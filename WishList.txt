@@ -1,0 +1,20 @@
+I wish to make a list of all the pokemon in my battle-factory game
+along with their stats, to see correlations in how to play against certain
+teams, so I don't get lose unexpectedly, and to see if the game randomizes
+the pokemon-moveset relationship or if these are predetermined. 
+(AKA keep a list of pokemon and their moveset to see if I can beat the system)
+
+
+For a program this small, I would want to do it in C.
+This will serve as practice for mirroring Object-Oriented Programming in C.
+
+Need a Table struct.
+
+And for the Table, an Entry struct.
+
+
+
+Perhaps, I'll start with implementing the typing system, and do weaknesses/resistances/no effects.
+
+
+Do I want the real stats for these pokemon? Or their base stats + EV's?
