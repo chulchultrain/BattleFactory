@@ -5,8 +5,10 @@ typedef enum Type { NONE, NORMAL, GRASS, BUG, FIRE, WATER, LIGHTNING, FLYING, RO
 
 typedef struct TypeContainer{
 
-enum Type primary;
-enum Type secondary;
+Type primary;
+Type secondary;
+
+
 
 }TypeContainer;
 

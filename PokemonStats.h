@@ -11,9 +11,9 @@ int SpecialAttack;
 int SpecialDefense;
 int Speed;
 
-//enum for pokemon Nature
 
 } PokemonStats;
 
+PokemonStats* NewPokemonStats(); //function def cant be seen in main function
 
 #endif
