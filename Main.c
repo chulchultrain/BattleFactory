@@ -6,14 +6,7 @@
 
 int main() {
 
-PokemonEntry hi;
-
-hi.typeData.primary = DARK;
-hi.typeData.secondary = NORMAL;
-
-PokemonStats *pokeStats = NewPokemonStats();
-int sd = pokeStats->Speed;
-printf("%d\n", sd);
+PokemonEntry *entry = NewPokemonEntry();
 
 
 return 0;

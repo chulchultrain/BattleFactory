@@ -12,6 +12,7 @@ Type secondary;
 
 }TypeContainer;
 
+TypeContainer *NewTypeContainer();
 
 
 #endif

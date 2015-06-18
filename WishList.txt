@@ -18,3 +18,9 @@ Perhaps, I'll start with implementing the typing system, and do weaknesses/resis
 
 
 Do I want the real stats for these pokemon? Or their base stats + EV's?
+
+
+
+CODE NAME ADDITION, CHAR ALLOCATION
+CODE REAL STATS ADDITION NOT JUST 0, OVERLOAD FUNCT
+
