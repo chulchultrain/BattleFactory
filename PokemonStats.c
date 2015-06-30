@@ -1,5 +1,6 @@
 #include "PokemonStats.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 PokemonStats* NewPokemonStats() {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
@@ -11,5 +12,23 @@ PokemonStats* NewPokemonStats() {
 	pokeStats->Speed = 0;
 
 	return pokeStats;
+
+}
+
+//Currently no default parameters wtf c doesnt have function overloading
+//read that should pass constant pointers instead of by value to avoid creating new 
+//objects. Although primitives arent nearly as costly.
+PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const int* SpA, const int* SpD, const int* S) {
+	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
+	printf("YES");
+	pokeStats->HitPoints = *HP;
+	pokeStats->Attack = *A;
+	pokeStats->Defense = *D;
+	pokeStats->SpecialAttack = *SpA;
+	pokeStats->SpecialDefense = *SpD;
+	pokeStats->Speed = *S;
+
+	return pokeStats;	
+
 
 }

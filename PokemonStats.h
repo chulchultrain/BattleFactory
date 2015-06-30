@@ -16,4 +16,6 @@ int Speed;
 
 PokemonStats* NewPokemonStats(); //function def cant be seen in main function
 
+
+PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const int* SpA, const int* SpD, const int* S);
 #endif
