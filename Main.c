@@ -13,11 +13,13 @@ d = 13;
 e = 14;
 f = 15;
 
-Type alpha = NONE;
-Type beta = DARK;
+Type *alpha = malloc(sizeof(Type));
+*alpha = NONE;
+Type *beta = malloc(sizeof(Type));
+*beta = DARK;
 
 PokemonStats *stats = FullNewPokemonStats(&a,&b,&c,&d,&e,&f);
-TypeContainer *type = FullTypeContainer(&alpha, &beta);
+TypeContainer *type = FullTypeContainer(alpha, beta);
 //printf("%d\n", stats->HitPoints);
 
 char QQ[] = {"Metagross"};
@@ -26,9 +28,13 @@ char QQ[] = {"Metagross"};
 
 
 PokemonEntry *blood = FullPokemonEntry(QQ, stats, type);
-printf("%s gfawe\n", blood->name);
-printf("%d efw\n", blood->pokeStats->HitPoints);
-printf("%d daw\n", blood->typeData->secondary);
+printf("Before: blood primary Type is %d\n", blood->typeData->primary);
+*alpha = PSYCHIC;
+printf("After change alpha: blood primary Type is %d\n", blood->typeData->primary);
+SetPrimaryType(blood->typeData, alpha);
+printf("After Set: blood primary Type is %d\n", blood->typeData->primary);
+*alpha = GRASS;
+printf("After change alpha: blood primary Type is %d\n", blood->typeData->primary);
 
 DeletePokemonEntry(blood);
 DeletePokemonStats(stats);

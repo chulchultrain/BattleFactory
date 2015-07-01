@@ -29,4 +29,19 @@ void DeleteTypeContainer(TypeContainer* recall) {
 
 }
 
+
+void SetPrimaryType(TypeContainer* original, Type* primary) {
+	original->primary = *primary;
+}
+
+void SetSecondaryType(TypeContainer* original, Type* secondary) {
+	original->secondary = *secondary;
+}
+
+void SetBothTypes(TypeContainer* original, Type* primary, Type* secondary) {
+	original->primary = *primary;
+	original->secondary = *secondary;
+}
+
+
 //maybe read typedata from premade textfile and construct a weaknesses/resistance table to not hardcode these things.

@@ -9,6 +9,7 @@ typedef struct TypeContainer{
 Type primary;
 Type secondary;
 
+//void (*DeleteTypeContainer)(TypeContainer* recall);
 
 
 }TypeContainer;
@@ -23,6 +24,12 @@ TypeContainer *FullTypeContainer(Type* type1, Type* type2);
 
 //TODO:delete TypeContainer function
 void DeleteTypeContainer(TypeContainer* recall);
+
+void SetPrimaryType(TypeContainer* original, Type* primary);
+
+void SetSecondaryType(TypeContainer* original, Type* secondary);
+
+void SetBothTypes(TypeContainer* original, Type* primary, Type* secondary);
 
 #endif
 
