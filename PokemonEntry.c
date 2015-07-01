@@ -45,4 +45,19 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContai
 
 }
 
+void DeletePokemonEntry(PokemonEntry* recall){
+	DeletePokemonStats(recall->pokeStats);
+	DeleteTypeContainer(recall->typeData);
+	free(recall);
+}
+
 #endif
+
+
+
+
+
+
+
+
+

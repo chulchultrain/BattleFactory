@@ -19,4 +19,11 @@ TypeContainer *CopyTypeContainer(TypeContainer* original);
 
 //driver to insert Types into a TypeContainer
 TypeContainer *FullTypeContainer(Type* type1, Type* type2);
+
+
+//TODO:delete TypeContainer function
+void DeleteTypeContainer(TypeContainer* recall);
+
 #endif
+
+

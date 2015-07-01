@@ -47,3 +47,7 @@ PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const 
 
 
 }
+
+void DeletePokemonStats(PokemonStats* recall){
+	free(recall);
+}

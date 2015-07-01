@@ -24,4 +24,9 @@ TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 
 }
 
+void DeleteTypeContainer(TypeContainer* recall) {
+	free(recall);
+
+}
+
 //maybe read typedata from premade textfile and construct a weaknesses/resistance table to not hardcode these things.

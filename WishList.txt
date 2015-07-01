@@ -14,6 +14,11 @@ And for the Table, an Entry struct.
 
 
 
+
+
+///////////////////////////////////////
+
+
 Perhaps, I'll start with implementing the typing system, and do weaknesses/resistances/no effects.
 
 
@@ -22,4 +27,6 @@ Do I want the real stats for these pokemon? Or their base stats + EV's?
 
 ADD FUNCTIONS TO MODIFY EXISTING ENTRY, STATS, TYPING object. For use with New Constructors. Initialize to 0 with NEW and set with these functions.
 
+ADD FUNCTIONS TO DEALLOCATE MEMORY FOR ENTRY, STATS, TYPING.
 
+ADD NULL POINTER CATCHES ON ALL MALLOCS

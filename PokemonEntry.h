@@ -29,4 +29,8 @@ PokemonStats *pokeStats;
 
 PokemonEntry *NewPokemonEntry();
 PokemonEntry *FullPokemonEntry(char* name, PokemonStats *statsHolder, TypeContainer *typeHolder);
+
+//TODO:delete PokemonEntry function
+void DeletePokemonEntry(PokemonEntry* recall);
+
 #endif
