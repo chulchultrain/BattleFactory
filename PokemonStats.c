@@ -35,7 +35,6 @@ PokemonStats* CopyPokemonStats(PokemonStats* original
 //objects. Although primitives arent nearly as costly.
 PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const int* SpA, const int* SpD, const int* S) {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
-	printf("YES");
 	pokeStats->HitPoints = *HP;
 	pokeStats->Attack = *A;
 	pokeStats->Defense = *D;
@@ -49,5 +48,31 @@ PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const 
 }
 
 void DeletePokemonStats(PokemonStats* recall){
+	
 	free(recall);
 }
+
+void SetHitPoints(PokemonStats* original, const int* HitPoints) {
+	original->HitPoints = *HitPoints;
+}
+
+void SetAttack(PokemonStats* original, const int* Attack) {
+	original->Attack = *Attack;
+}
+
+void SetDefense(PokemonStats* original, const int* Defense) {
+	original->Defense = *Defense;
+}
+
+void SetSpecialAttack(PokemonStats* original, const int* SpecialAttack) {
+	original->SpecialAttack = *SpecialAttack;
+}
+
+void SetSpecialDefense(PokemonStats* original, const int* SpecialDefense) {
+	original->SpecialDefense = *SpecialDefense;
+}
+
+void SetSpeed(PokemonStats* original, const int* Speed) {
+	original->Speed = *Speed;
+}
+

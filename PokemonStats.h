@@ -22,6 +22,18 @@ PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const 
 
 void DeletePokemonStats(PokemonStats* recall);
 
+void SetHitPoints(PokemonStats* original, const int* HitPoints);
+
+void SetAttack(PokemonStats* original, const int* Attack);
+
+void SetDefense(PokemonStats* original, const int* Defense);
+
+void SetSpecialAttack(PokemonStats* original, const int* SpecialAttack);
+
+void SetSpecialDefense(PokemonStats* original, const int* SpecialDefense);
+
+void SetSpeed(PokemonStats* original, const int* Speed);
+
 #endif
 
 //TODO:delete pokemonStats function

@@ -33,4 +33,6 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats *statsHolder, TypeContai
 //TODO:delete PokemonEntry function
 void DeletePokemonEntry(PokemonEntry* recall);
 
+void SetName(PokemonEntry* original, const char* name);
+
 #endif

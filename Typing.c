@@ -25,20 +25,20 @@ TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 }
 
 void DeleteTypeContainer(TypeContainer* recall) {
+	//reset so cant be recovered
 	free(recall);
 
 }
 
-
-void SetPrimaryType(TypeContainer* original, Type* primary) {
+void SetPrimaryType(TypeContainer* original,const Type* primary) {
 	original->primary = *primary;
 }
 
-void SetSecondaryType(TypeContainer* original, Type* secondary) {
+void SetSecondaryType(TypeContainer* original,const Type* secondary) {
 	original->secondary = *secondary;
 }
 
-void SetBothTypes(TypeContainer* original, Type* primary, Type* secondary) {
+void SetBothTypes(TypeContainer* original,const Type* primary,const Type* secondary) {
 	original->primary = *primary;
 	original->secondary = *secondary;
 }
