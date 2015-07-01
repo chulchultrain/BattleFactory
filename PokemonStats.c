@@ -15,6 +15,21 @@ PokemonStats* NewPokemonStats() {
 
 }
 
+//copy constructor
+PokemonStats* CopyPokemonStats(PokemonStats* original
+) {
+	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
+	pokeStats->HitPoints = original->HitPoints;
+	pokeStats->Attack = original->Attack;
+	pokeStats->Defense = original->Defense;
+	pokeStats->SpecialAttack = original->SpecialAttack;
+	pokeStats->SpecialDefense = original->SpecialDefense;
+	pokeStats->Speed = original->Speed;
+
+	return pokeStats;
+}
+
+
 //Currently no default parameters wtf c doesnt have function overloading
 //read that should pass constant pointers instead of by value to avoid creating new 
 //objects. Although primitives arent nearly as costly.

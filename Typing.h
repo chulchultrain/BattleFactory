@@ -5,6 +5,7 @@ typedef enum Type { NONE, NORMAL, GRASS, BUG, FIRE, WATER, LIGHTNING, FLYING, RO
 
 typedef struct TypeContainer{
 
+
 Type primary;
 Type secondary;
 
@@ -14,5 +15,8 @@ Type secondary;
 
 TypeContainer *NewTypeContainer();
 
+TypeContainer *CopyTypeContainer(TypeContainer* original);
 
+//driver to insert Types into a TypeContainer
+TypeContainer *FullTypeContainer(Type* type1, Type* type2);
 #endif

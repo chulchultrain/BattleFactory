@@ -29,7 +29,7 @@ PokemonEntry *NewPokemonEntry() {
 /*If we're gonna make a full pokemon stats, might as well make full new pokemon
   entry. Will include stats, type and name
 */
-PokemonEntry *FullPokemonEntry(char* name, PokemonStats *statsHolder, TypeContainer *typeHolder) {
+PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContainer* typeHolder) {
 	int i;
 	for(i = 0; i < MAX_NAME; i++)
 		if(name[i] == 0)
@@ -38,8 +38,8 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats *statsHolder, TypeContai
 		return NULL; //TODO:assert. name > 20c should have already checked
 	PokemonEntry *result = malloc(sizeof(PokemonEntry));
 	copyName(name, result->name);
-	result->typeData = NewTypeContainer(); //TODO:CopyConstructor
-	result->pokeStats = NewPokemonStats(); //TODO:CopyConstructor
+	result->typeData = CopyTypeContainer(typeHolder); //TODO:CopyConstructor
+	result->pokeStats = CopyPokemonStats(statsHolder); //TODO:CopyConstructor
 	return result;
 
 
