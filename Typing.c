@@ -30,6 +30,11 @@ TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 
 void DeleteTypeContainer(TypeContainer* recall) {
 	//reset so cant be recovered
+	recall->primary = NONE;
+	recall->secondary = NONE;
+	recall->SetPrimary = NULL;
+	recall->SetSecondary = NULL;
+	recall->SetBoth = NULL;
 	free(recall);
 
 }
