@@ -42,6 +42,12 @@ void SetSpeed(PokemonStats* original, const int* Speed);
 
 void SetPokemonStatsFunctionPointers(PokemonStats* original);
 
+void ResetPokemonStatsData(PokemonStats* recall);
+
+void ResetPokemonStatsPointers(PokemonStats* recall);
+
+void ResetPokemonStatsAll(PokemonStats* recall);
+
 
 #endif
 

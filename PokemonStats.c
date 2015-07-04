@@ -52,9 +52,32 @@ PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const 
 
 }
 
+void ResetPokemonStatsData(PokemonStats* recall) {
+	recall->HitPoints = 0;
+	recall->Attack = 0;
+	recall->Defense = 0;
+	recall->SpecialAttack = 0;
+	recall->SpecialDefense = 0;
+	recall->Speed = 0;
+}
+
+void ResetPokemonStatsPointers(PokemonStats* recall) {
+	recall->SetHP = 0;
+	recall->SetA = 0;
+	recall->SetD = 0;
+	recall->SetSpA = 0;
+	recall->SetSpD = 0;
+	recall->SetS = 0;
+}
+
+void ResetPokemonStatsAll(PokemonStats* recall) {
+	ResetPokemonStatsData(recall);
+	ResetPokemonStatsPointers(recall);
+}
+
 void DeletePokemonStats(PokemonStats* recall){
 	//TODO:zero values before free
-
+	ResetPokemonStatsAll(recall);
 	free(recall);
 }
 
