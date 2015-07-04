@@ -68,9 +68,13 @@ void SetPokemonName(PokemonEntry* original, const char* name) {
 	copyName(name, original->name);
 }
 
+
+
 void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->SetName = SetPokemonName;
 }
+
+
 
 #endif
 

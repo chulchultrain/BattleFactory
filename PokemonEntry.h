@@ -25,6 +25,7 @@ PokemonStats *pokeStats;
 
 void (*SetName)();
 
+void (*SetHP)();
 
 //enum for pokemon Nature
 
@@ -39,5 +40,7 @@ void DeletePokemonEntry(PokemonEntry* recall);
 void SetPokemonName(PokemonEntry* original, const char* name);
 
 void SetPokemonEntryFunctionPointers(PokemonEntry* original);
+
+void SetEntryHP(PokemonEntry* original, const int* HP);
 
 #endif

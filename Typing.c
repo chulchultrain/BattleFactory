@@ -28,13 +28,26 @@ TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 
 }
 
-void DeleteTypeContainer(TypeContainer* recall) {
-	//reset so cant be recovered
+void ResetTypeContainerData(TypeContainer* recall) {
 	recall->primary = NONE;
 	recall->secondary = NONE;
+
+}
+
+void ResetTypeContainerPointers(TypeContainer* recall) {
 	recall->SetPrimary = NULL;
 	recall->SetSecondary = NULL;
 	recall->SetBoth = NULL;
+}
+
+void ResetTypeContainerAll(TypeContainer* recall) {
+	ResetTypeContainerData(recall);
+	ResetTypeContainerPointers(recall);
+}
+
+void DeleteTypeContainer(TypeContainer* recall) {
+	//reset so cant be recovered
+	ResetTypeContainerAll(recall);
 	free(recall);
 
 }

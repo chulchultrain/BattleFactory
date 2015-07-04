@@ -36,6 +36,13 @@ void SetBothTypes(TypeContainer* original,const Type* primary,const Type* second
 
 void SetTypeContainerFunctionPointers(TypeContainer* original);
 
+void ResetTypeContainer(TypeContainer* recall);
+
+void ResetTypeContainerPointers(TypeContainer* recall);
+
+void ResetTypeContainerAll(TypeContainer* recall);
+
+
 #endif
 
 

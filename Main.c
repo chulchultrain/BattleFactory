@@ -63,6 +63,7 @@ printf("After:HP is %d\n", blood->pokeStats->HitPoints);
 blood->SetName(blood, QQ);
 printf("Set: name is %s\n", blood->name);
 
+
 DeletePokemonEntry(blood);
 DeletePokemonStats(stats);
 DeleteTypeContainer(type);
