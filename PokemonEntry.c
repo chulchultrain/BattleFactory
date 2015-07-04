@@ -24,6 +24,8 @@ PokemonEntry *NewPokemonEntry() {
 	result->name[0] = 0;
 	result->typeData = NewTypeContainer();
 	result->pokeStats = NewPokemonStats();
+
+	SetPokemonEntryFunctionPointers(result);
 	return result;
 
 }
@@ -42,6 +44,7 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContai
 	copyName(name, result->name);
 	result->typeData = CopyTypeContainer(typeHolder); //TODO:CopyConstructor
 	result->pokeStats = CopyPokemonStats(statsHolder); //TODO:CopyConstructor
+	SetPokemonEntryFunctionPointers(result);
 	return result;
 
 
@@ -54,7 +57,7 @@ void DeletePokemonEntry(PokemonEntry* recall){
 	free(recall);
 }
 
-void SetName(PokemonEntry* original, const char* name) {
+void SetPokemonName(PokemonEntry* original, const char* name) {
 	int i;
 	for(i = 0; i < MAX_NAME; i++)
 		if(name[i] == 0)
@@ -63,6 +66,10 @@ void SetName(PokemonEntry* original, const char* name) {
 		return; //TODO:assert
 	
 	copyName(name, original->name);
+}
+
+void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
+	original->SetName = SetPokemonName;
 }
 
 #endif

@@ -43,7 +43,7 @@ PokemonEntry *blood = FullPokemonEntry(QQ, stats, type);
 SetHitPoints(blood->pokeStats, a);
 *a = 10;
 printf("Set: hitpoints is %d\n", blood->pokeStats->HitPoints);
-SetName(blood, KL);
+SetPokemonName(blood, KL);
 printf("Set: name is %s\n", blood->name);
 TypeContainer *typePtr;
 printf("Before: type is %d\n", blood->typeData->primary);
@@ -53,6 +53,15 @@ typePtr = blood->typeData;
 
 typePtr->SetPrimary(typePtr, beta);
 printf("After:type is %d\n", blood->typeData->primary);
+
+PokemonStats *statsPtr;
+statsPtr = blood->pokeStats;
+*a = 100000;
+statsPtr->SetHP(statsPtr, a);
+printf("After:HP is %d\n", blood->pokeStats->HitPoints);
+
+blood->SetName(blood, QQ);
+printf("Set: name is %s\n", blood->name);
 
 DeletePokemonEntry(blood);
 DeletePokemonStats(stats);

@@ -23,6 +23,9 @@ char name[MAX_NAME];
 
 PokemonStats *pokeStats;
 
+void (*SetName)();
+
+
 //enum for pokemon Nature
 
 } PokemonEntry;
@@ -33,6 +36,8 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats *statsHolder, TypeContai
 //TODO:delete PokemonEntry function
 void DeletePokemonEntry(PokemonEntry* recall);
 
-void SetName(PokemonEntry* original, const char* name);
+void SetPokemonName(PokemonEntry* original, const char* name);
+
+void SetPokemonEntryFunctionPointers(PokemonEntry* original);
 
 #endif
