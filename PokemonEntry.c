@@ -50,8 +50,31 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContai
 
 }
 
+void ResetPokemonEntryData(PokemonEntry* recall) {
+	//TODO:ADD CLEAR NAME
+	int i;
+	for(i = 0; i < MAX_NAME; i++)
+		recall->name[i] = 0;
+
+
+	ResetPokemonStatsData(recall->pokeStats);
+	ResetTypeContainerData(recall->typeData);
+}
+
+void ResetPokemonEntryPointers(PokemonEntry* recall) {
+	recall->SetName = NULL;
+	ResetPokemonStatsPointers(recall->pokeStats);
+	ResetTypeContainerPointers(recall->typeData);
+}
+
+void ResetPokemonEntryAll(PokemonEntry* recall) {
+	ResetPokemonEntryData(recall);
+	ResetPokemonEntryPointers(recall);
+}
+
 void DeletePokemonEntry(PokemonEntry* recall){
 	//zero out name before free
+	ResetPokemonEntryAll(recall);
 	DeletePokemonStats(recall->pokeStats);
 	DeleteTypeContainer(recall->typeData);
 	free(recall);

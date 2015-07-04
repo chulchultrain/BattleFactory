@@ -43,4 +43,9 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original);
 
 void SetEntryHP(PokemonEntry* original, const int* HP);
 
+void ResetPokemonEntryData(PokemonEntry* recall);
+
+void ResetPokemonEntryPointers(PokemonEntry* recall);
+
+void ResetPokemonEntryAll(PokemonEntry* recall);
 #endif
