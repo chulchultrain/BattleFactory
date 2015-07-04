@@ -11,6 +11,12 @@ int SpecialAttack;
 int SpecialDefense;
 int Speed;
 
+void (*SetHP)();
+void (*SetA)();
+void (*SetD)();
+void (*SetSpA)();
+void (*SetSpD)();
+void (*SetS)();
 
 } PokemonStats;
 
@@ -33,6 +39,9 @@ void SetSpecialAttack(PokemonStats* original, const int* SpecialAttack);
 void SetSpecialDefense(PokemonStats* original, const int* SpecialDefense);
 
 void SetSpeed(PokemonStats* original, const int* Speed);
+
+void SetPokemonStatsFunctionPointers(PokemonStats* original);
+
 
 #endif
 

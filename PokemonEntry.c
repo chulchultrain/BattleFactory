@@ -48,6 +48,7 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContai
 }
 
 void DeletePokemonEntry(PokemonEntry* recall){
+	//zero out name before free
 	DeletePokemonStats(recall->pokeStats);
 	DeleteTypeContainer(recall->typeData);
 	free(recall);

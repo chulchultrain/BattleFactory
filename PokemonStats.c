@@ -11,6 +11,8 @@ PokemonStats* NewPokemonStats() {
 	pokeStats->SpecialDefense = 0;
 	pokeStats->Speed = 0;
 
+	SetPokemonStatsFunctionPointers(pokeStats);
+
 	return pokeStats;
 
 }
@@ -24,6 +26,8 @@ PokemonStats* CopyPokemonStats(PokemonStats* original) {
 	pokeStats->SpecialAttack = original->SpecialAttack;
 	pokeStats->SpecialDefense = original->SpecialDefense;
 	pokeStats->Speed = original->Speed;
+
+	SetPokemonStatsFunctionPointers(pokeStats);
 
 	return pokeStats;
 }
@@ -41,13 +45,16 @@ PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const 
 	pokeStats->SpecialDefense = *SpD;
 	pokeStats->Speed = *S;
 
+	SetPokemonStatsFunctionPointers(pokeStats);
+
 	return pokeStats;	
 
 
 }
 
 void DeletePokemonStats(PokemonStats* recall){
-	
+	//TODO:zero values before free
+
 	free(recall);
 }
 
@@ -73,5 +80,18 @@ void SetSpecialDefense(PokemonStats* original, const int* SpecialDefense) {
 
 void SetSpeed(PokemonStats* original, const int* Speed) {
 	original->Speed = *Speed;
+}
+
+
+void SetPokemonStatsFunctionPointers(PokemonStats* original) {
+
+
+	original->SetHP = SetHitPoints;
+	original->SetA = SetAttack;
+	original->SetD = SetDefense;
+	original->SetSpA = SetSpecialAttack;
+	original->SetSpD = SetSpecialDefense;
+	original->SetS = SetSpeed;
+
 }
 
