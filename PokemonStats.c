@@ -16,8 +16,7 @@ PokemonStats* NewPokemonStats() {
 }
 
 //copy constructor
-PokemonStats* CopyPokemonStats(PokemonStats* original
-) {
+PokemonStats* CopyPokemonStats(PokemonStats* original) {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
 	pokeStats->HitPoints = original->HitPoints;
 	pokeStats->Attack = original->Attack;

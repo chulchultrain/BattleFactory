@@ -45,10 +45,26 @@ SetHitPoints(blood->pokeStats, a);
 printf("Set: hitpoints is %d\n", blood->pokeStats->HitPoints);
 SetName(blood, KL);
 printf("Set: name is %s\n", blood->name);
+TypeContainer *typePtr;
+printf("Before: type is %d\n", blood->typeData->primary);
+typePtr = blood->typeData;
+
+*beta = WATER;
+
+typePtr->SetPrimary(typePtr, beta);
+printf("After:type is %d\n", blood->typeData->primary);
 
 DeletePokemonEntry(blood);
 DeletePokemonStats(stats);
 DeleteTypeContainer(type);
+free(a);
+free(b);
+free(c);
+free(d);
+free(e);
+free(f);
+free(alpha);
+free(beta);
 
 return 0;
 }
