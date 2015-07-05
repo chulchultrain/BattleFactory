@@ -13,6 +13,7 @@ void (*SetPrimary)();
 void (*SetSecondary)();
 void (*SetBoth)();
 
+void (*ConsolePrint)();
 }TypeContainer;
 
 TypeContainer *NewTypeContainer();

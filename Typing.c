@@ -71,6 +71,7 @@ void SetTypeContainerFunctionPointers(TypeContainer* original) {
 	original->SetPrimary = SetPrimaryType;
 	original->SetSecondary = SetSecondaryType;
 	original->SetBoth = SetBothTypes;
+	original->ConsolePrint = TypeContainerConsolePrint;
 }
 
 void TypeConsolePrint(Type* obj) {

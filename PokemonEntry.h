@@ -34,6 +34,8 @@ void (*SetSpeed)();
 void (*SetPrimaryType)();
 void (*SetSecondaryType)();
 
+void (*ConsolePrint)();
+
 //enum for pokemon Nature
 
 } PokemonEntry;

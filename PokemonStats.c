@@ -115,6 +115,7 @@ void SetPokemonStatsFunctionPointers(PokemonStats* original) {
 	original->SetSpA = SetSpecialAttack;
 	original->SetSpD = SetSpecialDefense;
 	original->SetS = SetSpeed;
+	original->ConsolePrint = PokemonStatsConsolePrint;
 
 }
 

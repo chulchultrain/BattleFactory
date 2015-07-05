@@ -112,6 +112,7 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->SetSpeed = SetEntryD;
 	original->SetPrimaryType = SetEntryPrimaryType;
 	original->SetSecondaryType = SetEntrySecondaryType;
+	original->ConsolePrint = PokemonEntryConsolePrint;
 
 }
 

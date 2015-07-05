@@ -17,6 +17,7 @@ void (*SetD)();
 void (*SetSpA)();
 void (*SetSpD)();
 void (*SetS)();
+void (*ConsolePrint)();
 
 } PokemonStats;
 
