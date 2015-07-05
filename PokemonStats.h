@@ -48,6 +48,8 @@ void ResetPokemonStatsPointers(PokemonStats* recall);
 
 void ResetPokemonStatsAll(PokemonStats* recall);
 
+void PokemonStatsConsolePrint(PokemonStats* obj);
+
 
 #endif
 

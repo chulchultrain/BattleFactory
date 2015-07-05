@@ -67,6 +67,7 @@ blood->SetHitPoints(blood, f);
 printf("Set: HP is %d\n", blood->pokeStats->HitPoints);
 
 TypeContainerConsolePrint(blood->typeData);
+PokemonStatsConsolePrint(blood->pokeStats);
 
 DeletePokemonEntry(blood);
 DeletePokemonStats(stats);

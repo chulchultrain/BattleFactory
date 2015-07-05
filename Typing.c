@@ -97,11 +97,11 @@ void TypeConsolePrint(Type* obj) {
 
 }
 
-void TypeContainerConsolePrint(TypeContainer* contain) {
+void TypeContainerConsolePrint(TypeContainer* obj) {
 	printf("Primary ");
-	TypeConsolePrint(&contain->primary);
+	TypeConsolePrint(&obj->primary);
 	printf("Secondary ");
-	TypeConsolePrint(&contain->secondary);
+	TypeConsolePrint(&obj->secondary);
 }
 
 

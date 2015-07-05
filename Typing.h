@@ -12,8 +12,6 @@ Type secondary;
 void (*SetPrimary)();
 void (*SetSecondary)();
 void (*SetBoth)();
-//void (*DeleteTypeContainer)(TypeContainer* recall);
-
 
 }TypeContainer;
 
@@ -44,7 +42,7 @@ void ResetTypeContainerAll(TypeContainer* recall);
 
 void TypeConsolePrint(Type* obj);
 
-void TypeContainerConsolePrint(TypeContainer* contain);
+void TypeContainerConsolePrint(TypeContainer* obj);
 
 
 #endif

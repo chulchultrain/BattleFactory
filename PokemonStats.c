@@ -118,3 +118,14 @@ void SetPokemonStatsFunctionPointers(PokemonStats* original) {
 
 }
 
+void PokemonStatsConsolePrint(PokemonStats* obj) {
+	printf("HP is %d\n", obj->HitPoints);
+	printf("Attack is %d\n", obj->Attack);
+	printf("Defense is %d\n", obj->Defense);
+	printf("Special Attack is %d\n", obj->SpecialAttack);
+	printf("Special Defense is %d\n", obj->SpecialDefense);
+	printf("Speed is %d\n", obj->Speed);
+}
+
+
+
