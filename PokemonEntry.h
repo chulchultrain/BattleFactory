@@ -66,6 +66,6 @@ void SetEntryS(PokemonEntry* original, const int* S);
 void SetEntryPrimaryType(PokemonEntry* original, const Type* primary);
 void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary);
 
-
+void PokemonEntryConsolePrint(PokemonEntry* obj);
 
 #endif

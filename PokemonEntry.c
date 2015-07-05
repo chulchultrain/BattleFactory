@@ -3,6 +3,7 @@
 
 #include "PokemonEntry.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 
 //TODO:NO MAGIC NUMBERS PLZ
@@ -146,6 +147,13 @@ void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary) {
 	SetSecondaryType(original->typeData, secondary);
 }
 
+void PokemonEntryConsolePrint(PokemonEntry* obj) {
+
+	printf("Name is %s\n", obj->name);	
+
+	PokemonStatsConsolePrint(obj->pokeStats);
+	TypeContainerConsolePrint(obj->typeData);
+}
 #endif
 
 
