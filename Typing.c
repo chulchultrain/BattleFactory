@@ -1,6 +1,7 @@
 
 #include "Typing.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 TypeContainer *NewTypeContainer() {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
@@ -70,6 +71,37 @@ void SetTypeContainerFunctionPointers(TypeContainer* original) {
 	original->SetPrimary = SetPrimaryType;
 	original->SetSecondary = SetSecondaryType;
 	original->SetBoth = SetBothTypes;
+}
+
+void TypeConsolePrint(Type* obj) {
+	printf("Type is ");
+	switch(*obj) {
+		case NONE: printf("NONE"); break;
+		case NORMAL: printf("NORMAL"); break;
+		case GRASS: printf("GRASS"); break;
+		case BUG: printf("BUG"); break;
+		case FIRE: printf("FIRE"); break;
+		case WATER: printf("WATER"); break;
+		case ELECTRIC: printf("ELECTRIC"); break;
+		case FLYING: printf("FLYING"); break;
+		case ROCK: printf("ROCK"); break;
+		case GROUND: printf("GROUND"); break;
+		case POISON: printf("POISON"); break;
+		case PSYCHIC: printf("PSYCHIC"); break;
+		case DARK: printf("DARK"); break;
+		case STEEL: printf("STEEL"); break;
+		case DRAGON: printf("DRAGON"); break;
+		default: printf("INVALID TYPE");
+	}
+	printf("\n");
+
+}
+
+void TypeContainerConsolePrint(TypeContainer* contain) {
+	printf("Primary ");
+	TypeConsolePrint(&contain->primary);
+	printf("Secondary ");
+	TypeConsolePrint(&contain->secondary);
 }
 
 

@@ -25,7 +25,14 @@ PokemonStats *pokeStats;
 
 void (*SetName)();
 
-void (*SetHP)();
+void (*SetHitPoints)();
+void (*SetAttack)();
+void (*SetDefense)();
+void (*SetSpecialAttack)();
+void (*SetSpecialDefense)();
+void (*SetSpeed)();
+void (*SetPrimaryType)();
+void (*SetSecondaryType)();
 
 //enum for pokemon Nature
 
@@ -48,4 +55,17 @@ void ResetPokemonEntryData(PokemonEntry* recall);
 void ResetPokemonEntryPointers(PokemonEntry* recall);
 
 void ResetPokemonEntryAll(PokemonEntry* recall);
+
+void SetEntryHP(PokemonEntry* original, const int* HP);
+void SetEntryA(PokemonEntry* original, const int* A);
+void SetEntryD(PokemonEntry* original, const int* D);
+void SetEntrySpA(PokemonEntry* original, const int* SpA);
+void SetEntrySpD(PokemonEntry* original, const int* SpD);
+void SetEntryS(PokemonEntry* original, const int* S);
+
+void SetEntryPrimaryType(PokemonEntry* original, const Type* primary);
+void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary);
+
+
+
 #endif

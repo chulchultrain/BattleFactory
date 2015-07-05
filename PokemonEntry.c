@@ -63,6 +63,14 @@ void ResetPokemonEntryData(PokemonEntry* recall) {
 
 void ResetPokemonEntryPointers(PokemonEntry* recall) {
 	recall->SetName = NULL;
+	recall->SetHitPoints = NULL;
+	recall->SetAttack = NULL;
+	recall->SetDefense = NULL;
+	recall->SetSpecialAttack = NULL;
+	recall->SetSpecialDefense = NULL;
+	recall->SetSpeed = NULL;
+	recall->SetPrimaryType = NULL;
+	recall->SetSecondaryType = NULL;
 	ResetPokemonStatsPointers(recall->pokeStats);
 	ResetTypeContainerPointers(recall->typeData);
 }
@@ -95,9 +103,48 @@ void SetPokemonName(PokemonEntry* original, const char* name) {
 
 void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->SetName = SetPokemonName;
+	original->SetHitPoints = SetEntryHP;
+	original->SetAttack = SetEntryA;
+	original->SetDefense = SetEntryD;
+	original->SetSpecialAttack = SetEntrySpA;
+	original->SetSpecialDefense = SetEntrySpD;
+	original->SetSpeed = SetEntryD;
+	original->SetPrimaryType = SetEntryPrimaryType;
+	original->SetSecondaryType = SetEntrySecondaryType;
+
 }
 
+void SetEntryHP(PokemonEntry* original, const int* HP) {
+	SetHitPoints(original->pokeStats, HP);
+}
 
+void SetEntryA(PokemonEntry* original, const int* A) {
+	SetAttack(original->pokeStats, A);
+}
+
+void SetEntryD(PokemonEntry* original, const int* D) {
+	SetDefense(original->pokeStats, D);
+}
+
+void SetEntrySpA(PokemonEntry* original, const int* SpA) {
+	SetSpecialAttack(original->pokeStats, SpA);
+}
+
+void SetEntrySpD(PokemonEntry* original, const int* SpD) {
+	SetSpecialDefense(original->pokeStats, SpD);
+}
+
+void SetEntryS(PokemonEntry* original, const int* S) {
+	SetSpeed(original->pokeStats, S);
+}
+
+void SetEntryPrimaryType(PokemonEntry* original, const Type* primary) {
+	SetPrimaryType(original->typeData, primary);
+}
+
+void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary) {
+	SetSecondaryType(original->typeData, secondary);
+}
 
 #endif
 

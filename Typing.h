@@ -1,7 +1,7 @@
 #ifndef __TYPING_H_INCLUDED__
 #define __TYPING_H_INCLUDED__
 
-typedef enum Type { NONE, NORMAL, GRASS, BUG, FIRE, WATER, LIGHTNING, FLYING, ROCK, GROUND, POISON, PSYCHIC, DARK, STEEL, DRAGON }Type;
+typedef enum Type { NONE, NORMAL, GRASS, BUG, FIRE, WATER, ELECTRIC, FLYING, ROCK, GROUND, POISON, PSYCHIC, DARK, STEEL, DRAGON }Type;
 
 typedef struct TypeContainer{
 
@@ -41,6 +41,10 @@ void ResetTypeContainerData(TypeContainer* recall);
 void ResetTypeContainerPointers(TypeContainer* recall);
 
 void ResetTypeContainerAll(TypeContainer* recall);
+
+void TypeConsolePrint(Type* obj);
+
+void TypeContainerConsolePrint(TypeContainer* contain);
 
 
 #endif
