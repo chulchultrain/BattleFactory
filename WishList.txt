@@ -34,3 +34,7 @@ ADD NULL POINTER CATCHES ON ALL MALLOCS
 ADD FUNCTIONS POINTERS TO STRUCTS TO SIMULATE OBJECT-ORIENTED PROGRAMMING.
 
 Add layers so top-level user only has to do PokemonEntry->SetHP or PokemonEntry->SetPrimaryType. Higher levels will ahve way more function poniters than lower levels
+
+
+
+DAMAGE CALCULATOR

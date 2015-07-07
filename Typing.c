@@ -3,18 +3,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+struct TypeContainerPrivate {
+
+	Type primary;
+	Type secondary;
+};
+
 TypeContainer *NewTypeContainer() {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
+	printf("mem create");
+	result->mem = malloc(sizeof(TypeContainerPrivate));
+	printf("set type container fp");
 	SetTypeContainerFunctionPointers(result);
-
+	printf("reset type data");
+	ResetTypeContainerData(result);
 
 	return result;
 }
 
 TypeContainer *CopyTypeContainer(TypeContainer* original) {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
-	result->primary = original->primary;
-	result->secondary = original->secondary;
+	result->mem = malloc(sizeof(TypeContainerPrivate));
+	result->mem->primary = original->mem->primary;
+	result->mem->secondary = original->mem->secondary;
 	SetTypeContainerFunctionPointers(result);
 	return result;
 
@@ -22,16 +34,17 @@ TypeContainer *CopyTypeContainer(TypeContainer* original) {
 
 TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 	TypeContainer *result = malloc(sizeof(TypeContainer));
-	result->primary = *type1;
-	result->secondary = *type2;
+	result->mem = malloc(sizeof(TypeContainerPrivate));
+	result->mem->primary = *type1;
+	result->mem->secondary = *type2;
 	SetTypeContainerFunctionPointers(result);	
 	return result;
 
 }
 
 void ResetTypeContainerData(TypeContainer* recall) {
-	recall->primary = NONE;
-	recall->secondary = NONE;
+	recall->mem->primary = NONE;
+	recall->mem->secondary = NONE;
 
 }
 
@@ -49,21 +62,24 @@ void ResetTypeContainerAll(TypeContainer* recall) {
 void DeleteTypeContainer(TypeContainer* recall) {
 	//reset so cant be recovered
 	ResetTypeContainerAll(recall);
+	free(recall->mem);
 	free(recall);
 
 }
 
 void SetPrimaryType(TypeContainer* original,const Type* primary) {
-	original->primary = *primary;
+	printf("PRIMARY3\n\n\n");
+	original->mem->primary = *primary;
+	printf("PRIMARY4\n\n\n");
 }
 
 void SetSecondaryType(TypeContainer* original,const Type* secondary) {
-	original->secondary = *secondary;
+	original->mem->secondary = *secondary;
 }
 
 void SetBothTypes(TypeContainer* original,const Type* primary,const Type* secondary) {
-	original->primary = *primary;
-	original->secondary = *secondary;
+	original->mem->primary = *primary;
+	original->mem->secondary = *secondary;
 }
 
 void SetTypeContainerFunctionPointers(TypeContainer* original) {
@@ -72,6 +88,8 @@ void SetTypeContainerFunctionPointers(TypeContainer* original) {
 	original->SetSecondary = SetSecondaryType;
 	original->SetBoth = SetBothTypes;
 	original->ConsolePrint = TypeContainerConsolePrint;
+	original->GetPrimary = GetPrimaryType;
+	original->GetSecondary = GetSecondaryType;
 }
 
 void TypeConsolePrint(Type* obj) {
@@ -100,9 +118,17 @@ void TypeConsolePrint(Type* obj) {
 
 void TypeContainerConsolePrint(TypeContainer* obj) {
 	printf("Primary ");
-	TypeConsolePrint(&obj->primary);
+	TypeConsolePrint(&obj->mem->primary);
 	printf("Secondary ");
-	TypeConsolePrint(&obj->secondary);
+	TypeConsolePrint(&obj->mem->secondary);
+}
+
+Type GetPrimaryType(TypeContainer* obj) {
+	return obj->mem->primary;
+}
+
+Type GetSecondaryType(TypeContainer* obj) {
+	return obj->mem->secondary;
 }
 
 

@@ -3,17 +3,20 @@
 
 typedef enum Type { NONE, NORMAL, GRASS, BUG, FIRE, WATER, ELECTRIC, FLYING, ROCK, GROUND, POISON, PSYCHIC, DARK, STEEL, DRAGON }Type;
 
+typedef struct TypeContainerPrivate TypeContainerPrivate;
+
 typedef struct TypeContainer{
 
-
-Type primary;
-Type secondary;
+TypeContainerPrivate *mem;
 
 void (*SetPrimary)();
 void (*SetSecondary)();
 void (*SetBoth)();
 
 void (*ConsolePrint)();
+Type (*GetPrimary)();
+Type (*GetSecondary)();
+
 }TypeContainer;
 
 TypeContainer *NewTypeContainer();
@@ -44,6 +47,11 @@ void ResetTypeContainerAll(TypeContainer* recall);
 void TypeConsolePrint(Type* obj);
 
 void TypeContainerConsolePrint(TypeContainer* obj);
+
+Type GetPrimaryType(TypeContainer* obj);
+
+Type GetSecondaryType(TypeContainer* obj);
+
 
 
 #endif
