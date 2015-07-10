@@ -2,14 +2,26 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+struct PokemonStatsPrivate {
+
+int HitPoints;
+int Attack;
+int Defense;
+int SpecialAttack;
+int SpecialDefense;
+int Speed;
+
+};
+
 PokemonStats* NewPokemonStats() {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
-	pokeStats->HitPoints = 0;
-	pokeStats->Attack = 0;
-	pokeStats->Defense = 0;
-	pokeStats->SpecialAttack = 0;
-	pokeStats->SpecialDefense = 0;
-	pokeStats->Speed = 0;
+	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
+	pokeStats->mem->HitPoints = 0;
+	pokeStats->mem->Attack = 0;
+	pokeStats->mem->Defense = 0;
+	pokeStats->mem->SpecialAttack = 0;
+	pokeStats->mem->SpecialDefense = 0;
+	pokeStats->mem->Speed = 0;
 
 	SetPokemonStatsFunctionPointers(pokeStats);
 
@@ -17,15 +29,16 @@ PokemonStats* NewPokemonStats() {
 
 }
 
-//copy constructor
+//TODO:TEST copy constructor
 PokemonStats* CopyPokemonStats(PokemonStats* original) {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
-	pokeStats->HitPoints = original->HitPoints;
-	pokeStats->Attack = original->Attack;
-	pokeStats->Defense = original->Defense;
-	pokeStats->SpecialAttack = original->SpecialAttack;
-	pokeStats->SpecialDefense = original->SpecialDefense;
-	pokeStats->Speed = original->Speed;
+	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
+	pokeStats->mem->HitPoints = original->mem->HitPoints;
+	pokeStats->mem->Attack = original->mem->Attack;
+	pokeStats->mem->Defense = original->mem->Defense;
+	pokeStats->mem->SpecialAttack = original->mem->SpecialAttack;
+	pokeStats->mem->SpecialDefense = original->mem->SpecialDefense;
+	pokeStats->mem->Speed = original->mem->Speed;
 
 	SetPokemonStatsFunctionPointers(pokeStats);
 
@@ -38,12 +51,13 @@ PokemonStats* CopyPokemonStats(PokemonStats* original) {
 //objects. Although primitives arent nearly as costly.
 PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const int* SpA, const int* SpD, const int* S) {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
-	pokeStats->HitPoints = *HP;
-	pokeStats->Attack = *A;
-	pokeStats->Defense = *D;
-	pokeStats->SpecialAttack = *SpA;
-	pokeStats->SpecialDefense = *SpD;
-	pokeStats->Speed = *S;
+	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
+	pokeStats->mem->HitPoints = *HP;
+	pokeStats->mem->Attack = *A;
+	pokeStats->mem->Defense = *D;
+	pokeStats->mem->SpecialAttack = *SpA;
+	pokeStats->mem->SpecialDefense = *SpD;
+	pokeStats->mem->Speed = *S;
 
 	SetPokemonStatsFunctionPointers(pokeStats);
 
@@ -53,12 +67,12 @@ PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const 
 }
 
 void ResetPokemonStatsData(PokemonStats* recall) {
-	recall->HitPoints = 0;
-	recall->Attack = 0;
-	recall->Defense = 0;
-	recall->SpecialAttack = 0;
-	recall->SpecialDefense = 0;
-	recall->Speed = 0;
+	recall->mem->HitPoints = 0;
+	recall->mem->Attack = 0;
+	recall->mem->Defense = 0;
+	recall->mem->SpecialAttack = 0;
+	recall->mem->SpecialDefense = 0;
+	recall->mem->Speed = 0;
 }
 
 void ResetPokemonStatsPointers(PokemonStats* recall) {
@@ -78,31 +92,32 @@ void ResetPokemonStatsAll(PokemonStats* recall) {
 void DeletePokemonStats(PokemonStats* recall){
 	//TODO:zero values before free
 	ResetPokemonStatsAll(recall);
+	free(recall->mem);
 	free(recall);
 }
 
 void SetHitPoints(PokemonStats* original, const int* HitPoints) {
-	original->HitPoints = *HitPoints;
+	original->mem->HitPoints = *HitPoints;
 }
 
 void SetAttack(PokemonStats* original, const int* Attack) {
-	original->Attack = *Attack;
+	original->mem->Attack = *Attack;
 }
 
 void SetDefense(PokemonStats* original, const int* Defense) {
-	original->Defense = *Defense;
+	original->mem->Defense = *Defense;
 }
 
 void SetSpecialAttack(PokemonStats* original, const int* SpecialAttack) {
-	original->SpecialAttack = *SpecialAttack;
+	original->mem->SpecialAttack = *SpecialAttack;
 }
 
 void SetSpecialDefense(PokemonStats* original, const int* SpecialDefense) {
-	original->SpecialDefense = *SpecialDefense;
+	original->mem->SpecialDefense = *SpecialDefense;
 }
 
 void SetSpeed(PokemonStats* original, const int* Speed) {
-	original->Speed = *Speed;
+	original->mem->Speed = *Speed;
 }
 
 
@@ -120,12 +135,12 @@ void SetPokemonStatsFunctionPointers(PokemonStats* original) {
 }
 
 void PokemonStatsConsolePrint(PokemonStats* obj) {
-	printf("HP is %d\n", obj->HitPoints);
-	printf("Attack is %d\n", obj->Attack);
-	printf("Defense is %d\n", obj->Defense);
-	printf("Special Attack is %d\n", obj->SpecialAttack);
-	printf("Special Defense is %d\n", obj->SpecialDefense);
-	printf("Speed is %d\n", obj->Speed);
+	printf("HP is %d\n", obj->mem->HitPoints);
+	printf("Attack is %d\n", obj->mem->Attack);
+	printf("Defense is %d\n", obj->mem->Defense);
+	printf("Special Attack is %d\n", obj->mem->SpecialAttack);
+	printf("Special Defense is %d\n", obj->mem->SpecialDefense);
+	printf("Speed is %d\n", obj->mem->Speed);
 }
 
 

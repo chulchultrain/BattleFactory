@@ -22,6 +22,7 @@ TypeContainer *NewTypeContainer() {
 	return result;
 }
 
+//TODO:TEST
 TypeContainer *CopyTypeContainer(TypeContainer* original) {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
 	result->mem = malloc(sizeof(TypeContainerPrivate));

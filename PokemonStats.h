@@ -1,15 +1,11 @@
 #ifndef __POKEMONSTATS_H_INCLUDED__
 #define __POKEMONSTATS_H_INCLUDED__
 
+typedef struct PokemonStatsPrivate PokemonStatsPrivate;
 
 typedef struct PokemonStats{
 
-int HitPoints;
-int Attack;
-int Defense;
-int SpecialAttack;
-int SpecialDefense;
-int Speed;
+PokemonStatsPrivate *mem;
 
 void (*SetHP)();
 void (*SetA)();
@@ -19,7 +15,7 @@ void (*SetSpD)();
 void (*SetS)();
 void (*ConsolePrint)();
 
-} PokemonStats;
+}PokemonStats;
 
 PokemonStats* NewPokemonStats(); //function def cant be seen in main function
 

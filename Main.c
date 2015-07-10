@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "PokemonStats.h"
 #include "Typing.h"
 //TODO:CHANGE BACK TO POKEMONENTRY
 
@@ -23,11 +24,24 @@ Type *alpha = malloc(sizeof(Type));
 *alpha = NONE;
 Type *beta = malloc(sizeof(Type));
 *beta = DARK;
+/**
 TypeContainer *result = NewTypeContainer();
 result->SetPrimary(result, alpha);
 result->SetSecondary(result, beta);
 result->ConsolePrint(result);
 DeleteTypeContainer(result);
+**/
+PokemonStats *result = NewPokemonStats();
+result->SetHP(result, a);
+result->SetA(result, b);
+result->SetD(result, c);
+result->SetSpA(result, d);
+result->SetSpD(result, e);
+result->SetS(result, f);
+result->ConsolePrint(result);
+
+
+
 free(a);
 free(b);
 free(c);
