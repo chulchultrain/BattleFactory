@@ -44,28 +44,13 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats *statsHolder, TypeContai
 //TODO:delete PokemonEntry function
 void DeletePokemonEntry(PokemonEntry* recall);
 
-void SetPokemonName(PokemonEntry* original, const char* name);
-
 void SetPokemonEntryFunctionPointers(PokemonEntry* original);
 
-void SetEntryHP(PokemonEntry* original, const int* HP);
 
 void ResetPokemonEntryData(PokemonEntry* recall);
 
 void ResetPokemonEntryPointers(PokemonEntry* recall);
 
 void ResetPokemonEntryAll(PokemonEntry* recall);
-
-void SetEntryHP(PokemonEntry* original, const int* HP);
-void SetEntryA(PokemonEntry* original, const int* A);
-void SetEntryD(PokemonEntry* original, const int* D);
-void SetEntrySpA(PokemonEntry* original, const int* SpA);
-void SetEntrySpD(PokemonEntry* original, const int* SpD);
-void SetEntryS(PokemonEntry* original, const int* S);
-
-void SetEntryPrimaryType(PokemonEntry* original, const Type* primary);
-void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary);
-
-void PokemonEntryConsolePrint(PokemonEntry* obj);
 
 #endif

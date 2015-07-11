@@ -13,6 +13,22 @@ int Speed;
 
 };
 
+void SetHitPoints(PokemonStats* original, const int* HitPoints);
+
+void SetAttack(PokemonStats* original, const int* Attack);
+
+void SetDefense(PokemonStats* original, const int* Defense);
+
+void SetSpecialAttack(PokemonStats* original, const int* SpecialAttack);
+
+void SetSpecialDefense(PokemonStats* original, const int* SpecialDefense);
+
+void SetSpeed(PokemonStats* original, const int* Speed);
+
+void SetPokemonStatsFunctionPointers(PokemonStats* original);
+
+void PokemonStatsConsolePrint(PokemonStats* obj);
+
 PokemonStats* NewPokemonStats() {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
 	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));

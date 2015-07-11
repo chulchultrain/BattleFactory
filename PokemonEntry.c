@@ -17,6 +17,25 @@ PokemonStats *pokeStats;
 
 };
 
+void SetPokemonName(PokemonEntry* original, const char* name);
+
+
+void SetEntryHP(PokemonEntry* original, const int* HP);
+
+
+
+void SetEntryHP(PokemonEntry* original, const int* HP);
+void SetEntryA(PokemonEntry* original, const int* A);
+void SetEntryD(PokemonEntry* original, const int* D);
+void SetEntrySpA(PokemonEntry* original, const int* SpA);
+void SetEntrySpD(PokemonEntry* original, const int* SpD);
+void SetEntryS(PokemonEntry* original, const int* S);
+
+void SetEntryPrimaryType(PokemonEntry* original, const Type* primary);
+void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary);
+
+void PokemonEntryConsolePrint(PokemonEntry* obj);
+
 
 //TODO:NO MAGIC NUMBERS PLZ
 //provide protection if longer than MAXNAME characters is entered.
