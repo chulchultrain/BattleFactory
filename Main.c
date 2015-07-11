@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "PokemonStats.h"
-#include "Typing.h"
+#include "PokemonEntry.h"
 //TODO:CHANGE BACK TO POKEMONENTRY
 
 int main() {
-printf("HERERE\n\n\n");
 int *a, *b, *c, *d, *e, *f;
 a = malloc(sizeof(int));
 b = malloc(sizeof(int));
@@ -31,6 +29,7 @@ result->SetSecondary(result, beta);
 result->ConsolePrint(result);
 DeleteTypeContainer(result);
 **/
+/**
 PokemonStats *result = NewPokemonStats();
 result->SetHP(result, a);
 result->SetA(result, b);
@@ -40,7 +39,19 @@ result->SetSpD(result, e);
 result->SetS(result, f);
 result->ConsolePrint(result);
 
+**/
 
+PokemonEntry *result = NewPokemonEntry();
+result->SetHitPoints(result, a);
+result->SetAttack(result, b);
+result->SetDefense(result, c);
+result->SetSpecialAttack(result, d);
+result->SetSpecialDefense(result, e);
+result->SetSpeed(result, f);
+result->SetPrimaryType(result, alpha);
+result->SetSecondaryType(result, beta);
+result->ConsolePrint(result);
+DeletePokemonEntry(result);
 
 free(a);
 free(b);

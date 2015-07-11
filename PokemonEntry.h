@@ -14,14 +14,12 @@
 
 //NOTE MAX OF 21 CHARACTERS IN NAME.
 //MAKE A NAME STRUCT/FILE NAH not worth for just a name. 
+
+typedef struct PokemonEntryPrivate PokemonEntryPrivate;
+
 typedef struct  PokemonEntry{
 
-TypeContainer *typeData;
-char name[MAX_NAME];
-//weaknesses/resistances/normal list
-//moveset
-
-PokemonStats *pokeStats;
+PokemonEntryPrivate *mem;
 
 void (*SetName)();
 

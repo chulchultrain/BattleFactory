@@ -5,6 +5,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+struct PokemonEntryPrivate {
+
+TypeContainer *typeData;
+
+char name[MAX_NAME];
+//weaknesses/resistances/normal list
+//moveset
+
+PokemonStats *pokeStats;
+
+};
+
 
 //TODO:NO MAGIC NUMBERS PLZ
 //provide protection if longer than MAXNAME characters is entered.
@@ -22,14 +34,18 @@ void copyName(const char* source, char* dest) {
 }
 PokemonEntry *NewPokemonEntry() {
 	PokemonEntry *result = malloc(sizeof(PokemonEntry));
-	result->name[0] = 0;
-	result->typeData = NewTypeContainer();
-	result->pokeStats = NewPokemonStats();
+	result->mem = malloc(sizeof(PokemonEntryPrivate));
+
+	result->mem->name[0] = 0;
+	result->mem->typeData = NewTypeContainer();
+	result->mem->pokeStats = NewPokemonStats();
 
 	SetPokemonEntryFunctionPointers(result);
 	return result;
 
 }
+
+//TODO:POKEMONENTRY COPY CONSTRUCTOR
 
 /*If we're gonna make a full pokemon stats, might as well make full new pokemon
   entry. Will include stats, type and name
@@ -42,9 +58,10 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContai
 	if(i == MAX_NAME)
 		return NULL; //TODO:assert. name > 20c should have already checked
 	PokemonEntry *result = malloc(sizeof(PokemonEntry));
-	copyName(name, result->name);
-	result->typeData = CopyTypeContainer(typeHolder); //TODO:CopyConstructor
-	result->pokeStats = CopyPokemonStats(statsHolder); //TODO:CopyConstructor
+	result->mem = malloc(sizeof(PokemonEntryPrivate));
+	copyName(name, result->mem->name);
+	result->mem->typeData = CopyTypeContainer(typeHolder); //TODO:CopyConstructor
+	result->mem->pokeStats = CopyPokemonStats(statsHolder); //TODO:CopyConstructor
 	SetPokemonEntryFunctionPointers(result);
 	return result;
 
@@ -55,11 +72,11 @@ void ResetPokemonEntryData(PokemonEntry* recall) {
 	//TODO:ADD CLEAR NAME
 	int i;
 	for(i = 0; i < MAX_NAME; i++)
-		recall->name[i] = 0;
+		recall->mem->name[i] = 0;
 
 
-	ResetPokemonStatsData(recall->pokeStats);
-	ResetTypeContainerData(recall->typeData);
+	ResetPokemonStatsData(recall->mem->pokeStats);
+	ResetTypeContainerData(recall->mem->typeData);
 }
 
 void ResetPokemonEntryPointers(PokemonEntry* recall) {
@@ -72,8 +89,8 @@ void ResetPokemonEntryPointers(PokemonEntry* recall) {
 	recall->SetSpeed = NULL;
 	recall->SetPrimaryType = NULL;
 	recall->SetSecondaryType = NULL;
-	ResetPokemonStatsPointers(recall->pokeStats);
-	ResetTypeContainerPointers(recall->typeData);
+	ResetPokemonStatsPointers(recall->mem->pokeStats);
+	ResetTypeContainerPointers(recall->mem->typeData);
 }
 
 void ResetPokemonEntryAll(PokemonEntry* recall) {
@@ -84,8 +101,9 @@ void ResetPokemonEntryAll(PokemonEntry* recall) {
 void DeletePokemonEntry(PokemonEntry* recall){
 	//zero out name before free
 	ResetPokemonEntryAll(recall);
-	DeletePokemonStats(recall->pokeStats);
-	DeleteTypeContainer(recall->typeData);
+	DeletePokemonStats(recall->mem->pokeStats);
+	DeleteTypeContainer(recall->mem->typeData);
+	free(recall->mem);
 	free(recall);
 }
 
@@ -97,7 +115,7 @@ void SetPokemonName(PokemonEntry* original, const char* name) {
 	if(i == MAX_NAME)
 		return; //TODO:assert
 	
-	copyName(name, original->name);
+	copyName(name, original->mem->name);
 }
 
 
@@ -109,7 +127,7 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->SetDefense = SetEntryD;
 	original->SetSpecialAttack = SetEntrySpA;
 	original->SetSpecialDefense = SetEntrySpD;
-	original->SetSpeed = SetEntryD;
+	original->SetSpeed = SetEntryS;
 	original->SetPrimaryType = SetEntryPrimaryType;
 	original->SetSecondaryType = SetEntrySecondaryType;
 	original->ConsolePrint = PokemonEntryConsolePrint;
@@ -117,43 +135,67 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 }
 
 void SetEntryHP(PokemonEntry* original, const int* HP) {
-	SetHitPoints(original->pokeStats, HP);
+	PokemonStats *statsPtr = original->mem->pokeStats;
+	statsPtr->SetHP(statsPtr, HP);
+	
+//	SetHitPoints(original->pokeStats, HP);
 }
 
 void SetEntryA(PokemonEntry* original, const int* A) {
-	SetAttack(original->pokeStats, A);
+	PokemonStats *statsPtr = original->mem->pokeStats;
+	statsPtr->SetA(statsPtr, A);
+//	SetAttack(original->pokeStats, A);
 }
 
 void SetEntryD(PokemonEntry* original, const int* D) {
-	SetDefense(original->pokeStats, D);
+	PokemonStats *statsPtr = original->mem->pokeStats;
+	statsPtr->SetD(statsPtr, D);
+//	SetDefense(original->pokeStats, D);
 }
 
 void SetEntrySpA(PokemonEntry* original, const int* SpA) {
-	SetSpecialAttack(original->pokeStats, SpA);
+	PokemonStats *statsPtr = original->mem->pokeStats;
+	statsPtr->SetSpA(statsPtr, SpA);
+//	SetSpecialAttack(original->pokeStats, SpA);
 }
 
 void SetEntrySpD(PokemonEntry* original, const int* SpD) {
-	SetSpecialDefense(original->pokeStats, SpD);
+	PokemonStats *statsPtr = original->mem->pokeStats;
+	statsPtr->SetSpD(statsPtr, SpD);
+//	SetSpecialDefense(original->pokeStats, SpD);
 }
 
 void SetEntryS(PokemonEntry* original, const int* S) {
-	SetSpeed(original->pokeStats, S);
+	PokemonStats *statsPtr = original->mem->pokeStats;
+	statsPtr->SetS(statsPtr, S);
+//	SetSpeed(original->pokeStats, S);
 }
 
 void SetEntryPrimaryType(PokemonEntry* original, const Type* primary) {
-	SetPrimaryType(original->typeData, primary);
+	TypeContainer *typePtr = original->mem->typeData;
+	typePtr->SetPrimary(typePtr, primary);
+//	SetPrimaryType(original->typeData, primary);
 }
 
 void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary) {
-	SetSecondaryType(original->typeData, secondary);
+	TypeContainer *typePtr = original->mem->typeData;
+	typePtr->SetSecondary(typePtr, secondary);
+//	SetSecondaryType(original->typeData, secondary);
 }
 
 void PokemonEntryConsolePrint(PokemonEntry* obj) {
 
-	printf("Name is %s\n", obj->name);	
+	
+	printf("Name is %s\n", obj->mem->name);	
 
-	PokemonStatsConsolePrint(obj->pokeStats);
-	TypeContainerConsolePrint(obj->typeData);
+	PokemonStats *statsPtr = obj->mem->pokeStats;
+	TypeContainer *typePtr = obj->mem->typeData;
+	
+	statsPtr->ConsolePrint(statsPtr);
+	typePtr->ConsolePrint(typePtr);
+
+//	PokemonStatsConsolePrint(obj->pokeStats);
+//	TypeContainerConsolePrint(obj->typeData);
 }
 #endif
 

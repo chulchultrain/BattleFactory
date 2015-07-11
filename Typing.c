@@ -12,11 +12,8 @@ struct TypeContainerPrivate {
 
 TypeContainer *NewTypeContainer() {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
-	printf("mem create");
-	result->mem = malloc(sizeof(TypeContainerPrivate));
-	printf("set type container fp");
-	SetTypeContainerFunctionPointers(result);
-	printf("reset type data");
+	result->mem = malloc(sizeof(TypeContainerPrivate));;
+	SetTypeContainerFunctionPointers(result);;
 	ResetTypeContainerData(result);
 
 	return result;
@@ -69,9 +66,7 @@ void DeleteTypeContainer(TypeContainer* recall) {
 }
 
 void SetPrimaryType(TypeContainer* original,const Type* primary) {
-	printf("PRIMARY3\n\n\n");
 	original->mem->primary = *primary;
-	printf("PRIMARY4\n\n\n");
 }
 
 void SetSecondaryType(TypeContainer* original,const Type* secondary) {
