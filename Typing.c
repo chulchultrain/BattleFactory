@@ -64,21 +64,21 @@ void ResetTypeContainerData(TypeContainer* recall) {
 	recall->mem->secondary = NONE;
 
 }
-
+/**
 void ResetTypeContainerPointers(TypeContainer* recall) {
 	recall->SetPrimary = NULL;
 	recall->SetSecondary = NULL;
 	recall->SetBoth = NULL;
 }
-
+**/
 void ResetTypeContainerAll(TypeContainer* recall) {
 	ResetTypeContainerData(recall);
-	ResetTypeContainerPointers(recall);
+//	ResetTypeContainerPointers(recall);
 }
 
 void DeleteTypeContainer(TypeContainer* recall) {
 	//reset so cant be recovered
-	ResetTypeContainerAll(recall);
+	ResetTypeContainerData(recall);
 	free(recall->mem);
 	free(recall);
 

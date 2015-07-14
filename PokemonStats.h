@@ -29,7 +29,7 @@ void DeletePokemonStats(PokemonStats* recall);
 
 void ResetPokemonStatsData(PokemonStats* recall);
 
-void ResetPokemonStatsPointers(PokemonStats* recall);
+//void ResetPokemonStatsPointers(PokemonStats* recall);
 
 void ResetPokemonStatsAll(PokemonStats* recall);
 

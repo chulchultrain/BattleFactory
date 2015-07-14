@@ -90,7 +90,7 @@ void ResetPokemonStatsData(PokemonStats* recall) {
 	recall->mem->SpecialDefense = 0;
 	recall->mem->Speed = 0;
 }
-
+/**
 void ResetPokemonStatsPointers(PokemonStats* recall) {
 	recall->SetHP = 0;
 	recall->SetA = 0;
@@ -99,15 +99,15 @@ void ResetPokemonStatsPointers(PokemonStats* recall) {
 	recall->SetSpD = 0;
 	recall->SetS = 0;
 }
-
+**/
 void ResetPokemonStatsAll(PokemonStats* recall) {
 	ResetPokemonStatsData(recall);
-	ResetPokemonStatsPointers(recall);
+//	ResetPokemonStatsPointers(recall);
 }
 
 void DeletePokemonStats(PokemonStats* recall){
 	//TODO:zero values before free
-	ResetPokemonStatsAll(recall);
+	ResetPokemonStatsData(recall);
 	free(recall->mem);
 	free(recall);
 }

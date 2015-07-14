@@ -31,8 +31,8 @@ void DeleteTypeContainer(TypeContainer* recall);
 
 
 void ResetTypeContainerData(TypeContainer* recall);
-
-void ResetTypeContainerPointers(TypeContainer* recall);
+//definitely need to get rid of resetpointer functions. Could lead to alot of problems.
+//void ResetTypeContainerPointers(TypeContainer* recall);
 
 void ResetTypeContainerAll(TypeContainer* recall);
 

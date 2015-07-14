@@ -44,12 +44,12 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats *statsHolder, TypeContai
 //TODO:delete PokemonEntry function
 void DeletePokemonEntry(PokemonEntry* recall);
 
-void SetPokemonEntryFunctionPointers(PokemonEntry* original);
+
 
 
 void ResetPokemonEntryData(PokemonEntry* recall);
 
-void ResetPokemonEntryPointers(PokemonEntry* recall);
+//void ResetPokemonEntryPointers(PokemonEntry* recall);
 
 void ResetPokemonEntryAll(PokemonEntry* recall);
 

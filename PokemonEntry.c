@@ -36,6 +36,7 @@ void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary);
 
 void PokemonEntryConsolePrint(PokemonEntry* obj);
 
+void SetPokemonEntryFunctionPointers(PokemonEntry* original);
 
 //TODO:NO MAGIC NUMBERS PLZ
 //provide protection if longer than MAXNAME characters is entered.
@@ -97,7 +98,7 @@ void ResetPokemonEntryData(PokemonEntry* recall) {
 	ResetPokemonStatsData(recall->mem->pokeStats);
 	ResetTypeContainerData(recall->mem->typeData);
 }
-
+/**
 void ResetPokemonEntryPointers(PokemonEntry* recall) {
 	recall->SetName = NULL;
 	recall->SetHitPoints = NULL;
@@ -111,15 +112,15 @@ void ResetPokemonEntryPointers(PokemonEntry* recall) {
 	ResetPokemonStatsPointers(recall->mem->pokeStats);
 	ResetTypeContainerPointers(recall->mem->typeData);
 }
-
+**/
 void ResetPokemonEntryAll(PokemonEntry* recall) {
 	ResetPokemonEntryData(recall);
-	ResetPokemonEntryPointers(recall);
+//	ResetPokemonEntryPointers(recall);
 }
 
 void DeletePokemonEntry(PokemonEntry* recall){
 	//zero out name before free
-	ResetPokemonEntryAll(recall);
+	ResetPokemonEntryData(recall);
 	DeletePokemonStats(recall->mem->pokeStats);
 	DeleteTypeContainer(recall->mem->typeData);
 	free(recall->mem);
