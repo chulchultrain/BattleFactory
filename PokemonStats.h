@@ -15,6 +15,13 @@ void (*SetSpD)();
 void (*SetS)();
 void (*ConsolePrint)();
 
+unsigned int(*GetHP)();
+unsigned int(*GetA)();
+unsigned int(*GetD)();
+unsigned int(*GetSpA)();
+unsigned int(*GetSpD)();
+unsigned int(*GetS)();
+
 }PokemonStats;
 
 PokemonStats* NewPokemonStats(); //function def cant be seen in main function

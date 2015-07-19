@@ -25,6 +25,13 @@ void SetSpecialDefense(PokemonStats* original, const unsigned int* SpecialDefens
 
 void SetSpeed(PokemonStats* original, const unsigned int* Speed);
 
+unsigned int GetHitPoints(PokemonStats* obj);
+unsigned int GetAttack(PokemonStats* obj);
+unsigned int GetDefense(PokemonStats* obj);
+unsigned int GetSpecialAttack(PokemonStats* obj);
+unsigned int GetSpecialDefense(PokemonStats* obj);
+unsigned int GetSpeed(PokemonStats* obj);
+
 void SetPokemonStatsFunctionPointers(PokemonStats* original);
 
 void PokemonStatsConsolePrint(PokemonStats* obj);
@@ -98,6 +105,13 @@ void ResetPokemonStatsPointers(PokemonStats* recall) {
 	recall->SetSpA = 0;
 	recall->SetSpD = 0;
 	recall->SetS = 0;
+	recall->ConsolePrint = 0;	
+	recall->GetHP = 0;
+	recall->GetA = 0;
+	recall->GetD = 0;
+	recall->GetSpA = 0;
+	recall->GetSpD = 0;
+	recall->GetS = 0;
 }
 **/
 void ResetPokemonStatsAll(PokemonStats* recall) {
@@ -147,7 +161,34 @@ void SetPokemonStatsFunctionPointers(PokemonStats* original) {
 	original->SetSpD = SetSpecialDefense;
 	original->SetS = SetSpeed;
 	original->ConsolePrint = PokemonStatsConsolePrint;
+	original->GetHP = GetHitPoints;
+	original->GetA = GetAttack;
+	original->GetD = GetDefense;
+	original->GetSpA = GetSpecialAttack;
+	original->GetSpD = GetSpecialDefense;
+	original->GetS = GetSpeed;
 
+}
+
+unsigned int GetHitPoints(PokemonStats* obj) {
+	return obj->mem->HitPoints;
+}
+
+unsigned int GetAttack(PokemonStats* obj) {
+	return obj->mem->Attack;
+}
+
+unsigned int GetDefense(PokemonStats* obj) {
+	return obj->mem->Defense;
+}
+unsigned int GetSpecialAttack(PokemonStats* obj) {
+	return obj->mem->SpecialAttack;
+}
+unsigned int GetSpecialDefense(PokemonStats* obj) {
+	return obj->mem->SpecialDefense;
+}
+unsigned int GetSpeed(PokemonStats* obj) {
+	return obj->mem->Speed;
 }
 
 void PokemonStatsConsolePrint(PokemonStats* obj) {
@@ -158,6 +199,8 @@ void PokemonStatsConsolePrint(PokemonStats* obj) {
 	printf("Special Defense is %d\n", obj->mem->SpecialDefense);
 	printf("Speed is %d\n", obj->mem->Speed);
 }
+
+
 
 
 

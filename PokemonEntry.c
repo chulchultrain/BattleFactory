@@ -34,6 +34,21 @@ void SetEntryS(PokemonEntry* original, const int* S);
 void SetEntryPrimaryType(PokemonEntry* original, const Type* primary);
 void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary);
 
+
+void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit);
+
+unsigned int GetEntryHP(PokemonEntry *obj);
+unsigned int GetEntryA(PokemonEntry *obj);
+unsigned int GetEntryD(PokemonEntry *obj);
+unsigned int GetEntrySpA(PokemonEntry *obj);
+unsigned int GetEntrySpD(PokemonEntry *obj);
+unsigned int GetEntryS(PokemonEntry *obj);
+
+Type GetEntryPrimary(PokemonEntry* obj);
+
+Type GetEntrySecondary(PokemonEntry* obj);
+
+
 void PokemonEntryConsolePrint(PokemonEntry* obj);
 
 void SetPokemonEntryFunctionPointers(PokemonEntry* original);
@@ -66,7 +81,11 @@ PokemonEntry *NewPokemonEntry() {
 }
 
 //TODO:POKEMONENTRY COPY CONSTRUCTOR
-
+/** but before I can do this I need getter functions
+PokemonEntry *CopyPokemonEntry(PokemonEntry* obj) {
+	PokemonEntry *result = NewPokemonEntry(obj);
+}
+**/
 /*If we're gonna make a full pokemon stats, might as well make full new pokemon
   entry. Will include stats, type and name
 */
@@ -98,6 +117,8 @@ void ResetPokemonEntryData(PokemonEntry* recall) {
 	ResetPokemonStatsData(recall->mem->pokeStats);
 	ResetTypeContainerData(recall->mem->typeData);
 }
+
+
 /**
 void ResetPokemonEntryPointers(PokemonEntry* recall) {
 	recall->SetName = NULL;
@@ -109,6 +130,7 @@ void ResetPokemonEntryPointers(PokemonEntry* recall) {
 	recall->SetSpeed = NULL;
 	recall->SetPrimaryType = NULL;
 	recall->SetSecondaryType = NULL;
+	recall->Get
 	ResetPokemonStatsPointers(recall->mem->pokeStats);
 	ResetTypeContainerPointers(recall->mem->typeData);
 }
@@ -144,7 +166,13 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->SetPrimaryType = SetEntryPrimaryType;
 	original->SetSecondaryType = SetEntrySecondaryType;
 	original->ConsolePrint = PokemonEntryConsolePrint;
-
+	original->GetName = GetEntryName;
+	original->GetHitPoints = GetEntryHP;
+	original->GetAttack = GetEntryA;
+	original->GetDefense = GetEntryD;
+	original->GetSpecialAttack = GetEntrySpA;
+	original->GetSpecialDefense = GetEntrySpD;
+	original->GetSpeed = GetEntryS;
 }
 
 void SetEntryHP(PokemonEntry* original, const int* HP) {
@@ -194,6 +222,59 @@ void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary) {
 	TypeContainer *typePtr = original->mem->typeData;
 	typePtr->SetSecondary(typePtr, secondary);
 //	SetSecondaryType(original->typeData, secondary);
+}
+
+
+void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit) {
+	unsigned int i;
+	unsigned int m = -1;
+	if(limit > MAX_NAME)
+		m = limit;
+	else
+		m = MAX_NAME;
+	for(i = 0; i<m; i++) {
+		dest[i] = obj->mem->name[i];
+	}
+}
+
+unsigned int GetEntryHP(PokemonEntry *obj) {
+	PokemonStats *statsPtr = obj->mem->pokeStats;
+	return statsPtr->GetHP(statsPtr);
+}
+
+unsigned int GetEntryA(PokemonEntry *obj) {
+	PokemonStats *statsPtr = obj->mem->pokeStats;
+	return statsPtr->GetA(statsPtr);
+}
+
+unsigned int GetEntryD(PokemonEntry *obj) {
+	PokemonStats *statsPtr = obj->mem->pokeStats;
+	return statsPtr->GetD(statsPtr);
+}
+
+unsigned int GetEntrySpA(PokemonEntry *obj) {
+	PokemonStats *statsPtr = obj->mem->pokeStats;
+	return statsPtr->GetSpA(statsPtr);
+}
+
+unsigned int GetEntrySpD(PokemonEntry *obj) {
+	PokemonStats *statsPtr = obj->mem->pokeStats;
+	return statsPtr->GetSpD(statsPtr);
+}
+
+unsigned int GetEntryS(PokemonEntry *obj) {
+	PokemonStats *statsPtr = obj->mem->pokeStats;
+	return statsPtr->GetS(statsPtr);
+}
+
+Type GetEntryPrimary(PokemonEntry* obj) {
+	TypeContainer *typePtr = obj->mem->typeData;
+	return typePtr->GetPrimary(typePtr);
+}
+
+Type GetEntrySecondary(PokemonEntry* obj) {
+	TypeContainer *typePtr = obj->mem->typeData;
+	return typePtr->GetSecondary(typePtr);
 }
 
 void PokemonEntryConsolePrint(PokemonEntry* obj) {

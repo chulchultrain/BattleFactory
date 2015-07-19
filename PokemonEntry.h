@@ -34,6 +34,16 @@ void (*SetSecondaryType)();
 
 void (*ConsolePrint)();
 
+void (*GetName)();
+unsigned int (*GetHitPoints)();
+unsigned int (*GetAttack)();
+unsigned int (*GetDefense)();
+unsigned int (*GetSpecialAttack)();
+unsigned int (*GetSpecialDefense)();
+unsigned int (*GetSpeed)();
+unsigned int (*GetPrimaryType)();
+unsigned int (*GetSecondaryType)();
+
 //enum for pokemon Nature
 
 } PokemonEntry;
