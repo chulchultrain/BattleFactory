@@ -24,11 +24,6 @@ Perhaps, I'll start with implementing the typing system, and do weaknesses/resis
 
 Do I want the real stats for these pokemon? Or their base stats + EV's?
 
-
-ADD FUNCTIONS TO MODIFY EXISTING ENTRY, STATS, TYPING object. For use with New Constructors. Initialize to 0 with NEW and set with these functions.
-
-ADD FUNCTIONS TO DEALLOCATE MEMORY FOR ENTRY, STATS, TYPING.
-
 ADD NULL POINTER CATCHES ON ALL MALLOCS
 
 ADD FUNCTIONS POINTERS TO STRUCTS TO SIMULATE OBJECT-ORIENTED PROGRAMMING.
@@ -38,3 +33,25 @@ Add layers so top-level user only has to do PokemonEntry->SetHP or PokemonEntry-
 
 
 DAMAGE CALCULATOR
+
+/////////////////////////////////
+
+First, Test Driver to get all the test cases. See what happens on corner cases.
+How do we define corner cases.
+
+Add pokemon and their stuff to battlefactory list of pokemon. 
+
+Somehow, using this data see what pokemon can be found from a certain piece of data.
+
+AKA the piece of info that the dude gives you. "This pokemon knows hydro pump.... The team will be feraligatr, Absol, and Zapdos, and retrieve possible enemy team configurations." Input this info, and output possible teams.
+
+Need tags, and search functions. Probably like the indexing thing from python course. Tag
+
+Interactive Driver:
+
+
+
+Console Input: Enter a New Pokemon. (Name, Stats, Type)
+Console Output
+
+

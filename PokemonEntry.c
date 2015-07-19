@@ -127,14 +127,7 @@ void DeletePokemonEntry(PokemonEntry* recall){
 	free(recall);
 }
 
-void SetPokemonName(PokemonEntry* original, const char* name) {
-	int i;
-	for(i = 0; i < MAX_NAME; i++)
-		if(name[i] == 0)
-			break;
-	if(i == MAX_NAME)
-		return; //TODO:assert
-	
+void SetPokemonName(PokemonEntry* original, const char* name) {	
 	copyName(name, original->mem->name);
 }
 
