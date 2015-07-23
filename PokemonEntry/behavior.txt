@@ -1,0 +1,2 @@
+Behavior:
+	When Setting Name: If name longer than MAX_NAME, then the end will be truncated.

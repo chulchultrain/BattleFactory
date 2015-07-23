@@ -1,0 +1,4 @@
+TypeContainer *NewTypeContainer();
+PokemonStats* NewPokemonStats();
+PokemonEntry *NewPokemonEntry();
+PokemonStats* FullNewPokemonStats(const int* HP,const int* A,const int* D,const int* SpA, const int* SpD, const int* S);
