@@ -13,6 +13,9 @@ PokedexEntry *CopyPokedexEntry(Pokedex *table, PokedexEntry *obj);
 
 unsigned int HashFunction(PokedexEntry *obj);
 
+
+void ConsolePrintPokedexEntry(PokedexEntry *obj);
+
 /**
 unsigned int ID;
 char name[MAX_NAME];
@@ -75,23 +78,28 @@ PokedexEntry *CopyPokedexEntry(Pokedex* table, PokedexEntry* obj) {
 	result->secondary = obj->secondary;
 	result->next = 0;
 	printf("FINISH COPY POKEDEXENTRY\n\n\n");
+	printf("PokedexEntry address %p\n\n\n", result);
 	return result;
 }
 
 //Pokedex constructor
 Pokedex *NewPokedex() {
-	Pokedex *result = malloc(sizeof *result);
-	if(result == 0)
+	Pokedex *result = malloc(sizeof(Pokedex));
+	if(result == 0) {
 		exit(1);
-	result->mem = malloc(sizeof *result->mem);
+			}
+	printf("Pokedex address is %p\n", result);
+	result->mem = malloc(sizeof(PokedexPrivate));
 	if(result->mem == 0) {
 		free(result);
 		exit(1); }
+	printf("Pokedex mem address is %p\n\n\n", result->mem);
 	int i;
-/**
+
 	for(i = 0; i < MAX_POKEMON_NUMBER; i++)
 		result->mem->table[i] = 0;
-**/
+
+	return result;
 }
 
 //Put entry in table
@@ -111,7 +119,9 @@ void SetPokedexEntryInPokedex(Pokedex* original, PokedexEntry* obj) {
 	else
 		printf("entryPtr = 0 assertion failure\n\n\n");
 	**/
-	original->mem->table[hashKey] = CopyPokedexEntry(original, obj);
+	printf("Pokedex address is %p\n", original);
+	printf("PokedexEntry address %p\n\n\n", obj);
+	original->mem->table[0] = CopyPokedexEntry(original, obj);
 	
 
 }
