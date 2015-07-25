@@ -13,7 +13,7 @@ printf("Dexter is %p\n", dexter);
 printf("Hbox is %p\n", &hbox);
 SetPokedexEntryInPokedex(dexter, &hbox);
 printf("After Setting\n\n\n");
-ConsolePrintPokedexEntryInPokedex(dexter, &hbox);
+ConsolePrintPokedexEntryInPokedex(dexter, hbox.name);
 DestroyPokedex(dexter);
 printf("After Destroy\n");
 

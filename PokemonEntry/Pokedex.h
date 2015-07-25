@@ -62,7 +62,7 @@ Pokedex *NewPokedex();
 
 void SetPokedexEntryInPokedex(Pokedex *original, PokedexEntry *obj);
 
-void ConsolePrintPokedexEntryInPokedex(Pokedex *obj, PokedexEntry *entry);
+void ConsolePrintPokedexEntryInPokedex(Pokedex *obj, char *name);
 
 void DestroyPokedex(Pokedex *recall);
 

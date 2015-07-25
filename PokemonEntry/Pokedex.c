@@ -11,7 +11,7 @@ struct PokedexPrivate {
 //TODO:CHANGE FUNCTION BACK TO 1 param when I get static destroyer function
 PokedexEntry *CopyPokedexEntry(Pokedex *table, PokedexEntry *obj);
 
-unsigned int HashFunction(PokedexEntry *obj);
+unsigned int HashFunction(char *name);
 
 
 void ConsolePrintPokedexEntry(PokedexEntry *obj);
@@ -107,10 +107,10 @@ Pokedex *NewPokedex() {
 Doesn't include checking if the entry already exists. Will add another if it does.
 **/
 void SetPokedexEntryInPokedex(Pokedex* original, PokedexEntry* obj) {
-	unsigned int hashKey = HashFunction(obj);
+	unsigned int hashKey = HashFunction(obj->name);
 	printf("AFTER HASH: hashKey is %d\n\n", hashKey);
-	//PokedexEntry *entryPtr = original->mem->table[hashKey];
-	/**
+	PokedexEntry *entryPtr = original->mem->table[hashKey];
+	
 	printf("INITIALIZE entryPtr\n\n");
 	while(entryPtr != 0)
 		entryPtr = entryPtr->next;
@@ -118,10 +118,10 @@ void SetPokedexEntryInPokedex(Pokedex* original, PokedexEntry* obj) {
 		printf("OKAY entryPtr = 0\n\n\n");
 	else
 		printf("entryPtr = 0 assertion failure\n\n\n");
-	**/
+	
 	printf("Pokedex address is %p\n", original);
 	printf("PokedexEntry address %p\n\n\n", obj);
-	original->mem->table[0] = CopyPokedexEntry(original, obj);
+	entryPtr = CopyPokedexEntry(original, obj);
 	
 
 }
@@ -138,21 +138,27 @@ void ConsolePrintPokedexEntry(PokedexEntry *obj) {
 	 
 }
 
-
-unsigned int HashFunction(PokedexEntry *obj) {
+//find hashkey given a name
+unsigned int HashFunction(char *obj) {
 	unsigned int i;
 	unsigned int sum;
-	for(i = 0; i < MAX_NAME && obj->name[i] != 0; i++)
-		sum += obj->name[i] * (i + 1);
+	for(i = 0; i < MAX_NAME && obj[i] != 0; i++)
+		sum += obj[i] * (i + 1);
 	sum %= MAX_POKEMON_NUMBER;
 	return sum;
 }
 
+int NameComparison(char *name1, char *name2) {
+	int i;
+	for(i = 0; i < MAX_NAME && (name1[i] != 0 && name2[i] != 0); i++)
+		if(name1[i] != name2[i])
+			return 0;
+	return 1;
+}
 
-
-void ConsolePrintPokedexEntryInPokedex(Pokedex *obj, PokedexEntry *entry) {
-	PokedexEntry *pokePtr = obj->mem->table[HashFunction(entry)];
-	while(pokePtr != 0 && entry->ID != pokePtr->ID)
+void ConsolePrintPokedexEntryInPokedex(Pokedex *obj, char *name) {
+	PokedexEntry *pokePtr = obj->mem->table[HashFunction(name)];
+	while(pokePtr != 0 && !NameComparison(pokePtr->name, name))
 		pokePtr = pokePtr->next;
 	if(pokePtr == 0)
 		printf("ENTRY DOES NOT EXIST\n");
