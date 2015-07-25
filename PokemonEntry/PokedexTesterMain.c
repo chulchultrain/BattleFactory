@@ -5,13 +5,13 @@
 
 int main() {
 
-PokedexEntry hbox = {133, "metagross", FIRE, WATER};
+PokedexEntry hbox = {133, "metagross", FIRE, WATER, 0};
 
 Pokedex *dexter = NewPokedex();
 printf("After constructor\n");
 SetPokedexEntryInPokedex(dexter, &hbox);
-printf("After Setting\n");
-ConsolePrintPokedexEntryInPokedex(dexter, 133);
+printf("After Setting\n\n\n");
+ConsolePrintPokedexEntryInPokedex(dexter, &hbox);
 DestroyPokedex(dexter);
 printf("After Destroy\n");
 
