@@ -8,8 +8,7 @@
 #define MAX_NAME 21
 #endif
 
-#include "Typing.h"
-#include "PokemonStats.h"
+
 
 
 //NOTE MAX OF 21 CHARACTERS IN NAME.
@@ -49,7 +48,6 @@ unsigned int (*GetSecondaryType)();
 } PokemonEntry;
 
 PokemonEntry *NewPokemonEntry();
-PokemonEntry *FullPokemonEntry(char* name, PokemonStats *statsHolder, TypeContainer *typeHolder);
 
 //TODO:delete PokemonEntry function
 void DeletePokemonEntry(PokemonEntry* recall);

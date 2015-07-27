@@ -16,15 +16,10 @@ unsigned int HashFunction(char *name);
 
 void ConsolePrintPokedexEntry(PokedexEntry *obj);
 
-/**
-unsigned int ID;
-char name[MAX_NAME];
-Type primary;
-Type secondary;
-**/
+
 
 //CP'd from PokemonEntry.c
-void copyName(const char* source, char* dest) {
+void copyPokedexName(const char* source, char* dest) {
 	int i = 0;
 	while(i < MAX_NAME && source[i] != 0) {
 		dest[i] = source[i];
@@ -38,7 +33,7 @@ void copyName(const char* source, char* dest) {
 
 
 //CP'd from Typing.c
-void TypeConsolePrint(Type* obj) {
+void PokedexTypeConsolePrint(Type* obj) {
 	printf("Type is ");
 	switch(*obj) {
 		case NONE: printf("NONE"); break;
@@ -47,6 +42,7 @@ void TypeConsolePrint(Type* obj) {
 		case BUG: printf("BUG"); break;
 		case FIRE: printf("FIRE"); break;
 		case WATER: printf("WATER"); break;
+		case ICE: printf("ICE"); break;
 		case ELECTRIC: printf("ELECTRIC"); break;
 		case FLYING: printf("FLYING"); break;
 		case ROCK: printf("ROCK"); break;
@@ -73,7 +69,7 @@ PokedexEntry *CopyPokedexEntry(Pokedex* table, PokedexEntry* obj) {
 			}
 	
 	result->ID = obj->ID;
-	copyName(obj->name, result->name);
+	copyPokedexName(obj->name, result->name);
 	result->primary = obj->primary;
 	result->secondary = obj->secondary;
 	result->next = 0;
@@ -109,21 +105,21 @@ Doesn't include checking if the entry already exists. Will add another if it doe
 void SetPokedexEntryInPokedex(Pokedex* original, PokedexEntry* obj) {
 	unsigned int hashKey = HashFunction(obj->name);
 	printf("AFTER HASH: hashKey is %d\n\n", hashKey);
-	PokedexEntry *entryPtr = original->mem->table[hashKey];
-	
-	printf("INITIALIZE entryPtr\n\n");
-	while(entryPtr != 0)
-		entryPtr = entryPtr->next;
-	if(entryPtr == 0)
-		printf("OKAY entryPtr = 0\n\n\n");
-	else
-		printf("entryPtr = 0 assertion failure\n\n\n");
-	
-	printf("Pokedex address is %p\n", original);
-	printf("PokedexEntry address %p\n\n\n", obj);
-	entryPtr = CopyPokedexEntry(original, obj);
-	
 
+	if(original->mem->table[hashKey] == 0)
+		original->mem->table[hashKey] = CopyPokedexEntry(original, obj);
+	else {
+		PokedexEntry *entryPtr = original->mem->table[hashKey];
+	
+		printf("INITIALIZE entryPtr\n\n");
+
+	while(entryPtr->next != 0)
+		entryPtr = entryPtr->next;
+
+		printf("Pokedex address is %p\n", original);
+		entryPtr->next = CopyPokedexEntry(original, obj);
+		printf("entryPtr in SetEntry is %p\n", entryPtr);
+	}
 }
 
 
@@ -132,33 +128,45 @@ void ConsolePrintPokedexEntry(PokedexEntry *obj) {
 	printf("Pokedex Entry #%d\n", obj->ID);
 	printf("Name: %s\n", obj->name);
 	printf("Primary ");
-	TypeConsolePrint(&obj->primary);
+	PokedexTypeConsolePrint(&obj->primary);
 	printf("Secondary ");
-	TypeConsolePrint(&obj->secondary);
+	PokedexTypeConsolePrint(&obj->secondary);
 	 
 }
 
 //find hashkey given a name
-unsigned int HashFunction(char *obj) {
+unsigned int HashFunction(char* obj) {
 	unsigned int i;
-	unsigned int sum;
+	unsigned int sum = 0;
 	for(i = 0; i < MAX_NAME && obj[i] != 0; i++)
-		sum += obj[i] * (i + 1);
+		
+		sum += ((int)obj[i] * (i + 1));
+	printf("hash ended at i of %u\n", i);
 	sum %= MAX_POKEMON_NUMBER;
 	return sum;
 }
 
+//returns 0 if names are equal
 int NameComparison(char *name1, char *name2) {
 	int i;
+	printf("name1 is %s\n", name1);
+	printf("name2 is %s\n", name2);
 	for(i = 0; i < MAX_NAME && (name1[i] != 0 && name2[i] != 0); i++)
 		if(name1[i] != name2[i])
-			return 0;
-	return 1;
+			return 1;
+	printf("NAME COMPARISION END PRINT\n");
+	return 0;
 }
 
 void ConsolePrintPokedexEntryInPokedex(Pokedex *obj, char *name) {
-	PokedexEntry *pokePtr = obj->mem->table[HashFunction(name)];
-	while(pokePtr != 0 && !NameComparison(pokePtr->name, name))
+	unsigned int hashKey = HashFunction(name);
+	printf("obj->mem->table of %u points to %p\n", hashKey, obj->mem->table[hashKey]);
+	PokedexEntry *pokePtr = obj->mem->table[hashKey];
+	printf("pokedex points to %p\n", obj);
+	printf("name is %s\n", name);
+	printf("hash function is %u\n", hashKey);
+	printf("pokePtr points to %p\n", pokePtr);
+	while(pokePtr != 0 && NameComparison(pokePtr->name, name))
 		pokePtr = pokePtr->next;
 	if(pokePtr == 0)
 		printf("ENTRY DOES NOT EXIST\n");

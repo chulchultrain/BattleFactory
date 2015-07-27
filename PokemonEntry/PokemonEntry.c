@@ -1,9 +1,9 @@
-#ifndef __POKEMON_ENTRY_C_INCLUDED__
-#define __POKEMON_ENTRY_C_INCLUDED__
 
 #include "PokemonEntry.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "Typing.h"
+#include "PokemonStats.h"
 
 struct PokemonEntryPrivate {
 
@@ -89,6 +89,9 @@ PokemonEntry *CopyPokemonEntry(PokemonEntry* obj) {
 /*If we're gonna make a full pokemon stats, might as well make full new pokemon
   entry. Will include stats, type and name
 */
+
+/**
+Deprecated:
 PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContainer* typeHolder) {
 	int i;
 	for(i = 0; i < MAX_NAME; i++)
@@ -106,6 +109,7 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContai
 
 
 }
+**/
 
 void ResetPokemonEntryData(PokemonEntry* recall) {
 	//TODO:ADD CLEAR NAME
@@ -291,7 +295,6 @@ void PokemonEntryConsolePrint(PokemonEntry* obj) {
 //	PokemonStatsConsolePrint(obj->pokeStats);
 //	TypeContainerConsolePrint(obj->typeData);
 }
-#endif
 
 
 
