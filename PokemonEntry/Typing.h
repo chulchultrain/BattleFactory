@@ -1,7 +1,7 @@
 #ifndef __TYPING_H_INCLUDED__
 #define __TYPING_H_INCLUDED__
 
-typedef enum Type { NONE, NORMAL, GRASS, BUG, FIRE, WATER, ELECTRIC, FLYING, ROCK, GROUND, POISON, PSYCHIC, DARK, STEEL, DRAGON }Type;
+typedef enum Type { NONE, NORMAL, GRASS, BUG, FIRE, WATER, ICE, ELECTRIC, FLYING, ROCK, GROUND, POISON, PSYCHIC, DARK, STEEL, DRAGON }Type;
 
 typedef struct TypeContainerPrivate TypeContainerPrivate;
 

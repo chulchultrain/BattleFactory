@@ -116,6 +116,7 @@ void TypeConsolePrint(Type* obj) {
 		case BUG: printf("BUG"); break;
 		case FIRE: printf("FIRE"); break;
 		case WATER: printf("WATER"); break;
+		case ICE: printf("ICE"); break;
 		case ELECTRIC: printf("ELECTRIC"); break;
 		case FLYING: printf("FLYING"); break;
 		case ROCK: printf("ROCK"); break;
