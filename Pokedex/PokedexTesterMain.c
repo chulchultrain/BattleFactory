@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Pokedex.h"
-#include "GlobalDestroyer.h"
-#include "PokemonEntry.h"
+#include <Pokedex/Pokedex.h>
+#include <GlobalDestroyer/GlobalDestroyer.h>
+#include <PokemonEntry/PokemonEntry.h>
 
 
 int main() {
