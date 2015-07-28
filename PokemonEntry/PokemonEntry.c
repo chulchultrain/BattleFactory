@@ -1,9 +1,9 @@
 
-#include "PokemonEntry.h"
+#include <PokemonEntry/PokemonEntry.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Typing.h"
-#include "PokemonStats.h"
+#include <PokemonEntry/Typing.h>
+#include <PokemonEntry/PokemonStats.h>
 
 struct PokemonEntryPrivate {
 

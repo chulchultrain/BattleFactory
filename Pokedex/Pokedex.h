@@ -24,7 +24,7 @@ I feel like I have done enough OOP in the  3 structs mentioned earlier.
 #endif
 
 
-#include "Typing.h"
+#include <PokemonEntry/Typing.h>
 
 typedef struct PokedexEntry PokedexEntry;
 

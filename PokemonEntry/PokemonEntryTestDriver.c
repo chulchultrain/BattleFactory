@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "PokemonEntryTestDriver.h"
+#include <PokemonEntry/PokemonEntryTestDriver.h>
 
 /**
 Test driver to see whether PokemonEntry and all its components work togethere properly.

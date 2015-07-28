@@ -1,4 +1,4 @@
-#include "PokemonStats.h"
+#include <PokemonEntry/PokemonStats.h>
 #include <stdlib.h>
 #include <stdio.h>
 

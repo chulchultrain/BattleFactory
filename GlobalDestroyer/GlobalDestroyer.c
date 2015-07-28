@@ -1,7 +1,7 @@
-#include "GlobalDestroyer.h"
+#include <GlobalDestroyer/GlobalDestroyer.h>
 
-#include "PokemonEntry.h"
-#include "Pokedex.h"
+#include <PokemonEntry/PokemonEntry.h>
+#include <Pokedex/Pokedex.h>
 
 
 

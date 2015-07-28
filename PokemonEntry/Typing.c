@@ -1,5 +1,5 @@
 
-#include "Typing.h"
+#include <PokemonEntry/Typing.h>
 #include <stdlib.h>
 #include <stdio.h>
 
