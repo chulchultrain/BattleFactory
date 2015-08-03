@@ -66,4 +66,7 @@ void ConsolePrintPokedexEntryInPokedex(Pokedex *obj, char *name);
 
 void DestroyPokedex(Pokedex *recall);
 
+void FillPokedex(Pokedex *dexter, char *fileName);
+
+
 #endif

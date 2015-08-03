@@ -1,7 +1,12 @@
 #include <Pokedex/Pokedex.h>
+#include <GlobalDestroyer/GlobalDestroyer.h>
 
 #include <stdlib.h>
 #include <stdio.h>
+
+#ifndef MAX_POKEDEX_LINE
+#define MAX_POKEDEX_LINE 70
+#endif
 
 struct PokedexPrivate {
 	PokedexEntry *table[MAX_POKEMON_NUMBER];
@@ -64,7 +69,8 @@ PokedexEntry *CopyPokedexEntry(Pokedex* table, PokedexEntry* obj) {
 	PokedexEntry *result = malloc(sizeof *result);
 
 	if(result == 0) {
-		DestroyPokedex(table);
+		GlobalDestroyer(1,0,0);
+		//DestroyPokedex(table);
 		exit(1);
 			}
 	
@@ -82,12 +88,14 @@ PokedexEntry *CopyPokedexEntry(Pokedex* table, PokedexEntry* obj) {
 Pokedex *NewPokedex() {
 	Pokedex *result = malloc(sizeof(Pokedex));
 	if(result == 0) {
+		GlobalDestroyer(1,0,0);
 		exit(1);
 			}
 	printf("Pokedex address is %p\n", result);
 	result->mem = malloc(sizeof(PokedexPrivate));
 	if(result->mem == 0) {
 		free(result);
+		GlobalDestroyer(1,0,0);
 		exit(1); }
 	printf("Pokedex mem address is %p\n\n\n", result->mem);
 	int i;
@@ -197,7 +205,131 @@ void DestroyPokedex(Pokedex *recall) {
 	free(recall);
 }
 
+/**
+#003 Venusaur Grass Poison 
+#004 Charmander Fire 
+**/
 
+unsigned int GetPokedexIDFromLine(char *line, unsigned int boundary) {
+	unsigned int i;
+	unsigned int sum = 0;
+	for(i = 1; i < boundary; i++) {
+		sum *= 10;
+		sum += (line[i] - '0');
+					}
+	return sum;
+
+}
+
+ //NONE, NORMAL, GRASS, BUG, FIRE, WATER, ICE, ELECTRIC, FLYING, ROCK, GROUND, POISON, PSYCHIC, DARK, STEEL, DRAGON
+
+Type TakeTypeFromToken(char *line) {
+	int i = 0;
+	switch(line[0]) {
+		case 'B': return BUG;
+		case 'D': 
+			switch(line[1]) {
+				case 'a': return DARK;
+				case 'r': return DRAGON;
+				}
+		case 'E': return ELECTRIC;
+		case 'F':
+			switch(line[1]) {
+				case 'i': return FIRE;
+				case 'l': return FLYING;
+				}
+		case 'G':
+			switch(line[2]) {
+				case 'a': return GRASS;
+				case 'o': return GROUND;
+				}
+		case 'I': return ICE;
+		case 'N': return NORMAL;
+		case 'P': switch(line[1]) {
+				case 'o': return POISON;
+				case 's': return PSYCHIC;
+				}
+		case 'S': return STEEL;
+		case 'W': return WATER;
+	}	
+	return NONE;
+
+}
+
+Type TakeTypeFromLine(char *line, unsigned int s) {
+	char type[11]; //TODO:MAGIC NUM - MAX_TYPE_LEN
+	int i;
+	for(i = 0; i < 11 && line[i+s] != ' ' && line[i+s] != '\n'; i++) //TODO:MAGIC NUM HERE TO
+		type[i] = line[i+s];
+	return TakeTypeFromToken(type);
+}
+
+unsigned int SkipSpace(char *line, unsigned int index) {
+	unsigned int i = index;
+	while(line[i] == ' ' && i < MAX_NAME)
+		i++;
+	return i;
+}
+
+
+//inputs line taken from file and outputs a pokedex entry ready for table input.
+PokedexEntry ConvertLineToPokedexEntry(char *line) {
+	PokedexEntry result;
+
+	unsigned int i = 0;
+	unsigned int temp = 0;
+
+	while( line[i] != ' ' && line[i] != '\n' && i < MAX_POKEDEX_LINE) 	
+		i++; 
+
+	result.ID = GetPokedexIDFromLine(line, i); //IDretrieval
+	i = SkipSpace(line, i);	
+
+	while( line[i] != ' ' && line[i] != '\n' && temp < MAX_NAME) { 	
+		result.name[temp] = line[i]; //Name retrieval
+		temp++;
+		i++; }
+	result.name[temp] = 0;
+
+	i = SkipSpace(line, i);	
+	result.primary = TakeTypeFromLine(line, i);
+
+	while( line[i] != ' ' && line[i] != '\n' && i < MAX_POKEDEX_LINE) 	
+		i++; 
+	if( line[i] == '\n') {
+		result.secondary = NONE;
+	}
+	else {
+		i++;
+		result.secondary = TakeTypeFromLine(line, i);
+	}
+		 
+	return result;
+
+}
+
+/**
+inputs file into Pokedex
+
+**/
+void FillPokedex(Pokedex *dexter, char *fileName) {
+	FILE *inputFile = fopen(fileName, "r");
+	if(inputFile == 0) {
+		printf("Opening inputFile of %s failed.", fileName);
+		GlobalDestroyer(1,0,0);
+		exit(1);
+	}
+	char line[MAX_POKEDEX_LINE];
+	int max;
+	PokedexEntry tempEntry;
+	while( fgets(line, MAX_POKEDEX_LINE - 1,inputFile) != 0) {
+		
+		tempEntry = ConvertLineToPokedexEntry(line);
+		SetPokedexEntryInPokedex(dexter, &tempEntry);
+	
+	} 
+	fclose(inputFile);
+}
 
 
 
