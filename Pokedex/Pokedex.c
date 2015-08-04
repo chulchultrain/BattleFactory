@@ -210,13 +210,16 @@ void DestroyPokedex(Pokedex *recall) {
 #004 Charmander Fire 
 **/
 
-unsigned int GetPokedexIDFromLine(char *line, unsigned int boundary) {
+unsigned int GetPokedexIDFromLine(char *line, unsigned int* end) {
 	unsigned int i;
 	unsigned int sum = 0;
-	for(i = 1; i < boundary; i++) {
+
+	//TODO:TEST THIS
+	for(i = 1; (unsigned)(line[i] - '0') <= 9; i++) {
 		sum *= 10;
 		sum += (line[i] - '0');
 					}
+	*end = i;
 	return sum;
 
 }
@@ -256,19 +259,21 @@ Type TakeTypeFromToken(char *line) {
 
 }
 
-Type TakeTypeFromLine(char *line, unsigned int s) {
+Type TakeTypeFromLine(char *line, unsigned int *end) {
 	char type[11]; //TODO:MAGIC NUM - MAX_TYPE_LEN
-	int i;
+	unsigned int i;
+	unsigned int s = *end;
 	for(i = 0; i < 11 && line[i+s] != ' ' && line[i+s] != '\n'; i++) //TODO:MAGIC NUM HERE TO
 		type[i] = line[i+s];
+	*end = s + i;
 	return TakeTypeFromToken(type);
 }
 
-unsigned int SkipSpace(char *line, unsigned int index) {
-	unsigned int i = index;
-	while(line[i] == ' ' && i < MAX_NAME)
+void SkipSpace(char *line, unsigned int* index) {
+	unsigned int i = *index;
+	while(line[i] == ' ' && i < MAX_POKEDEX_LINE)
 		i++;
-	return i;
+	*index = i;
 }
 
 
@@ -276,34 +281,34 @@ unsigned int SkipSpace(char *line, unsigned int index) {
 PokedexEntry ConvertLineToPokedexEntry(char *line) {
 	PokedexEntry result;
 
-	unsigned int i = 0;
+	unsigned int *i = malloc(sizeof(unsigned int));
+	if( i == 0)
+		GlobalDestroyer(1,0,0);
+	*i = 0;
 	unsigned int temp = 0;
-
-	while( line[i] != ' ' && line[i] != '\n' && i < MAX_POKEDEX_LINE) 	
-		i++; 
-
 	result.ID = GetPokedexIDFromLine(line, i); //IDretrieval
-	i = SkipSpace(line, i);	
+	SkipSpace(line, i);	
+	
+	unsigned nameTemp = *i;
 
-	while( line[i] != ' ' && line[i] != '\n' && temp < MAX_NAME) { 	
-		result.name[temp] = line[i]; //Name retrieval
+	while( line[nameTemp] != ' ' && line[nameTemp] != '\n' && temp < MAX_NAME) { 	
+		result.name[temp] = line[nameTemp]; //Name retrieval
 		temp++;
-		i++; }
+		nameTemp++; }
 	result.name[temp] = 0;
+	*i = nameTemp;
 
-	i = SkipSpace(line, i);	
+	SkipSpace(line, i);	
 	result.primary = TakeTypeFromLine(line, i);
 
-	while( line[i] != ' ' && line[i] != '\n' && i < MAX_POKEDEX_LINE) 	
-		i++; 
-	if( line[i] == '\n') {
+	if( line[*i] == '\n') {
 		result.secondary = NONE;
 	}
 	else {
-		i++;
+		SkipSpace(line, i);
 		result.secondary = TakeTypeFromLine(line, i);
 	}
-		 
+	free(i);
 	return result;
 
 }
