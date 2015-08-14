@@ -4,9 +4,7 @@
 /*problems using extern cuz the const was in a different file so compiler couldnt figure out how much mem to use. couldnt use const because name was getting changed at filescope somehow.
 */
 
-#ifndef MAX_NAME
-#define MAX_NAME 21
-#endif
+
 
 
 

@@ -1,9 +1,14 @@
 
 #include <PokemonEntry/PokemonEntry.h>
+#include <GlobalDestroyer/GlobalDestroyer.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <PokemonEntry/Typing.h>
 #include <PokemonEntry/PokemonStats.h>
+
+#ifndef MAX_NAME
+#define MAX_NAME 21
+#endif
 
 struct PokemonEntryPrivate {
 
@@ -69,7 +74,12 @@ void copyName(const char* source, char* dest) {
 }
 PokemonEntry *NewPokemonEntry() {
 	PokemonEntry *result = malloc(sizeof(PokemonEntry));
+	if( result == 0)
+		GlobalDestroyer(1,0,0);
+
 	result->mem = malloc(sizeof(PokemonEntryPrivate));
+	if( result->mem == 0)
+		GlobalDestroyer(1,0,0);
 
 	result->mem->name[0] = 0;
 	result->mem->typeData = NewTypeContainer();

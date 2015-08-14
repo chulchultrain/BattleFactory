@@ -1,5 +1,6 @@
 
 #include <PokemonEntry/Typing.h>
+#include <GlobalDestroyer/GlobalDestroyer.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -31,8 +32,12 @@ Type GetSecondaryType(TypeContainer* obj);
 
 TypeContainer *NewTypeContainer() {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
-	result->mem = malloc(sizeof(TypeContainerPrivate));;
-	SetTypeContainerFunctionPointers(result);;
+	if (result == 0)
+		GlobalDestroyer(1,0,0);
+	result->mem = malloc(sizeof(TypeContainerPrivate));
+	if (result->mem == 0)
+		GlobalDestroyer(1,0,0);
+	SetTypeContainerFunctionPointers(result);
 	ResetTypeContainerData(result);
 
 	return result;
@@ -41,7 +46,11 @@ TypeContainer *NewTypeContainer() {
 //TODO:TEST
 TypeContainer *CopyTypeContainer(TypeContainer* original) {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
+	if (result == 0)
+		GlobalDestroyer(1,0,0);
 	result->mem = malloc(sizeof(TypeContainerPrivate));
+	if (result->mem == 0)
+		GlobalDestroyer(1,0,0);
 	result->mem->primary = original->mem->primary;
 	result->mem->secondary = original->mem->secondary;
 	SetTypeContainerFunctionPointers(result);
@@ -51,7 +60,11 @@ TypeContainer *CopyTypeContainer(TypeContainer* original) {
 
 TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 	TypeContainer *result = malloc(sizeof(TypeContainer));
+	if (result == 0)
+		GlobalDestroyer(1,0,0);
 	result->mem = malloc(sizeof(TypeContainerPrivate));
+	if (result->mem == 0)
+		GlobalDestroyer(1,0,0);
 	result->mem->primary = *type1;
 	result->mem->secondary = *type2;
 	SetTypeContainerFunctionPointers(result);	

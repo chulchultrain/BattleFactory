@@ -2,6 +2,9 @@
 #include <stdio.h>
 
 #include <PokemonEntry/PokemonEntryTestDriver.h>
+#include <PokemonEntry/PokemonEntry.h>
+#include <PokemonEntry/Typing.h>
+
 
 /**
 Test driver to see whether PokemonEntry and all its components work togethere properly.

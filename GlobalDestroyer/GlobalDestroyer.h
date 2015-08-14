@@ -2,8 +2,7 @@
 #define __GLOBALDESTROYER_H_INCLUDED__
 
 
-#include <stdio.h>
-#include <stdlib.h>
+
 
 typedef struct PokemonEntry PokemonEntry;
 typedef struct Pokedex Pokedex;

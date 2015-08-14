@@ -1,4 +1,5 @@
 #include <PokemonEntry/PokemonStats.h>
+#include <GlobalDestroyer/GlobalDestroyer.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -38,7 +39,11 @@ void PokemonStatsConsolePrint(PokemonStats* obj);
 
 PokemonStats* NewPokemonStats() {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
+	if (pokeStats == 0)
+		GlobalDestroyer(1,0,0);
 	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
+	if (pokeStats->mem == 0)
+		GlobalDestroyer(1,0,0);
 	pokeStats->mem->HitPoints = 0;
 	pokeStats->mem->Attack = 0;
 	pokeStats->mem->Defense = 0;
@@ -55,7 +60,11 @@ PokemonStats* NewPokemonStats() {
 //TODO:TEST copy constructor
 PokemonStats* CopyPokemonStats(PokemonStats* original) {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
+	if (pokeStats == 0)
+		GlobalDestroyer(1,0,0);
 	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
+	if (pokeStats->mem == 0)
+		GlobalDestroyer(1,0,0);
 	pokeStats->mem->HitPoints = original->mem->HitPoints;
 	pokeStats->mem->Attack = original->mem->Attack;
 	pokeStats->mem->Defense = original->mem->Defense;
@@ -74,7 +83,11 @@ PokemonStats* CopyPokemonStats(PokemonStats* original) {
 //objects. Although primitives arent nearly as costly.
 PokemonStats* FullNewPokemonStats(const unsigned int* HP,const unsigned int* A,const unsigned int* D,const unsigned int* SpA, const unsigned int* SpD, const unsigned int* S) {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
+	if (pokeStats == 0)
+		GlobalDestroyer(1,0,0);
 	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
+	if (pokeStats->mem == 0)
+		GlobalDestroyer(1,0,0);
 	pokeStats->mem->HitPoints = *HP;
 	pokeStats->mem->Attack = *A;
 	pokeStats->mem->Defense = *D;
