@@ -39,7 +39,7 @@ void SetTypeContainerMemory(TypeContainerPrivate *memPtr) {
 
 TypeContainer *NewTypeContainer() {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
-	if (result == 0)
+	//if (result == 0)
 		GlobalDestroyer(1,0,0);
 	result->mem = malloc(sizeof(TypeContainerPrivate));
 	if (result->mem == 0) {

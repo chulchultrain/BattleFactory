@@ -11,6 +11,7 @@ void GlobalDestroyer(int mallocFailFlag, PokemonEntry *pokePtr, Pokedex *dexPtr)
 	static PokemonEntry *pokemonEntryPtr;
 	static Pokedex *pokedexPtr;
 	if(mallocFailFlag != 0) {
+		printf("FAILED COMPLETELY\n");
 		if(pokemonEntryPtr != 0) {
 			DeletePokemonEntry(pokemonEntryPtr);
 			pokemonEntryPtr = 0;

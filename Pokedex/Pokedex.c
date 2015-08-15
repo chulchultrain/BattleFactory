@@ -70,10 +70,8 @@ PokedexEntry *CopyPokedexEntry(Pokedex* table, PokedexEntry* obj) {
 
 	if(result == 0) {
 		GlobalDestroyer(1,0,0);
-		//DestroyPokedex(table);
-		exit(1);
 			}
-	
+
 	result->ID = obj->ID;
 	copyPokedexName(obj->name, result->name);
 	result->primary = obj->primary;
@@ -84,19 +82,20 @@ PokedexEntry *CopyPokedexEntry(Pokedex* table, PokedexEntry* obj) {
 	return result;
 }
 
+
+
 //Pokedex constructor
 Pokedex *NewPokedex() {
 	Pokedex *result = malloc(sizeof(Pokedex));
 	if(result == 0) {
 		GlobalDestroyer(1,0,0);
-		exit(1);
 			}
 	printf("Pokedex address is %p\n", result);
+	GlobalDestroyer(0,0,result);	 //SET POKEDEX IN GLOBAL DESTROYER
 	result->mem = malloc(sizeof(PokedexPrivate));
 	if(result->mem == 0) {
-		free(result);
 		GlobalDestroyer(1,0,0);
-		exit(1); }
+			}
 	printf("Pokedex mem address is %p\n\n\n", result->mem);
 	int i;
 
@@ -183,11 +182,6 @@ void ConsolePrintPokedexEntryInPokedex(Pokedex *obj, char *name) {
 }
 
 
-void DestroyPokedexEntry(PokedexEntry *recall) {
-//TODO: RESET VALUES IF I FEEL LIKE IT
-
-	free(recall);
-}
 
 void DestroyTablePointer(PokedexEntry *recall) {
 	if(recall != 0) {
@@ -198,11 +192,16 @@ void DestroyTablePointer(PokedexEntry *recall) {
 
 
 void DestroyPokedex(Pokedex *recall) {
-	int i;
-	for(i = 0; i < MAX_POKEMON_NUMBER; i++) 
-		DestroyTablePointer(recall->mem->table[i]);
-	free(recall->mem);
-	free(recall);
+	if(recall != 0) {
+
+		int i;
+		if( recall->mem != 0) {
+		for(i = 0; i < MAX_POKEMON_NUMBER; i++) 
+			DestroyTablePointer(recall->mem->table[i]);
+		free(recall->mem);
+				}
+		free(recall); }
+
 }
 
 /**
