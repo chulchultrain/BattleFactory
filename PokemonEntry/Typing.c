@@ -30,13 +30,23 @@ Type GetPrimaryType(TypeContainer* obj);
 
 Type GetSecondaryType(TypeContainer* obj);
 
+void SetTypeContainerMemory(TypeContainerPrivate *memPtr) {
+	if (memPtr != 0) {
+		memPtr->primary = NONE;
+		memPtr->secondary = NONE;
+	}
+}
+
 TypeContainer *NewTypeContainer() {
 	TypeContainer *result = malloc(sizeof(TypeContainer));
 	if (result == 0)
 		GlobalDestroyer(1,0,0);
 	result->mem = malloc(sizeof(TypeContainerPrivate));
-	if (result->mem == 0)
-		GlobalDestroyer(1,0,0);
+	if (result->mem == 0) {
+		GlobalDestroyer(1,0,0); 
+		}
+
+	SetTypeContainerMemory(result->mem);
 	SetTypeContainerFunctionPointers(result);
 	ResetTypeContainerData(result);
 
@@ -51,6 +61,7 @@ TypeContainer *CopyTypeContainer(TypeContainer* original) {
 	result->mem = malloc(sizeof(TypeContainerPrivate));
 	if (result->mem == 0)
 		GlobalDestroyer(1,0,0);
+	SetTypeContainerMemory(result->mem);
 	result->mem->primary = original->mem->primary;
 	result->mem->secondary = original->mem->secondary;
 	SetTypeContainerFunctionPointers(result);
@@ -65,6 +76,7 @@ TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 	result->mem = malloc(sizeof(TypeContainerPrivate));
 	if (result->mem == 0)
 		GlobalDestroyer(1,0,0);
+	SetTypeContainerMemory(result->mem);
 	result->mem->primary = *type1;
 	result->mem->secondary = *type2;
 	SetTypeContainerFunctionPointers(result);	
@@ -73,9 +85,11 @@ TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 }
 
 void ResetTypeContainerData(TypeContainer* recall) {
-	recall->mem->primary = NONE;
-	recall->mem->secondary = NONE;
-
+	if(recall != 0) {
+		if(recall->mem != 0) { 
+			recall->mem->primary = NONE;
+			recall->mem->secondary = NONE;} 
+		}
 }
 /**
 void ResetTypeContainerPointers(TypeContainer* recall) {
@@ -91,9 +105,14 @@ void ResetTypeContainerAll(TypeContainer* recall) {
 
 void DeleteTypeContainer(TypeContainer* recall) {
 	//reset so cant be recovered
-	ResetTypeContainerData(recall);
-	free(recall->mem);
-	free(recall);
+	if(recall != 0) {
+		if(recall->mem != 0) {
+			ResetTypeContainerData(recall);
+			free(recall->mem);
+			recall->mem = 0;
+					}
+		free(recall); 
+		recall = 0; }
 
 }
 

@@ -42,8 +42,9 @@ PokemonStats* NewPokemonStats() {
 	if (pokeStats == 0)
 		GlobalDestroyer(1,0,0);
 	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
-	if (pokeStats->mem == 0)
+	if (pokeStats->mem == 0) {
 		GlobalDestroyer(1,0,0);
+		}
 	pokeStats->mem->HitPoints = 0;
 	pokeStats->mem->Attack = 0;
 	pokeStats->mem->Defense = 0;
@@ -63,8 +64,9 @@ PokemonStats* CopyPokemonStats(PokemonStats* original) {
 	if (pokeStats == 0)
 		GlobalDestroyer(1,0,0);
 	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
-	if (pokeStats->mem == 0)
+	if (pokeStats->mem == 0) {
 		GlobalDestroyer(1,0,0);
+		}
 	pokeStats->mem->HitPoints = original->mem->HitPoints;
 	pokeStats->mem->Attack = original->mem->Attack;
 	pokeStats->mem->Defense = original->mem->Defense;
@@ -86,8 +88,9 @@ PokemonStats* FullNewPokemonStats(const unsigned int* HP,const unsigned int* A,c
 	if (pokeStats == 0)
 		GlobalDestroyer(1,0,0);
 	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
-	if (pokeStats->mem == 0)
+	if (pokeStats->mem == 0) {
 		GlobalDestroyer(1,0,0);
+		}
 	pokeStats->mem->HitPoints = *HP;
 	pokeStats->mem->Attack = *A;
 	pokeStats->mem->Defense = *D;
@@ -103,12 +106,15 @@ PokemonStats* FullNewPokemonStats(const unsigned int* HP,const unsigned int* A,c
 }
 
 void ResetPokemonStatsData(PokemonStats* recall) {
-	recall->mem->HitPoints = 0;
-	recall->mem->Attack = 0;
-	recall->mem->Defense = 0;
-	recall->mem->SpecialAttack = 0;
-	recall->mem->SpecialDefense = 0;
-	recall->mem->Speed = 0;
+	if(recall != 0) {
+		if(recall->mem != 0) {
+			recall->mem->HitPoints = 0;
+			recall->mem->Attack = 0;
+			recall->mem->Defense = 0;
+			recall->mem->SpecialAttack = 0;
+			recall->mem->SpecialDefense = 0;
+			recall->mem->Speed = 0; }
+		}
 }
 /**
 void ResetPokemonStatsPointers(PokemonStats* recall) {
@@ -133,10 +139,15 @@ void ResetPokemonStatsAll(PokemonStats* recall) {
 }
 
 void DeletePokemonStats(PokemonStats* recall){
-	//TODO:zero values before free
-	ResetPokemonStatsData(recall);
-	free(recall->mem);
-	free(recall);
+	if( recall != 0) {
+		if(recall->mem != 0); {
+			ResetPokemonStatsData(recall);
+			free(recall->mem);
+			recall->mem = 0;
+				}
+		free(recall);
+		recall = 0;
+	}
 }
 
 void SetHitPoints(PokemonStats* original, const unsigned int* HitPoints) {

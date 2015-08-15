@@ -72,19 +72,34 @@ void copyName(const char* source, char* dest) {
 	else
 		dest[i] = 0; //append '\0'
 }
+/**
+void SetPokemonEntryMemPointer(PokemonEntry *entryPtr) {
+	if(entryPtr != 0)
+		entryPtr->mem = 0;
+}
+**/
+void SetPokemonEntryMemory(PokemonEntryPrivate *memPtr) {
+	if(memPtr != 0) {
+		memPtr->typeData = 0;
+		memPtr->pokeStats = 0;
+		memPtr->name[0] = 0;
+		memPtr->typeData = NewTypeContainer();
+		memPtr->pokeStats = NewPokemonStats();
+	}
+}
+
 PokemonEntry *NewPokemonEntry() {
 	PokemonEntry *result = malloc(sizeof(PokemonEntry));
 	if( result == 0)
 		GlobalDestroyer(1,0,0);
 
+	GlobalDestroyer(0,result,0);	
+
 	result->mem = malloc(sizeof(PokemonEntryPrivate));
-	if( result->mem == 0)
+	if( result->mem == 0) {
 		GlobalDestroyer(1,0,0);
-
-	result->mem->name[0] = 0;
-	result->mem->typeData = NewTypeContainer();
-	result->mem->pokeStats = NewPokemonStats();
-
+	}
+	SetPokemonEntryMemory(result->mem);
 	SetPokemonEntryFunctionPointers(result);
 	return result;
 
@@ -123,13 +138,15 @@ PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContai
 
 void ResetPokemonEntryData(PokemonEntry* recall) {
 	//TODO:ADD CLEAR NAME
-	int i;
-	for(i = 0; i < MAX_NAME; i++)
-		recall->mem->name[i] = 0;
-
-
-	ResetPokemonStatsData(recall->mem->pokeStats);
-	ResetTypeContainerData(recall->mem->typeData);
+	if(recall->mem != 0) {
+		int i;
+		for(i = 0; i < MAX_NAME; i++)
+			recall->mem->name[i] = 0;
+	
+		
+		ResetPokemonStatsData(recall->mem->pokeStats);
+		ResetTypeContainerData(recall->mem->typeData);
+	}
 }
 
 
@@ -156,11 +173,18 @@ void ResetPokemonEntryAll(PokemonEntry* recall) {
 
 void DeletePokemonEntry(PokemonEntry* recall){
 	//zero out name before free
-	ResetPokemonEntryData(recall);
-	DeletePokemonStats(recall->mem->pokeStats);
-	DeleteTypeContainer(recall->mem->typeData);
-	free(recall->mem);
+	if(recall != 0) {
+		if(recall->mem != 0) {
+			ResetPokemonEntryData(recall);
+			if(recall->mem->pokeStats != 0)
+				DeletePokemonStats(recall->mem->pokeStats);
+			if(recall->mem->typeData != 0)
+				DeleteTypeContainer(recall->mem->typeData);
+			free(recall->mem);
+			recall->mem = 0; }
 	free(recall);
+	recall = 0; }
+	
 }
 
 void SetPokemonName(PokemonEntry* original, const char* name) {	

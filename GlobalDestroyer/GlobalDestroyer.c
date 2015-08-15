@@ -4,6 +4,7 @@
 #include <PokemonEntry/PokemonEntry.h>
 #include <Pokedex/Pokedex.h>
 
+//only one pokedex and one pokemonEntry maximum will be active at one time
 
 
 void GlobalDestroyer(int mallocFailFlag, PokemonEntry *pokePtr, Pokedex *dexPtr) {
@@ -21,6 +22,7 @@ void GlobalDestroyer(int mallocFailFlag, PokemonEntry *pokePtr, Pokedex *dexPtr)
 		exit(0); //TODO:SHOULD IT BE 1 OR 0?
 	}
 	else {
+		
 		if(pokePtr != 0)
 			pokemonEntryPtr = pokePtr;
 		if(dexPtr != 0)
