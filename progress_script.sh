@@ -20,6 +20,7 @@ cd $GlobalDestroyer_DIR
 git add GlobalDestroyer.c GlobalDestroyer.h 
 cd $BF_DIR
 git add com_script.sh progress_script.sh
+git add MakeFile
 git commit
 git push origin master
 

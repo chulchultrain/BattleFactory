@@ -226,7 +226,6 @@ unsigned int GetPokedexIDFromLine(char *line, unsigned int* end) {
  //NONE, NORMAL, GRASS, BUG, FIRE, WATER, ICE, ELECTRIC, FLYING, ROCK, GROUND, POISON, PSYCHIC, DARK, STEEL, DRAGON
 
 Type TakeTypeFromToken(char *line) {
-	int i = 0;
 	switch(line[0]) {
 		case 'B': return BUG;
 		case 'D': 
@@ -324,7 +323,6 @@ void FillPokedex(Pokedex *dexter, char *fileName) {
 		exit(1);
 	}
 	char line[MAX_POKEDEX_LINE];
-	int max;
 	PokedexEntry tempEntry;
 	while( fgets(line, MAX_POKEDEX_LINE - 1,inputFile) != 0) {
 		
