@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <PokemonEntry/PokemonEntry.h>
-
 
 #include <PokemonEntry/PokemonEntryTestDriver.h>
 //TODO:CHANGE BACK TO POKEMONENTRY

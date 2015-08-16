@@ -1,0 +1,43 @@
+
+
+BF_DIR = ~/Workspace/Projects/Personal/BattleFactory
+
+PE_DIR = $(BF_DIR)/PokemonEntry
+PD_DIR = $(BF_DIR)/Pokedex
+GD_DIR = $(BF_DIR)/GlobalDestroyer
+
+O_DIR = $(BF_DIR)/
+
+INC_DIR = `pwd`
+
+FLAGS = -I$(INC_DIR) -c -Wall
+
+
+
+$(PE_DIR)/PokemonEntry.o: $(PE_DIR)/PokemonEntry.c $(PE_DIR)/PokemonEntry.h $(PE_DIR)/PokemonStats.h $(PE_DIR)/Typing.h $(GD_DIR)/GlobalDestroyer.h
+	gcc $(FLAGS) $(PE_DIR)/PokemonEntry.c 
+
+$(PE_DIR)/PokemonStats.o: $(PE_DIR)/PokemonStats.c $(PE_DIR)/PokemonStats.h $(GD_DIR)/GlobalDestroyer.h
+	gcc $(FLAGS) $(PE_DIR)/PokemonStats.c
+
+$(PE_DIR)/Typing.o: $(PE_DIR)/Typing.c $(PE_DIR)/Typing.h $(GD_DIR)/GlobalDestroyer.h
+	gcc $(FLAGS) $(PE_DIR)/Typing.c
+
+$(PE_DIR)/PokemonEntryTestDriver.o: $(PE_DIR)/PokemonEntryTestDriver.c $(PE_DIR)/PokemonEntryTestDriver.h $(PE_DIR)/PokemonEntry.h $(PE_DIR)/Typing.h
+	gcc $(FLAGS) $(PE_DIR)/PokemonEntryTestDriver.c
+
+$(PD_DIR)/Pokedex.o: $(PD_DIR)/Pokedex.c $(PD_DIR)/Pokedex.h $(GD_DIR)/GlobalDestroyer.h $(PE_DIR)/Typing.h
+	gcc $(FLAGS) $(PD_DIR)/Pokedex.c
+
+$(GD_DIR)/GlobalDestroyer.o: $(GD_DIR)/GlobalDestroyer.c $(GD_DIR)/GlobalDestroyer.h $(PE_DIR)/PokemonEntry.h $(PE_DIR)/Pokedex.h
+	gcc $(FLAGS) $(GD_DIR)/GlobalDestroyer.c
+
+
+
+
+
+
+
+
+
+

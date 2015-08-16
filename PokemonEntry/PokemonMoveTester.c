@@ -11,7 +11,7 @@ int main() {
 
 PokemonMove *hyperBeam = NewPokemonMove();
 
-char w[100] = "WHIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII";
+char w[100] = "";
 	printf("1st\n");
 hyperBeam->SetName(hyperBeam,w);
 	printf("2nd\n");
