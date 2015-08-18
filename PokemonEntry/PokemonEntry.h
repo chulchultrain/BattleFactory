@@ -28,6 +28,10 @@ void (*SetSpecialDefense)();
 void (*SetSpeed)();
 void (*SetPrimaryType)();
 void (*SetSecondaryType)();
+void (*SetFirstMove)();
+void (*SetSecondMove)();
+void (*SetThirdMove)();
+void (*SetFourthMove)();
 
 void (*ConsolePrint)();
 
@@ -40,6 +44,10 @@ unsigned int (*GetSpecialDefense)();
 unsigned int (*GetSpeed)();
 unsigned int (*GetPrimaryType)();
 unsigned int (*GetSecondaryType)();
+void (*GetFirstMove)();
+void (*GetSecondMove)();
+void (*GetThirdMove)();
+void (*GetFourthMove)();
 
 //enum for pokemon Nature
 

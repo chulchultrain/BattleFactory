@@ -30,6 +30,7 @@ void copyMoveName(const char* source, char* dest) {
 }
 
 
+
 PokemonMove *NewPokemonMove() {
 	PokemonMove *newPtr = malloc(sizeof(PokemonMove));
 	if( newPtr == 0)
@@ -83,7 +84,7 @@ void ResetPokemonMoveData(PokemonMove *recall) {
 
 }
 
-void DestroyPokemonMove(PokemonMove *recall) {
+void DeletePokemonMove(PokemonMove *recall) {
 	if( recall != 0) {
 		if( recall->mem != 0) {
 			free(recall->mem);

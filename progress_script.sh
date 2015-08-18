@@ -13,7 +13,7 @@ echo $GlobalDestroyer_DIR
 
 cd $PokemonEntry_DIR
 git add PokemonEntry.c PokemonEntry.h PokemonStats.c PokemonStats.h Typing.c Typing.h Main.c PokemonMove.c PokemonMove.h \
-PokemonMove.c PokemonMove.h PokemonMoveTester.c
+PokemonMoveSet.c PokemonMoveSet.h PokemonMoveTester.c 
 cd $Pokedex_DIR
 git add Pokedex.c Pokedex.h PokedexTesterMain.c 
 cd $GlobalDestroyer_DIR

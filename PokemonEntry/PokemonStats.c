@@ -146,7 +146,6 @@ void DeletePokemonStats(PokemonStats* recall){
 			recall->mem = 0;
 				}
 		free(recall);
-		recall = 0;
 	}
 }
 

@@ -1,5 +1,5 @@
 #ifndef __POKEMONMOVE_H_INCLUDED__
-#define __POKEMONMONVE_H_INCLUDED__
+#define __POKEMONMOVE_H_INCLUDED__
 
 
 typedef struct PokemonMovePrivate PokemonMovePrivate;
@@ -21,7 +21,7 @@ PokemonMove *NewPokemonMove();
 
 void ResetPokemonMoveData(PokemonMove *recall);
 
-void DestroyPokemonMove(PokemonMove *recall);
+void DeletePokemonMove(PokemonMove *recall);
 
 
 

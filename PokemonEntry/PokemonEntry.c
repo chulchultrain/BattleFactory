@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <PokemonEntry/Typing.h>
 #include <PokemonEntry/PokemonStats.h>
+#include <PokemonEntry/PokemonMoveSet.h>
 
 #ifndef MAX_NAME
 #define MAX_NAME 21
@@ -19,6 +20,7 @@ char name[MAX_NAME];
 //moveset
 
 PokemonStats *pokeStats;
+PokemonMoveSet *moveSet;
 
 };
 
@@ -39,6 +41,15 @@ void SetEntryS(PokemonEntry* original, const int* S);
 void SetEntryPrimaryType(PokemonEntry* original, const Type* primary);
 void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary);
 
+void SetEntryFirstMove(PokemonEntry *original, char *move);
+void SetEntrySecondMove(PokemonEntry *original, char *move);
+void SetEntryThirdMove(PokemonEntry *original, char *move);
+void SetEntryFourthMove(PokemonEntry *original, char *move);
+
+void GetEntryFirstMove(PokemonEntry *original, char *dest, unsigned int limit);
+void GetEntrySecondMove(PokemonEntry *original, char *dest, unsigned int limit);
+void GetEntryThirdMove(PokemonEntry *original, char *dest, unsigned int limit);
+void GetEntryFourthMove(PokemonEntry *original, char *dest, unsigned int limit);
 
 void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit);
 
@@ -82,9 +93,11 @@ void SetPokemonEntryMemory(PokemonEntryPrivate *memPtr) {
 	if(memPtr != 0) {
 		memPtr->typeData = 0;
 		memPtr->pokeStats = 0;
+		memPtr->moveSet = 0;
 		memPtr->name[0] = 0;
 		memPtr->typeData = NewTypeContainer();
 		memPtr->pokeStats = NewPokemonStats();
+		memPtr->moveSet = NewPokemonMoveSet();
 	}
 }
 
@@ -176,14 +189,18 @@ void DeletePokemonEntry(PokemonEntry* recall){
 	if(recall != 0) {
 		if(recall->mem != 0) {
 			ResetPokemonEntryData(recall);
-			if(recall->mem->pokeStats != 0)
+			if(recall->mem->pokeStats != 0) {
 				DeletePokemonStats(recall->mem->pokeStats);
-			if(recall->mem->typeData != 0)
+				recall->mem->pokeStats = 0;
+				printf("pokemonStats address is %p\n", recall->mem->pokeStats); }
+			if(recall->mem->typeData != 0) {
 				DeleteTypeContainer(recall->mem->typeData);
+				recall->mem->typeData = 0;
+							}
 			free(recall->mem);
 			recall->mem = 0; }
-	free(recall);
-	recall = 0; }
+		free(recall);
+		 }
 	
 }
 
@@ -211,6 +228,14 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->GetSpecialAttack = GetEntrySpA;
 	original->GetSpecialDefense = GetEntrySpD;
 	original->GetSpeed = GetEntryS;
+	original->SetFirstMove = SetEntryFirstMove;
+	original->SetSecondMove = SetEntrySecondMove;
+	original->SetThirdMove = SetEntryThirdMove;
+	original->SetFourthMove = SetEntryFourthMove;
+	original->GetFirstMove = GetEntryFirstMove;
+	original->GetSecondMove = GetEntrySecondMove;
+	original->GetThirdMove = GetEntryThirdMove;
+	original->GetFourthMove = GetEntryFourthMove;
 }
 
 void SetEntryHP(PokemonEntry* original, const int* HP) {
@@ -261,6 +286,39 @@ void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary) {
 	typePtr->SetSecondary(typePtr, secondary);
 //	SetSecondaryType(original->typeData, secondary);
 }
+
+void SetEntryFirstMove(PokemonEntry *original, char *move) {
+	original->mem->moveSet->SetFirstMove(original->mem->moveSet, move);
+}
+
+void SetEntrySecondMove(PokemonEntry *original, char *move) {
+	original->mem->moveSet->SetSecondMove(original->mem->moveSet, move);
+}
+
+void SetEntryThirdMove(PokemonEntry *original, char *move) {
+	original->mem->moveSet->SetThirdMove(original->mem->moveSet, move);
+}
+
+void SetEntryFourthMove(PokemonEntry *original, char *move) {
+	original->mem->moveSet->SetFourthMove(original->mem->moveSet, move);
+}
+
+void GetEntryFirstMove(PokemonEntry *original, char *move, unsigned int limit) {
+	original->mem->moveSet->GetFirstMove(original->mem->moveSet, move, limit);
+}
+
+void GetEntrySecondMove(PokemonEntry *original, char *move, unsigned int limit) {
+	original->mem->moveSet->GetSecondMove(original->mem->moveSet, move, limit);
+}
+
+void GetEntryThirdMove(PokemonEntry *original, char *move, unsigned int limit) {
+	original->mem->moveSet->GetThirdMove(original->mem->moveSet, move, limit);
+}
+
+void GetEntryFourthMove(PokemonEntry *original, char *move, unsigned int limit) {
+	original->mem->moveSet->GetFourthMove(original->mem->moveSet, move, limit);
+}
+
 
 
 void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit) {
@@ -322,9 +380,11 @@ void PokemonEntryConsolePrint(PokemonEntry* obj) {
 
 	PokemonStats *statsPtr = obj->mem->pokeStats;
 	TypeContainer *typePtr = obj->mem->typeData;
-	
+	PokemonMoveSet *moveSetPtr = obj->mem->moveSet;	
 	statsPtr->ConsolePrint(statsPtr);
 	typePtr->ConsolePrint(typePtr);
+	moveSetPtr->ConsolePrint(moveSetPtr);
+	
 
 //	PokemonStatsConsolePrint(obj->pokeStats);
 //	TypeContainerConsolePrint(obj->typeData);

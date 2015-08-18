@@ -112,7 +112,7 @@ void DeleteTypeContainer(TypeContainer* recall) {
 			recall->mem = 0;
 					}
 		free(recall); 
-		recall = 0; }
+		 }
 
 }
 
