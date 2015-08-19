@@ -1,12 +1,33 @@
 #include <Pokedex/Pokedex.h>
 #include <GlobalDestroyer/GlobalDestroyer.h>
+#include <BF_Special_Util/Special_Util.h>
 
 #include <stdlib.h>
 #include <stdio.h>
 
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+
+
 #ifndef MAX_POKEDEX_LINE
 #define MAX_POKEDEX_LINE 70
 #endif
+
+typedef struct PokedexEntry PokedexEntry;
+
+struct PokedexEntry {
+
+unsigned int ID;
+char name[MAX_NAME];
+Type primary;
+Type secondary;
+PokedexEntry *next;
+
+
+};
 
 struct PokedexPrivate {
 	PokedexEntry *table[MAX_POKEMON_NUMBER];
@@ -334,6 +355,59 @@ void FillPokedex(Pokedex *dexter, char *fileName) {
 }
 
 
+void MakeFileWithPokemon(char *nameDir, char *pokePtr, unsigned int ID) {
+	char fileName[100];
+	unsigned int i = 0;
+
+	i = InsertArrayInArray(nameDir,30,fileName,0,100);
+	fileName[i] = '/';
+	i += 1;
+	i = InsertArrayInArray(pokePtr,MAX_NAME,fileName,i,100);
+	fileName[i] = 0;
+	FILE *filePtr = fopen(fileName,"w");
+	fprintf(filePtr, "ID is %d\n",ID);
+	fclose(filePtr);
+}
+
+void MakeFileForHashTableEntry(char *nameDir, PokedexEntry *entryPtr) {
+
+	while(entryPtr != 0) {
+
+		MakeFileWithPokemon(nameDir, entryPtr->name, entryPtr->ID);
+		entryPtr = entryPtr->next;
+	}
+
+}
+//char *baseDirName, char *baseDirLimit
+void WritePokedexToDirectory(Pokedex *dexter) {
+
+
+	struct stat *st = malloc(sizeof(struct stat));
+
+	char baseDirName[30] = "BASE";
+	char nDappend[20] = "/NAME";
+	
+
+	char nameDir[100] = {0};
+	unsigned int i = 0;
+	i = InsertArrayInArray(baseDirName, 30, nameDir,0, 100);	
+	i = InsertArrayInArray(nDappend, 20, nameDir, i, 100);
+	printf("%s nameDir is \n", nameDir);
+
+	
+
+	MakeDir(baseDirName, st);
+	MakeDir(nameDir, st);
+
+	unsigned int j = 0;
+	for(j = 0; j < MAX_POKEMON_NUMBER; j++)	
+		if( dexter->mem->table[j] != 0)
+			MakeFileForHashTableEntry(nameDir ,dexter->mem->table[j]);
+	free(st);
+	
+
+
+}
 
 
 

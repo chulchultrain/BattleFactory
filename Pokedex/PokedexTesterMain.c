@@ -15,6 +15,8 @@ char test[30] = "DexterDataFile.txt";
 char name[MAX_NAME] = "Metagross";
 
 FillPokedex(dexter, test);
+WritePokedexToDirectory(dexter);
+
 ConsolePrintPokedexEntryInPokedex(dexter, name);
 GlobalDestroyer(1, 0, 0);
 printf("After Destroy\n");

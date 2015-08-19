@@ -26,18 +26,8 @@ I feel like I have done enough OOP in the  3 structs mentioned earlier.
 
 #include <PokemonEntry/Typing.h>
 
-typedef struct PokedexEntry PokedexEntry;
-
-struct PokedexEntry {
-
-unsigned int ID;
-char name[MAX_NAME];
-Type primary;
-Type secondary;
-PokedexEntry *next;
 
 
-};
 
 /**
 Goal: Make array of Pokedex entries. No need for hashtable/hashfunctions because each pokemon has a unique numerical ID. 
@@ -60,13 +50,13 @@ ConsolePrintEntry
 
 Pokedex *NewPokedex();
 
-void SetPokedexEntryInPokedex(Pokedex *original, PokedexEntry *obj);
-
 void ConsolePrintPokedexEntryInPokedex(Pokedex *obj, char *name);
 
 void DestroyPokedex(Pokedex *recall);
 
 void FillPokedex(Pokedex *dexter, char *fileName);
+
+void WritePokedexToDirectory(Pokedex *dexter);
 
 
 #endif
