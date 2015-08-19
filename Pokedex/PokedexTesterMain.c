@@ -11,7 +11,7 @@ Pokedex *dexter = NewPokedex();
 
 GlobalDestroyer(0, 0, dexter);
 
-char test[30] = "DexterDataFile.txt";
+char test[30] = "outputPokedex.txt";
 char name[MAX_NAME] = "Metagross";
 
 FillPokedex(dexter, test);

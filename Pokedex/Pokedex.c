@@ -282,19 +282,20 @@ Type TakeTypeFromLine(char *line, unsigned int *end) {
 	char type[11]; //TODO:MAGIC NUM - MAX_TYPE_LEN
 	unsigned int i;
 	unsigned int s = *end;
-	for(i = 0; i < 11 && line[i+s] != ' ' && line[i+s] != '\n'; i++) //TODO:MAGIC NUM HERE TO
+	for(i = 0; i < 11 && line[i+s] != '\t' && line[i+s] != '\n'; i++) //TODO:MAGIC NUM HERE TO
 		type[i] = line[i+s];
 	*end = s + i;
 	return TakeTypeFromToken(type);
 }
 
+/**
 void SkipSpace(char *line, unsigned int* index) {
 	unsigned int i = *index;
 	while(line[i] == ' ' && i < MAX_POKEDEX_LINE)
 		i++;
 	*index = i;
 }
-
+**/
 
 //inputs line taken from file and outputs a pokedex entry ready for table input.
 PokedexEntry ConvertLineToPokedexEntry(char *line) {
@@ -306,25 +307,33 @@ PokedexEntry ConvertLineToPokedexEntry(char *line) {
 	*i = 0;
 	unsigned int temp = 0;
 	result.ID = GetPokedexIDFromLine(line, i); //IDretrieval
-	SkipSpace(line, i);	
-	
-	unsigned nameTemp = *i;
+	//SkipSpace(line, i);	
+	*i += 1;	
+	unsigned int nameTemp = *i;
 
-	while( line[nameTemp] != ' ' && line[nameTemp] != '\n' && temp < MAX_NAME) { 	
+	//fails for Mr. Mime and Mime Jr because they have spaces
+	//idea is maybe separate tokens with tabs instead of spaces to differ between
+	//code would be alot cleaner
+	while( line[nameTemp] != '\t' && line[nameTemp] != '\n' && temp < MAX_NAME) { 	
 		result.name[temp] = line[nameTemp]; //Name retrieval
 		temp++;
 		nameTemp++; }
-	result.name[temp] = 0;
-	*i = nameTemp;
+	if(temp < MAX_NAME)
+		result.name[temp] = 0;
+	else
+		result.name[temp - 1] = 0;
 
-	SkipSpace(line, i);	
+	*i = nameTemp + 1;
+	
+	//SkipSpace(line, i);	
 	result.primary = TakeTypeFromLine(line, i);
-
+	
 	if( line[*i] == '\n') {
 		result.secondary = NONE;
 	}
 	else {
-		SkipSpace(line, i);
+		//SkipSpace(line, i);
+		*i += 1;
 		result.secondary = TakeTypeFromLine(line, i);
 	}
 	free(i);
@@ -372,7 +381,7 @@ void MakeFileWithPokemon(char *nameDir, char *pokePtr, unsigned int ID) {
 void MakeFileForHashTableEntry(char *nameDir, PokedexEntry *entryPtr) {
 
 	while(entryPtr != 0) {
-
+		printf("EntryPtr->name %s\n", entryPtr->name);
 		MakeFileWithPokemon(nameDir, entryPtr->name, entryPtr->ID);
 		entryPtr = entryPtr->next;
 	}
