@@ -2,11 +2,7 @@
 #include <GlobalDestroyer/GlobalDestroyer.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-
-#ifndef MAX_MOVE_NAME
-#define MAX_MOVE_NAME 21
-#endif
+#include <SpecialConstants/SpecialConstants.h>
 
 struct PokemonMovePrivate {
 	

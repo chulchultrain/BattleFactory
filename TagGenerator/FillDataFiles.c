@@ -2,35 +2,28 @@
 #include <BF_Special_Util/Special_Util.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-#ifndef MAX_NAME 
-#define MAX_NAME 21
-#endif
-
-#ifndef MAX_DIR_NAME
-#define MAX_DIR_NAME 1000
-#endif
+#include <SpecialConstants/SpecialConstants.h>
 
 
 
 void WriteNameTagFile(FILE *entryFilePtr, char *nameDir, char *entryName, struct stat *st) {
-	char outputFileName[MAX_DIR_NAME] = {0};
+	char outputFileName[MAX_FILE_NAME] = {0};
 	unsigned int i = 0;
-	i = InsertArrayInArray(nameDir, MAX_DIR_NAME, outputFileName, i, MAX_DIR_NAME);
+	i = InsertArrayInArray(nameDir, MAX_FILE_NAME, outputFileName, i, MAX_FILE_NAME);
 
-	i = InsertArrayInArray(entryName, MAX_NAME, outputFileName, i, MAX_DIR_NAME);
+	i = InsertArrayInArray(entryName, MAX_NAME, outputFileName, i, MAX_FILE_NAME);
 
 	printf("%s\n", outputFileName);
 	FILE *outputFile = fopen(outputFileName, "a");
 	if( outputFile != 0) {
 
-		char buffer[80] = {0};
-		if( fgets(buffer, 80, entryFilePtr) == 0)	
+		char buffer[MAX_CHAR_BUFFER_SIZE] = {0};
+		if( fgets(buffer, MAX_CHAR_BUFFER_SIZE, entryFilePtr) == 0)	
 			return;
 	
 		while( buffer[0] != '\n' ) {
 			fprintf(outputFile, "%s", buffer);
-			fgets(buffer, 80, entryFilePtr); 
+			fgets(buffer, MAX_CHAR_BUFFER_SIZE, entryFilePtr); 
 		}
 		fprintf(outputFile,"\n");
 		fclose(outputFile);

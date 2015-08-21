@@ -3,9 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef MAX_MOVE_NAME
-#define MAX_MOVE_NAME 21
-#endif
 
 int main() {
 

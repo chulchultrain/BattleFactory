@@ -6,10 +6,7 @@
 #include <PokemonEntry/Typing.h>
 #include <PokemonEntry/PokemonStats.h>
 #include <PokemonEntry/PokemonMoveSet.h>
-
-#ifndef MAX_NAME
-#define MAX_NAME 21
-#endif
+#include <SpecialConstants/SpecialConstants.h>
 
 struct PokemonEntryPrivate {
 

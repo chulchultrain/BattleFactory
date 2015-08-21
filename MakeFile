@@ -7,6 +7,7 @@ PD_DIR = $(BF_DIR)/Pokedex
 GD_DIR = $(BF_DIR)/GlobalDestroyer
 SU_DIR = $(BF_DIR)/BF_Special_Util
 TG_DIR = $(BF_DIR)/TagGenerator
+SC_DIR = $(BF_DIR)/SpecialConstants
 
 INC_DIR = `pwd`
 
@@ -15,7 +16,7 @@ FLAGS = -I$(INC_DIR) -c -Wall
 PETester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
 	gcc -o PETester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
 
-PokedexTester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/PokedexTesterMain.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
+PokedexTester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/PokedexTesterMain.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o 
 	gcc -o PokedexTester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/PokedexTesterMain.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
 
 PokeMoveSetTester: $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(PE_DIR)/PokemonMoveTester.o $(GD_DIR)/GlobalDestroyer.o $(SU_DIR)/Special_Util.o
@@ -24,7 +25,7 @@ PokeMoveSetTester: $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(PE_DIR)/
 TagGenTester: $(TG_DIR)/TagGenTester.o $(TG_DIR)/FillDataFiles.o $(SU_DIR)/Special_Util.o
 	gcc -o TagGenTester $(TG_DIR)/TagGenTester.o $(TG_DIR)/FillDataFiles.o $(SU_DIR)/Special_Util.o
 
-$(PE_DIR)/PokemonEntry.o: $(PE_DIR)/PokemonEntry.c $(PE_DIR)/PokemonEntry.h $(PE_DIR)/PokemonStats.h $(PE_DIR)/Typing.h $(GD_DIR)/GlobalDestroyer.h
+$(PE_DIR)/PokemonEntry.o: $(PE_DIR)/PokemonEntry.c $(PE_DIR)/PokemonEntry.h $(PE_DIR)/PokemonStats.h $(PE_DIR)/Typing.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(PE_DIR)/PokemonEntry.c -o $(PE_DIR)/PokemonEntry.o
 
 $(PE_DIR)/PokemonStats.o: $(PE_DIR)/PokemonStats.c $(PE_DIR)/PokemonStats.h $(GD_DIR)/GlobalDestroyer.h
@@ -36,8 +37,8 @@ $(PE_DIR)/Typing.o: $(PE_DIR)/Typing.c $(PE_DIR)/Typing.h $(GD_DIR)/GlobalDestro
 $(PE_DIR)/PokemonMoveSet.o: $(PE_DIR)/PokemonMoveSet.c $(PE_DIR)/PokemonMoveSet.h $(PE_DIR)/PokemonMove.h $(GD_DIR)/GlobalDestroyer.h
 	gcc $(FLAGS) $(PE_DIR)/PokemonMoveSet.c -o $(PE_DIR)/PokemonMoveSet.o
 
-$(PE_DIR)/PokemonMove.o: $(PE_DIR)/PokemonMove.c $(PE_DIR)/PokemonMove.h $(GD_DIR)/GlobalDestroyer.h
-	gcc $(FLAGS) $(PE_DIR)/PokemonMove.c -o $(PE_DIR)/PokemonMove.o
+$(PE_DIR)/PokemonMove.o: $(PE_DIR)/PokemonMove.c $(PE_DIR)/PokemonMove.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h
+	gcc $(FLAGS) $(PE_DIR)/PokemonMove.c -o $(PE_DIR)/PokemonMove.o 
 
 $(PE_DIR)/PokemonEntryTestDriver.o: $(PE_DIR)/PokemonEntryTestDriver.c $(PE_DIR)/PokemonEntryTestDriver.h $(PE_DIR)/PokemonEntry.h $(PE_DIR)/Typing.h
 	gcc $(FLAGS) $(PE_DIR)/PokemonEntryTestDriver.c -o $(PE_DIR)/PokemonEntryTestDriver.o
@@ -45,7 +46,7 @@ $(PE_DIR)/PokemonEntryTestDriver.o: $(PE_DIR)/PokemonEntryTestDriver.c $(PE_DIR)
 $(PD_DIR)/PokedexTesterMain.o: $(PD_DIR)/PokedexTesterMain.c $(GD_DIR)/GlobalDestroyer.h $(PD_DIR)/Pokedex.h
 	gcc $(FLAGS) $(PD_DIR)/PokedexTesterMain.c -o $(PD_DIR)/PokedexTesterMain.o
 
-$(PD_DIR)/Pokedex.o: $(PD_DIR)/Pokedex.c $(PD_DIR)/Pokedex.h $(GD_DIR)/GlobalDestroyer.h $(PE_DIR)/Typing.h $(SU_DIR)/Special_Util.h
+$(PD_DIR)/Pokedex.o: $(PD_DIR)/Pokedex.c $(PD_DIR)/Pokedex.h $(GD_DIR)/GlobalDestroyer.h $(PE_DIR)/Typing.h $(SU_DIR)/Special_Util.h $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(PD_DIR)/Pokedex.c -o $(PD_DIR)/Pokedex.o
 
 $(GD_DIR)/GlobalDestroyer.o: $(GD_DIR)/GlobalDestroyer.c $(GD_DIR)/GlobalDestroyer.h $(PE_DIR)/PokemonEntry.h $(PD_DIR)/Pokedex.h
@@ -54,10 +55,10 @@ $(GD_DIR)/GlobalDestroyer.o: $(GD_DIR)/GlobalDestroyer.c $(GD_DIR)/GlobalDestroy
 $(SU_DIR)/Special_Util.o: $(SU_DIR)/Special_Util.c $(SU_DIR)/Special_Util.h
 	gcc $(FLAGS) $(SU_DIR)/Special_Util.c -o $(SU_DIR)/Special_Util.o
 
-$(TG_DIR)/FillDataFiles.o: $(TG_DIR)/FillDataFiles.c $(TG_DIR)/FillDataFiles.h $(SU_DIR)/Special_Util.h
+$(TG_DIR)/FillDataFiles.o: $(TG_DIR)/FillDataFiles.c $(TG_DIR)/FillDataFiles.h $(SU_DIR)/Special_Util.h $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(TG_DIR)/FillDataFiles.c -o $(TG_DIR)/FillDataFiles.o
 
-$(TG_DIR)/TagGenTester.o: $(TG_DIR)/FillDataFiles.h $(TG_DIR)/TagGenTester.c
+$(TG_DIR)/TagGenTester.o: $(TG_DIR)/FillDataFiles.h $(TG_DIR)/TagGenTester.c $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(TG_DIR)/TagGenTester.c -o $(TG_DIR)/TagGenTester.o
 
 clean: 
