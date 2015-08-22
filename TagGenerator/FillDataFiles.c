@@ -6,6 +6,8 @@
 
 
 
+
+
 void WriteNameTagFile(FILE *entryFilePtr, char *nameDir, char *entryName, struct stat *st) {
 	char outputFileName[MAX_FILE_NAME] = {0};
 	unsigned int i = 0;

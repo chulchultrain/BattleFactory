@@ -2,6 +2,10 @@
 #define __SPECIALCONSTANTS_H_INCLUDED__
 
 
+/*
+File to store Special constants and include here so that do not have to #define in all the files used.
+*/
+
 #ifndef MAX_NAME
 #define MAX_NAME 21
 #endif
@@ -36,6 +40,18 @@
 
 #ifndef ENTRY_FILE4_OF_DATA
 #define ENTRY_FILE4_OF_DATA "Output_R4.txt"
+#endif
+
+#ifndef MAX_POKEMONENTRY_IN_MEM
+#define MAX_POKEMONENTRY_IN_MEM 4
+#endif
+
+#ifndef MAX_POKEDEX_IN_MEM
+#define MAX_POKEDEX_IN_MEM 2
+#endif
+
+#ifndef MAX_BATTLESIM_IN_MEM
+#define MAX_BATTLESIM_IN_MEM 2
 #endif
 
 #ifndef MAX_CHAR_BUFFER_SIZE
