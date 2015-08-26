@@ -8,6 +8,7 @@ GlobalDestroyer_DIR=$BF_DIR/GlobalDestroyer
 Special_Util_DIR=$BF_DIR/BF_Special_Util
 TG_DIR=$BF_DIR/TagGenerator
 SC_DIR=$BF_DIR/SpecialConstants
+RD_DIR=$BF_DIR/RetrieveData
 
 echo $BF_DIR
 echo $PokemonEntry_DIR
@@ -28,6 +29,8 @@ cd $TG_DIR
 git add FillDataFiles.c FillDataFiles.h TagGenTester.c
 cd $SC_DIR
 git add SpecialConstants.h
+cd $RD_DIR
+git add RetrievePokemon.h RetrievePokemon.c RetrieveTester.c
 cd $BF_DIR
 git add com_script.sh progress_script.sh
 git add MakeFile

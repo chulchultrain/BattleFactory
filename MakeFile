@@ -8,10 +8,14 @@ GD_DIR = $(BF_DIR)/GlobalDestroyer
 SU_DIR = $(BF_DIR)/BF_Special_Util
 TG_DIR = $(BF_DIR)/TagGenerator
 SC_DIR = $(BF_DIR)/SpecialConstants
+RD_DIR = $(BF_DIR)/RetrieveData
 
 INC_DIR = `pwd`
 
 FLAGS = -I$(INC_DIR) -c -Wall
+
+RDTester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o $(RD_DIR)/RetrieveTester.o $(RD_DIR)/RetrievePokemon.o
+	gcc -o RDTester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(RD_DIR)/RetrieveTester.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o $(RD_DIR)/RetrievePokemon.o
 
 PETester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
 	gcc -o PETester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
@@ -60,6 +64,12 @@ $(TG_DIR)/FillDataFiles.o: $(TG_DIR)/FillDataFiles.c $(TG_DIR)/FillDataFiles.h $
 
 $(TG_DIR)/TagGenTester.o: $(TG_DIR)/FillDataFiles.h $(TG_DIR)/TagGenTester.c $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(TG_DIR)/TagGenTester.c -o $(TG_DIR)/TagGenTester.o
+
+$(RD_DIR)/RetrievePokemon.o: $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h $(SU_DIR)/Special_Util.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h
+	gcc $(FLAGS) $(RD_DIR)/RetrievePokemon.c -o $(RD_DIR)/RetrievePokemon.o
+
+$(RD_DIR)/RetrieveTester.o: $(RD_DIR)/RetrieveTester.c $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h
+	gcc $(FLAGS) $(RD_DIR)/RetrieveTester.c -o $(RD_DIR)/RetrieveTester.o
 
 clean: 
 	rm */*.o *.o *~ PETester PokeMoveSetTester
