@@ -1,6 +1,7 @@
 
 
-BF_DIR = ~/Workspace/Projects/Personal/BattleFactory
+
+BF_DIR = $(shell pwd)
 
 PE_DIR = $(BF_DIR)/PokemonEntry
 PD_DIR = $(BF_DIR)/Pokedex
@@ -10,7 +11,7 @@ TG_DIR = $(BF_DIR)/TagGenerator
 SC_DIR = $(BF_DIR)/SpecialConstants
 RD_DIR = $(BF_DIR)/RetrieveData
 
-INC_DIR = `pwd`
+INC_DIR = $(shell pwd)
 
 FLAGS = -I$(INC_DIR) -c -Wall
 
