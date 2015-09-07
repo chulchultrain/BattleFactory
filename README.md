@@ -15,3 +15,5 @@ You will need to run TagGenTester. Again, it can be made as a target of the make
 make -f MakeFile TagGenTester
 
 And then execute TagGenTester, one way is to type ./TagGenTester.
+
+What I wish for this program to do for me is that when I give the program a matchup between two battlefactory pokemon, mine and the computer's, it will generate for me the amount of damage that I will give and receive from the moves of my pokemon and the opponent's, given the possible different movesets and EVs of the opponent. Given this information directly and not having to calculate it will give me an advantage over the computer. 
