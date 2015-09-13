@@ -9,13 +9,24 @@ char buffer[21] = {0};
 
 printf("The Application to Help Get Higher Records in Pokemon Platinum Battle Factory\n");
 
-unsigned int toContinue = 1;
+char continueChar = 'Y';
 
-while(toContinue == 1) {
+int i;
 
+while(continueChar == 'Y') {
+printf("Enter Pokemon Name you which to find. ");
 fgets(buffer,21,stdin);
+
+//modulize
+i = 0;
+while(i < 21 && buffer[i] != '\n')
+	i++;
+buffer[i] = 0;
+
+
 ConsolePrintPokemonEntryFile(buffer);
-fgetc(buffer,21,stdin);
+printf("To continue with another pokemon, type in Y. ");
+continueChar = fgetc(stdin);
 }
 return 0;
 
