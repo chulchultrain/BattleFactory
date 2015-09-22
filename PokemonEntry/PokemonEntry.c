@@ -38,15 +38,28 @@ void SetEntryS(PokemonEntry* original, const int* S);
 void SetEntryPrimaryType(PokemonEntry* original, const Type* primary);
 void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary);
 
-void SetEntryFirstMove(PokemonEntry *original, char *move);
-void SetEntrySecondMove(PokemonEntry *original, char *move);
-void SetEntryThirdMove(PokemonEntry *original, char *move);
-void SetEntryFourthMove(PokemonEntry *original, char *move);
+void SetEntryFirstMove(PokemonEntry *original, char *move, unsigned int d, Type t);
+void SetEntrySecondMove(PokemonEntry *original, char *move, unsigned int d, Type t);
+void SetEntryThirdMove(PokemonEntry *original, char *move, unsigned int d, Type t);
+void SetEntryFourthMove(PokemonEntry *original, char *move, unsigned int d, Type t);
 
-void GetEntryFirstMove(PokemonEntry *original, char *dest, unsigned int limit);
-void GetEntrySecondMove(PokemonEntry *original, char *dest, unsigned int limit);
-void GetEntryThirdMove(PokemonEntry *original, char *dest, unsigned int limit);
-void GetEntryFourthMove(PokemonEntry *original, char *dest, unsigned int limit);
+void GetEntryFirstMoveName(PokemonEntry *original, char *dest, unsigned int limit);
+void GetEntrySecondMoveName(PokemonEntry *original, char *dest, unsigned int limit);
+void GetEntryThirdMoveName(PokemonEntry *original, char *dest, unsigned int limit);
+void GetEntryFourthMoveName(PokemonEntry *original, char *dest, unsigned int limit);
+
+unsigned int GetEntryFirstMoveDamage(PokemonEntry *obj);
+unsigned int GetEntrySecondMoveDamage(PokemonEntry *obj);
+unsigned int GetEntryThirdMoveDamage(PokemonEntry *obj);
+unsigned int GetEntryFourthMoveDamage(PokemonEntry *obj);
+
+Type GetEntryFirstMoveType(PokemonEntry *obj);
+
+Type GetEntrySecondMoveType(PokemonEntry *obj);
+Type GetEntryThirdMoveType(PokemonEntry *obj);
+Type GetEntryFourthMoveType(PokemonEntry *obj);
+
+
 
 void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit);
 
@@ -156,6 +169,10 @@ void ResetPokemonEntryData(PokemonEntry* recall) {
 		
 		ResetPokemonStatsData(recall->mem->pokeStats);
 		ResetTypeContainerData(recall->mem->typeData);
+		/**
+		//TODO:MAKE this function in PokmeonMoveSet
+		ResetPokemonMoveSetData(recall->mem->moveSet);
+		**/
 	}
 }
 
@@ -194,6 +211,11 @@ void DeletePokemonEntry(PokemonEntry* recall){
 				DeleteTypeContainer(recall->mem->typeData);
 				recall->mem->typeData = 0;
 							}
+			if(recall->mem->moveSet != 0) {
+				DeletePokemonMoveSet(recall->mem->moveSet);
+				recall->mem->moveSet = 0;
+							}
+
 			free(recall->mem);
 			recall->mem = 0; }
 		free(recall);
@@ -225,14 +247,26 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->GetSpecialAttack = GetEntrySpA;
 	original->GetSpecialDefense = GetEntrySpD;
 	original->GetSpeed = GetEntryS;
+
 	original->SetFirstMove = SetEntryFirstMove;
 	original->SetSecondMove = SetEntrySecondMove;
 	original->SetThirdMove = SetEntryThirdMove;
 	original->SetFourthMove = SetEntryFourthMove;
-	original->GetFirstMove = GetEntryFirstMove;
-	original->GetSecondMove = GetEntrySecondMove;
-	original->GetThirdMove = GetEntryThirdMove;
-	original->GetFourthMove = GetEntryFourthMove;
+	original->GetFirstMoveName = GetEntryFirstMoveName;
+	original->GetSecondMoveName = GetEntrySecondMoveName;
+	original->GetThirdMoveName = GetEntryThirdMoveName;
+	original->GetFourthMoveName = GetEntryFourthMoveName;
+
+	original->GetFirstMoveDamage = GetEntryFirstMoveDamage;
+	original->GetSecondMoveDamage = GetEntrySecondMoveDamage;
+	original->GetThirdMoveDamage = GetEntryThirdMoveDamage;
+	original->GetFourthMoveDamage = GetEntryFourthMoveDamage;
+
+	original->GetFirstMoveType = GetEntryFirstMoveType;
+	original->GetSecondMoveType = GetEntrySecondMoveType;
+	original->GetThirdMoveType = GetEntryThirdMoveType;
+	original->GetFourthMoveType = GetEntryFourthMoveType;
+
 }
 
 void SetEntryHP(PokemonEntry* original, const int* HP) {
@@ -284,39 +318,78 @@ void SetEntrySecondaryType(PokemonEntry* original, const Type* secondary) {
 //	SetSecondaryType(original->typeData, secondary);
 }
 
-void SetEntryFirstMove(PokemonEntry *original, char *move) {
-	original->mem->moveSet->SetFirstMove(original->mem->moveSet, move);
+void SetEntryFirstMove(PokemonEntry *original, char *move, unsigned int d, Type t) {
+	original->mem->moveSet->SetFirstMoveName(original->mem->moveSet, move);
+	original->mem->moveSet->SetFirstMoveDamage(original->mem->moveSet,d);
+	original->mem->moveSet->SetFirstMoveType(original->mem->moveSet,t);
 }
 
-void SetEntrySecondMove(PokemonEntry *original, char *move) {
-	original->mem->moveSet->SetSecondMove(original->mem->moveSet, move);
+void SetEntrySecondMove(PokemonEntry *original, char *move, unsigned int d, Type t) {
+	original->mem->moveSet->SetSecondMoveName(original->mem->moveSet, move);
+	original->mem->moveSet->SetSecondMoveDamage(original->mem->moveSet,d);
+	original->mem->moveSet->SetSecondMoveType(original->mem->moveSet,t);
 }
 
-void SetEntryThirdMove(PokemonEntry *original, char *move) {
-	original->mem->moveSet->SetThirdMove(original->mem->moveSet, move);
+void SetEntryThirdMove(PokemonEntry *original, char *move, unsigned int d, Type t) {
+	original->mem->moveSet->SetThirdMoveName(original->mem->moveSet, move);
+	original->mem->moveSet->SetThirdMoveDamage(original->mem->moveSet,d);
+	original->mem->moveSet->SetThirdMoveType(original->mem->moveSet,t);
 }
 
-void SetEntryFourthMove(PokemonEntry *original, char *move) {
-	original->mem->moveSet->SetFourthMove(original->mem->moveSet, move);
+void SetEntryFourthMove(PokemonEntry *original, char *move, unsigned int d, Type t) {
+	original->mem->moveSet->SetFourthMoveName(original->mem->moveSet, move);
+	original->mem->moveSet->SetFourthMoveDamage(original->mem->moveSet,d);
+	original->mem->moveSet->SetFourthMoveType(original->mem->moveSet,t);
 }
 
-void GetEntryFirstMove(PokemonEntry *original, char *move, unsigned int limit) {
-	original->mem->moveSet->GetFirstMove(original->mem->moveSet, move, limit);
+void GetEntryFirstMoveName(PokemonEntry *original, char *move, unsigned int limit) {
+	original->mem->moveSet->GetFirstMoveName(original->mem->moveSet, move, limit);
 }
 
-void GetEntrySecondMove(PokemonEntry *original, char *move, unsigned int limit) {
-	original->mem->moveSet->GetSecondMove(original->mem->moveSet, move, limit);
+void GetEntrySecondMoveName(PokemonEntry *original, char *move, unsigned int limit) {
+	original->mem->moveSet->GetSecondMoveName(original->mem->moveSet, move, limit);
 }
 
-void GetEntryThirdMove(PokemonEntry *original, char *move, unsigned int limit) {
-	original->mem->moveSet->GetThirdMove(original->mem->moveSet, move, limit);
+void GetEntryThirdMoveName(PokemonEntry *original, char *move, unsigned int limit) {
+	original->mem->moveSet->GetThirdMoveName(original->mem->moveSet, move, limit);
 }
 
-void GetEntryFourthMove(PokemonEntry *original, char *move, unsigned int limit) {
-	original->mem->moveSet->GetFourthMove(original->mem->moveSet, move, limit);
+void GetEntryFourthMoveName(PokemonEntry *original, char *move, unsigned int limit) {
+	original->mem->moveSet->GetFourthMoveName(original->mem->moveSet, move, limit);
 }
 
+unsigned int GetEntryFirstMoveDamage(PokemonEntry *obj) {
+	return obj->mem->moveSet->GetFirstMoveDamage(obj->mem->moveSet);	
+}
 
+unsigned int GetEntrySecondMoveDamage(PokemonEntry *obj) {
+	return obj->mem->moveSet->GetSecondMoveDamage(obj->mem->moveSet);	
+}
+
+unsigned int GetEntryThirdMoveDamage(PokemonEntry *obj) {
+	return obj->mem->moveSet->GetThirdMoveDamage(obj->mem->moveSet);	
+}
+
+unsigned int GetEntryFourthMoveDamage(PokemonEntry *obj) {
+	return obj->mem->moveSet->GetFourthMoveDamage(obj->mem->moveSet);	
+}
+
+Type GetEntryFirstMoveType(PokemonEntry *obj) {
+	return obj->mem->moveSet->GetFirstMoveType(obj->mem->moveSet);	
+}
+
+Type GetEntrySecondMoveType(PokemonEntry *obj) {
+	return obj->mem->moveSet->GetSecondMoveType(obj->mem->moveSet);	
+
+}
+
+Type GetEntryThirdMoveType(PokemonEntry *obj) {
+	return obj->mem->moveSet->GetThirdMoveType(obj->mem->moveSet);	
+}
+
+Type GetEntryFourthMoveType(PokemonEntry *obj) {
+	return obj->mem->moveSet->GetFourthMoveType(obj->mem->moveSet);	
+}
 
 void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit) {
 	unsigned int i;

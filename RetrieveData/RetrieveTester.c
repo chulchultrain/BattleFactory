@@ -14,19 +14,20 @@ char continueChar = 'Y';
 int i;
 
 while(continueChar == 'Y') {
-printf("Enter Pokemon Name you which to find. ");
-fgets(buffer,21,stdin);
+	printf("Enter Pokemon Name you which to find. ");
+	fgets(buffer,21,stdin);
+	fflush(stdin);
+	//modulize
+	i = 0;
+	while(i < 21 && buffer[i] != '\n')
+		i++;
+	buffer[i] = 0;
 
-//modulize
-i = 0;
-while(i < 21 && buffer[i] != '\n')
-	i++;
-buffer[i] = 0;
 
-
-ConsolePrintPokemonEntryFile(buffer);
-printf("To continue with another pokemon, type in Y. ");
-continueChar = fgetc(stdin);
+	ConsolePrintPokemonEntryFile(buffer);
+	printf("To continue with another pokemon, type in Y. ");
+	continueChar = fgetc(stdin);
+	fflush(stdin);
 }
 return 0;
 

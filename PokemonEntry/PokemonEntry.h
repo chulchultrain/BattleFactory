@@ -7,7 +7,7 @@
 
 
 
-
+#include <PokemonEntry/Typing.h>
 
 //NOTE MAX OF 21 CHARACTERS IN NAME.
 //MAKE A NAME STRUCT/FILE NAH not worth for just a name. 
@@ -44,10 +44,21 @@ unsigned int (*GetSpecialDefense)();
 unsigned int (*GetSpeed)();
 unsigned int (*GetPrimaryType)();
 unsigned int (*GetSecondaryType)();
-void (*GetFirstMove)();
-void (*GetSecondMove)();
-void (*GetThirdMove)();
-void (*GetFourthMove)();
+void (*GetFirstMoveName)();
+void (*GetSecondMoveName)();
+void (*GetThirdMoveName)();
+void (*GetFourthMoveName)();
+
+unsigned int (*GetFirstMoveDamage)();
+unsigned int (*GetSecondMoveDamage)();
+unsigned int (*GetThirdMoveDamage)();
+unsigned int (*GetFourthMoveDamage)();
+
+Type (*GetFirstMoveType)();
+Type (*GetSecondMoveType)();
+Type (*GetThirdMoveType)();
+Type (*GetFourthMoveType)();
+
 
 //enum for pokemon Nature
 

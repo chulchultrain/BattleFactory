@@ -22,7 +22,7 @@ void SetBothTypes(TypeContainer* original,const Type* primary,const Type* second
 
 void SetTypeContainerFunctionPointers(TypeContainer* original);
 
-void TypeConsolePrint(Type* obj);
+void TypeConsolePrint(Type obj);
 
 void TypeContainerConsolePrint(TypeContainer* obj);
 
@@ -139,9 +139,9 @@ void SetTypeContainerFunctionPointers(TypeContainer* original) {
 	original->GetSecondary = GetSecondaryType;
 }
 
-void TypeConsolePrint(Type* obj) {
+void TypeConsolePrint(Type obj) {
 	printf("Type is ");
-	switch(*obj) {
+	switch(obj) {
 		case NONE: printf("NONE"); break;
 		case NORMAL: printf("NORMAL"); break;
 		case GRASS: printf("GRASS"); break;
@@ -166,9 +166,9 @@ void TypeConsolePrint(Type* obj) {
 
 void TypeContainerConsolePrint(TypeContainer* obj) {
 	printf("Primary ");
-	TypeConsolePrint(&obj->mem->primary);
+	TypeConsolePrint(obj->mem->primary);
 	printf("Secondary ");
-	TypeConsolePrint(&obj->mem->secondary);
+	TypeConsolePrint(obj->mem->secondary);
 }
 
 Type GetPrimaryType(TypeContainer* obj) {

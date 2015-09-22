@@ -6,7 +6,9 @@
 
 struct PokemonMovePrivate {
 	
+unsigned int damage;
 char name[MAX_MOVE_NAME];
+Type moveType;
 
 };
 
@@ -25,7 +27,13 @@ void copyMoveName(const char* source, char* dest) {
 		dest[i] = 0; //append '\0'
 }
 
-
+void SetPokemonMovePrivateData(PokemonMovePrivate *mem) {
+	if(mem != 0) {
+		mem->name[0] = 0;
+		mem->damage = 0;
+		mem->moveType = NONE;
+	}
+}
 
 PokemonMove *NewPokemonMove() {
 	PokemonMove *newPtr = malloc(sizeof(PokemonMove));
@@ -34,7 +42,8 @@ PokemonMove *NewPokemonMove() {
 	newPtr->mem = malloc(sizeof(PokemonMovePrivate));
 	if( newPtr->mem == 0)
 		GlobalDestroyer(1,0,0);
-	newPtr->mem->name[0] = 0;
+
+	SetPokemonMovePrivateData(newPtr->mem);
 
 	SetPokemonMoveFunctionPointers(newPtr);
 	return newPtr;
@@ -52,8 +61,35 @@ void GetMoveName(PokemonMove *obj, char *dest, unsigned int limit) {
 	}	
 }
 
+
+
+void MoveTypeConsolePrint(Type obj) {
+	printf("Type is ");
+	switch(obj) {
+		case NONE: printf("NONE"); break;
+		case NORMAL: printf("NORMAL"); break;
+		case GRASS: printf("GRASS"); break;
+		case BUG: printf("BUG"); break;
+		case FIRE: printf("FIRE"); break;
+		case WATER: printf("WATER"); break;
+		case ICE: printf("ICE"); break;
+		case ELECTRIC: printf("ELECTRIC"); break;
+		case FLYING: printf("FLYING"); break;
+		case ROCK: printf("ROCK"); break;
+		case GROUND: printf("GROUND"); break;
+		case POISON: printf("POISON"); break;
+		case PSYCHIC: printf("PSYCHIC"); break;
+		case DARK: printf("DARK"); break;
+		case STEEL: printf("STEEL"); break;
+		case DRAGON: printf("DRAGON"); break;
+		default: printf("INVALID TYPE");
+	}
+	printf("\n");
+
+}
 void MoveConsolePrint(PokemonMove *obj) {
-	printf("Move is %s\n", obj->mem->name);
+	printf("Move is %s. Damage is %u ", obj->mem->name, obj->mem->damage);
+	MoveTypeConsolePrint(obj->mem->moveType);
 }
 
 void SetMoveName(PokemonMove *original, char *moveName) {
@@ -61,11 +97,33 @@ void SetMoveName(PokemonMove *original, char *moveName) {
 	copyMoveName(moveName, original->mem->name);
 }
 
+void SetMoveDamage(PokemonMove *original, unsigned int D) {
+	original->mem->damage = D;
+}
+
+unsigned int GetMoveDamage(PokemonMove *obj) {
+	return obj->mem->damage;
+}
+
+void SetMoveType(PokemonMove *original, Type t) {
+	original->mem->moveType = t;
+}
+
+Type GetMoveType(PokemonMove *obj) {
+	return obj->mem->moveType;
+}
+
 
 void SetPokemonMoveFunctionPointers(PokemonMove *movePtr) {
 	movePtr->SetName = SetMoveName;
 	movePtr->GetName = GetMoveName;
 	movePtr->ConsolePrint = MoveConsolePrint;
+	//TODO:
+	movePtr->SetDamage = SetMoveDamage;
+	movePtr->GetDamage = GetMoveDamage;
+	movePtr->SetType = SetMoveType;
+	movePtr->GetType = GetMoveType;
+
 }
 
 void ResetPokemonMoveData(PokemonMove *recall) {
@@ -75,7 +133,8 @@ void ResetPokemonMoveData(PokemonMove *recall) {
 			for(i = 0; i < MAX_MOVE_NAME; i++)
 				recall->mem->name[i] = 0;
 				}
-
+		recall->mem->damage = 0;
+		recall->mem->moveType = NONE;
 	}
 
 }
