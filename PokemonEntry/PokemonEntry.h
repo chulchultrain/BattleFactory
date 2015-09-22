@@ -8,6 +8,7 @@
 
 
 #include <PokemonEntry/Typing.h>
+#include <PokemonEntry/PokemonMove.h>
 
 //NOTE MAX OF 21 CHARACTERS IN NAME.
 //MAKE A NAME STRUCT/FILE NAH not worth for just a name. 
@@ -59,6 +60,10 @@ Type (*GetSecondMoveType)();
 Type (*GetThirdMoveType)();
 Type (*GetFourthMoveType)();
 
+MoveCategory (*GetFirstMoveCategory)();
+MoveCategory (*GetSecondMoveCategory)();
+MoveCategory (*GetThirdMoveCategory)();
+MoveCategory (*GetFourthMoveCategory)();
 
 //enum for pokemon Nature
 

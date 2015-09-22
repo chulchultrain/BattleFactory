@@ -3,6 +3,8 @@
 
 #include <PokemonEntry/Typing.h>
 
+typedef enum MoveCategory { EMPTY, PHYSICAL, SPECIAL, STATUS} MoveCategory;
+
 typedef struct PokemonMovePrivate PokemonMovePrivate;
 
 
@@ -19,6 +21,8 @@ void (*SetDamage)();
 unsigned int (*GetDamage)();
 void (*SetType)();
 Type (*GetType)();
+void (*SetCategory)();
+MoveCategory (*GetCategory)();
 
 } PokemonMove;
 

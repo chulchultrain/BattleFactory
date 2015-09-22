@@ -9,6 +9,7 @@ struct PokemonMovePrivate {
 unsigned int damage;
 char name[MAX_MOVE_NAME];
 Type moveType;
+MoveCategory moveCat;
 
 };
 
@@ -32,6 +33,7 @@ void SetPokemonMovePrivateData(PokemonMovePrivate *mem) {
 		mem->name[0] = 0;
 		mem->damage = 0;
 		mem->moveType = NONE;
+		mem->moveCat = EMPTY;
 	}
 }
 
@@ -87,9 +89,25 @@ void MoveTypeConsolePrint(Type obj) {
 	printf("\n");
 
 }
+
+void MoveCategoryConsolePrint(MoveCategory obj) {
+	printf("Move Category is ");
+	switch(obj) {
+			case NONE: printf("EMPTY"); break;
+			case PHYSICAL: printf("PHYSICAL"); break;
+			case SPECIAL: printf("SPECIAL"); break;
+			case STATUS: printf("STATUS"); break;
+			default: printf("INVALID MOVE CATEGORY");
+		}
+	printf(' ');
+//	printf("\n");
+}
+
 void MoveConsolePrint(PokemonMove *obj) {
 	printf("Move is %s. Damage is %u ", obj->mem->name, obj->mem->damage);
+	MoveCategoryConsolePrint(obj->mem->moveCat);
 	MoveTypeConsolePrint(obj->mem->moveType);
+
 }
 
 void SetMoveName(PokemonMove *original, char *moveName) {
@@ -97,20 +115,28 @@ void SetMoveName(PokemonMove *original, char *moveName) {
 	copyMoveName(moveName, original->mem->name);
 }
 
-void SetMoveDamage(PokemonMove *original, unsigned int D) {
-	original->mem->damage = D;
+void SetMoveDamage(PokemonMove *original, unsigned int *D) {
+	original->mem->damage = *D;
 }
 
 unsigned int GetMoveDamage(PokemonMove *obj) {
 	return obj->mem->damage;
 }
 
-void SetMoveType(PokemonMove *original, Type t) {
-	original->mem->moveType = t;
+void SetMoveType(PokemonMove *original, Type *t) {
+	original->mem->moveType = *t;
 }
 
 Type GetMoveType(PokemonMove *obj) {
 	return obj->mem->moveType;
+}
+
+void SetMoveCategory(PokemonMove *original, MoveCategory *m) {
+	original->mem->moveCat = *m;
+}
+
+MoveCategory GetMoveCategory(PokemonMove *obj) {
+	return obj->mem->moveCat;
 }
 
 
@@ -123,7 +149,8 @@ void SetPokemonMoveFunctionPointers(PokemonMove *movePtr) {
 	movePtr->GetDamage = GetMoveDamage;
 	movePtr->SetType = SetMoveType;
 	movePtr->GetType = GetMoveType;
-
+	movePtr->SetCategory = SetMoveCategory;
+	movePtr->GetCategory = GetMoveCategory;
 }
 
 void ResetPokemonMoveData(PokemonMove *recall) {
@@ -135,6 +162,7 @@ void ResetPokemonMoveData(PokemonMove *recall) {
 				}
 		recall->mem->damage = 0;
 		recall->mem->moveType = NONE;
+		recall->mem->moveCat = EMPTY;
 	}
 
 }

@@ -2,6 +2,7 @@
 #define __POKEMONMOVESET_H_INCLUDED__
 
 #include <PokemonEntry/Typing.h>
+#include <PokemonEntry/PokemonMove.h>
 
 typedef struct PokemonMoveSetPrivate PokemonMoveSetPrivate;
 
@@ -30,6 +31,11 @@ void (*SetSecondMoveType)();
 void (*SetThirdMoveType)();
 void (*SetFourthMoveType)();
 
+void (*SetFirstMoveCategory)();
+void (*SetSecondMoveCategory)();
+void (*SetThirdMoveCategory)();
+void (*SetFourthMoveCategory)();
+
 void (*ConsolePrint)();
 
 unsigned int (*GetFirstMoveDamage)();
@@ -42,7 +48,10 @@ Type (*GetSecondMoveType)();
 Type (*GetThirdMoveType)();
 Type (*GetFourthMoveType)();
 
-
+MoveCategory (*GetFirstMoveCategory)();
+MoveCategory (*GetSecondMoveCategory)();
+MoveCategory (*GetThirdMoveCategory)();
+MoveCategory (*GetFourthMoveCategory)();
 
 
 } PokemonMoveSet;
