@@ -8,7 +8,7 @@
 
 void ConsolePrintPokemonEntryFile(char *name) {
 
-char fileName[MAX_FILE_NAME] = NAME_DIRECTORY_OF_DATA;
+char fileName[MAX_FILE_NAME] = ENTRY_DIRECTORY SUB_DIR_DPP;
 printf("NAME_DIRECTORY_OF_DATA is %s \n", fileName);
 int i;
 for(i = 0; i < MAX_FILE_NAME; i++)
@@ -32,3 +32,33 @@ fclose(fin);
 
 
 }
+
+/**
+void GetBaseStatsFromFile(PokemonEntry *entry) {
+	char name[MAX_NAME] = {0};
+	entry->GetName(entry,name,MAX_NAME);
+	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
+	AppendArrayToArray(name,MAX_NAME,fileName,MAX_FILE_NAME);
+	
+	FILE *fin = fopen(fileName, "r");
+	if(fin == 0) {
+		GlobalDFestroyer(1,0,0);
+	}
+	//ProcessBaseStatsFile return an unsigned int array full of stats somehow, then plug into entry.
+
+}
+**/
+
+
+/**
+	void EntryFromFile(PokemonEntry *entry, unsigned int whichEntry) {
+		//retrieve stats from BASE/STATS/ dir.
+		//create array witht these base stats.
+	}
+		//create PokemonEntry, with name.
+		//based on whichEntry, parse out the correct entry, and update stats, nature, moveset accordingly
+
+
+
+**/
+

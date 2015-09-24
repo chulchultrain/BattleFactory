@@ -25,3 +25,26 @@ unsigned int InsertArrayInArray(char *src, unsigned int srcLimit, char *dest, un
 	return i + start;
 
 }
+
+unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, unsigned int destLimit) {
+	unsigned int i = 0; //destArray iterator
+	unsigned int j = 0; //srcArray iterator
+	
+	//iterate through destarray until reach its end.
+	while( i < destLimit || dest[i] != 0)
+		i++;
+
+	//if no space to append, return
+	if( i == destLimit)
+		return destLimit;
+
+
+	//append as much as can without going over destLimit.
+	while(i < destLimit || src[j] != 0) {
+		dest[i] = src[j];
+		i++;
+		j++; }
+
+	return i;
+
+}

@@ -32,6 +32,7 @@ git add SpecialConstants.h
 cd $RD_DIR
 git add RetrievePokemon.h RetrievePokemon.c RetrieveTester.c
 cd $BF_DIR
+git add Output_R1.txt Output_R2.txt Output_R3.txt Output_R4.txt DexterDataFile.txt
 git add com_script.sh progress_script.sh
 git add MakeFile
 git commit

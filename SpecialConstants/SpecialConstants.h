@@ -22,9 +22,19 @@ File to store Special constants and include here so that do not have to #define 
 #define MAX_MOVE_NAME 21
 #endif
 
-#ifndef NAME_DIRECTORY_OF_DATA
-#define NAME_DIRECTORY_OF_DATA "BASE/NAME/"
+#ifndef BASE_STATS_DIR
+#define BASE_STATS_DIR "BASE/STATS/"
 #endif
+
+#ifndef ENTRY_DIRECTORY
+#define ENTRY_DIRECTORY "BASE/ENTRY/"
+#endif
+
+#ifndef SUB_DIR_DPP
+#define SUB_DIR_DPP "DPP/"
+#endif
+
+//make sub dirs for the other gens when necessary.
 
 #ifndef ENTRY_FILE1_OF_DATA
 #define ENTRY_FILE1_OF_DATA "Output_R1.txt"

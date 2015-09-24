@@ -1,4 +1,5 @@
 #include <RetrieveData/RetrievePokemon.h>
+#include <GlobalDestroyer/GlobalDestroyer.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -29,6 +30,8 @@ while(continueChar == 'Y') {
 	continueChar = fgetc(stdin);
 	fflush(stdin);
 }
+
+GlobalDestroyer(1,0,0);
 return 0;
 
 }

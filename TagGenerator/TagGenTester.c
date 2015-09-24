@@ -7,7 +7,7 @@
 
 int main() {
 
-char nameDir[1000] = NAME_DIRECTORY_OF_DATA;
+char nameDir[1000] = ENTRY_DIRECTORY SUB_DIR_DPP;
 char entryFile[100] = ENTRY_FILE1_OF_DATA;
 char entryFile2[100] = ENTRY_FILE2_OF_DATA;
 char entryFile3[100] = ENTRY_FILE3_OF_DATA;

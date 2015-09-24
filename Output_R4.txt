@@ -2281,7 +2281,7 @@ Turn
 Focus Sash
 Jolly
 255 HP
-255 SA
+255 Spd
 
 Gliscor
 Ground/Flying Earthquake
