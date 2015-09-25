@@ -34,11 +34,19 @@ fclose(fin);
 }
 
 /**
-void GetBaseStatsFromFile(PokemonEntry *entry) {
-	char name[MAX_NAME] = {0};
-	entry->GetName(entry,name,MAX_NAME);
+
+void TopLevel(char *name) {
+	unsigned int statTable[NUM_OF_STATS];
+	GetBaseStatsFromFile(name, MAX_NAME, statTable, NUM_OF_STATS);
+	
+	//create entry using basestats and name.
+
+
+}
+
+void GetBaseStatsFromFile(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
 	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
-	AppendArrayToArray(name,MAX_NAME,fileName,MAX_FILE_NAME);
+	AppendArrayToArray(name, name_limit, fileName, MAX_FILE_NAME);
 	
 	FILE *fin = fopen(fileName, "r");
 	if(fin == 0) {
@@ -51,14 +59,12 @@ void GetBaseStatsFromFile(PokemonEntry *entry) {
 
 
 /**
-	void EntryFromFile(PokemonEntry *entry, unsigned int whichEntry) {
-		//retrieve stats from BASE/STATS/ dir.
-		//create array witht these base stats.
-	}
-		//create PokemonEntry, with name.
-		//based on whichEntry, parse out the correct entry, and update stats, nature, moveset accordingly
+void EntryFromFile(PokemonEntry *entry, unsigned int whichEntry) {
 
+	//create PokemonEntry, with name.
+	//based on whichEntry, parse out the correct entry, and update stats, nature, moveset accordingly
 
+}
 
 **/
 
