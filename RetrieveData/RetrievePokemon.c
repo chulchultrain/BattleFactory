@@ -37,10 +37,22 @@ fclose(fin);
 
 void TopLevel(char *name) {
 	unsigned int statTable[NUM_OF_STATS];
-	GetBaseStatsFromFile(name, MAX_NAME, statTable, NUM_OF_STATS);
+	GetBaseStatsForPokemonName(name, MAX_NAME, statTable, NUM_OF_STATS);
 	
+	unsigned int i = 0;
+
+
 	//create entry using basestats and name.
-	
+	PokemonEntry *pEntry = NewPokemonEntry();
+	pEntry->SetName(pEntry, name);
+	pEntry->SetHitPoints(pEntry, statTable);
+	pEntry->SetAttack(pEntry, (statTable + 1));
+	pEntry->SetDefense(pEntry, (statTable + 2));
+	pEntry->SetSpecialAttack(pEntry, (statTable + 3));
+	pEntry->SetSpecialDefense(pEntry, (statTable + 4));
+	pEntry->SetSpeed(pEntry, (statTable + 5));
+
+
 
 }
 
@@ -51,8 +63,8 @@ void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int stat
 	int val = 0;
 	char buffer[MAX_LINE_LENGTH] = {0};
 
-	while(i < statArrayLimit) {
-		fgets(buffer, MAX_LINE_LENGTH, fptr);
+	while(i < statArrayLimit && fgets(buffer, MAX_LINE_LENGTH, fptr != 0)) {
+
 		val = StringToUnsignedInt(buffer, MAX_LINE_LENGTH, (statArray + i) );
 		//add Logger function to indicate failure. 
 		i++;
@@ -60,7 +72,7 @@ void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int stat
 
 }
 
-void GetBaseStatsFromFile(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
+void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
 	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
 	AppendArrayToArray(name, name_limit, fileName, MAX_FILE_NAME);
 	
