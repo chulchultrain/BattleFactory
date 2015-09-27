@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
+unsigned int StringToUnsignedInt(char *line, unsigned int line_length) {
+	
+}
 
 void MakeDir(char *dirName, struct stat *st) {
 	if(dirName != 0 && st != 0) {
@@ -31,7 +33,7 @@ unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, un
 	unsigned int j = 0; //srcArray iterator
 	
 	//iterate through destarray until reach its end.
-	while( i < destLimit || dest[i] != 0)
+	while( i < destLimit && dest[i] != 0)
 		i++;
 
 	//if no space to append, return
@@ -40,7 +42,7 @@ unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, un
 
 
 	//append as much as can without going over destLimit.
-	while(i < destLimit || src[j] != 0) {
+	while(i < destLimit && src[j] != 0) {
 		dest[i] = src[j];
 		i++;
 		j++; }

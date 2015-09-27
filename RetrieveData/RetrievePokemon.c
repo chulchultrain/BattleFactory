@@ -40,7 +40,23 @@ void TopLevel(char *name) {
 	GetBaseStatsFromFile(name, MAX_NAME, statTable, NUM_OF_STATS);
 	
 	//create entry using basestats and name.
+	
 
+}
+
+// the file should have each stat on a different line, statName statAmount 
+void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit) {
+
+	unsigned int i = 0; //array offset
+	int val = 0;
+	char buffer[MAX_LINE_LENGTH] = {0};
+
+	while(i < statArrayLimit) {
+		fgets(buffer, MAX_LINE_LENGTH, fptr);
+		val = StringToUnsignedInt(buffer, MAX_LINE_LENGTH, (statArray + i) );
+		//add Logger function to indicate failure. 
+		i++;
+	}
 
 }
 
@@ -52,8 +68,8 @@ void GetBaseStatsFromFile(char *name, unsigned int name_limit, unsigned int *sta
 	if(fin == 0) {
 		GlobalDFestroyer(1,0,0);
 	}
-	//ProcessBaseStatsFile return an unsigned int array full of stats somehow, then plug into entry.
-
+	//Extracts base stats out of file and put into array.
+	ProcessBaseStatsFile(fin, statArray, statArrayLimit);
 }
 **/
 

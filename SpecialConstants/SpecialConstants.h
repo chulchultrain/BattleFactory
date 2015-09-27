@@ -14,6 +14,10 @@ File to store Special constants and include here so that do not have to #define 
 #define MAX_POKEDEX_LINE 80
 #endif
 
+#ifndef MAX_LINE_LENGTH
+#define MAX_LINE_LENGTH 80
+#endif
+
 #ifndef MAX_FILE_NAME
 #define MAX_FILE_NAME 200
 #endif

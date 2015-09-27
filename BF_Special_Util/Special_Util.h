@@ -9,10 +9,24 @@
 void MakeDir(char *dirName, struct stat *st);
 
 
+/**
+Attempts to translate a string(char array) to an unsigned int.
+@param line - string(char array) to be translated
+@param line_length - length of string to be translated to ensure memory access doesn't go beyond the limits
+Will attempt to return an unsigned int based on the digits present in the char array. If the char array is invalid, meaning
+it contains items other than numerical digits, the function will fail. When failing, function will return 1 and the unsigned int
+will be set to 0. 
+
+Successful call will return 0, and set pointer properly.
+**/
+int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *);
+
 //start = start index in the destination array. This function will always try to put the full src array into an index of the dest array.
 unsigned int InsertArrayInArray(char *src, unsigned int srcLimit, char *dest, unsigned int start, unsigned int destLimit);
 
 //appends full array to another array. aka index 0 to first occurence of NULL, then index 0 
 unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, unsigned int destLimit);
+
+
 
 #endif
