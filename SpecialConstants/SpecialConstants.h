@@ -38,8 +38,36 @@ File to store Special constants and include here so that do not have to #define 
 #define ENTRY_DIRECTORY "BASE/ENTRY/"
 #endif
 
+#ifndef MAX_REGIONS
+#define MAX_REGIONS 9
+#endif
+
+#ifndef MAX_REGION_SUBDIR_LENGTH
+#define MAX_REGION_SUBDIR_LENGTH 8
+#endif
+
+#ifndef SUB_DIR_EMERALD
+#define SUB_DIR_EMERALD "EMERALD/"
+#endif
+
 #ifndef SUB_DIR_DPP
 #define SUB_DIR_DPP "DPP/"
+#endif
+
+#ifndef SUB_DIR_HGSS
+#define SUB_DIR_HGSS "HGSS/"
+#endif
+
+#ifndef SUB_DIR_BW
+#define SUB_DIR_BW "BW/"
+#endif
+
+#ifndef SUB_DIR_XY
+#define SUB_DIR_XY "XY/"
+#endif
+
+#ifndef SUB_DIR_ORAS
+#define SUB_DIR_ORAS "ORAS/"
 #endif
 
 //make sub dirs for the other gens when necessary.
