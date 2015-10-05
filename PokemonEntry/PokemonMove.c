@@ -99,7 +99,7 @@ void MoveCategoryConsolePrint(MoveCategory obj) {
 			case STATUS: printf("STATUS"); break;
 			default: printf("INVALID MOVE CATEGORY");
 		}
-	printf(' ');
+	printf(" ");
 //	printf("\n");
 }
 

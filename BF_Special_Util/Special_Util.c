@@ -2,8 +2,25 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-unsigned int StringToUnsignedInt(char *line, unsigned int line_length) {
-	
+
+unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *product) {
+	unsigned int temp = 0;
+	unsigned int i;
+	for(i = 0;  i < line_length && line[i] != '\n'; i++) {
+		if( line[i] >= '0' && line[i] <= '9') {
+			temp *= 10;
+			temp += (line[i] - '0'); 
+			printf("unsigned int is %u\n", temp);
+				}
+		else
+			return 1;
+
+	}
+	*product = temp;
+	printf("unsigned int is %u\n", *product);
+
+
+	return 0;
 }
 
 void MakeDir(char *dirName, struct stat *st) {

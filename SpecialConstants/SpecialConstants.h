@@ -62,6 +62,10 @@ File to store Special constants and include here so that do not have to #define 
 #define SUB_DIR_BW "BW/"
 #endif
 
+#ifndef SUB_DIR_BW2
+#define SUB_DIR_BW2 "BW2/"
+#endif
+
 #ifndef SUB_DIR_XY
 #define SUB_DIR_XY "XY/"
 #endif

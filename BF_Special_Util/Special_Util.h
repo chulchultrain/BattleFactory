@@ -19,7 +19,7 @@ will be set to 0.
 
 Successful call will return 0, and set pointer properly.
 **/
-int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *);
+unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *);
 
 //start = start index in the destination array. This function will always try to put the full src array into an index of the dest array.
 unsigned int InsertArrayInArray(char *src, unsigned int srcLimit, char *dest, unsigned int start, unsigned int destLimit);

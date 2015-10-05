@@ -25,10 +25,13 @@ while(continueChar == 'Y') {
 	buffer[i] = 0;
 
 
-	ConsolePrintPokemonEntryFile(buffer);
+	TopLevel(buffer);
 	printf("To continue with another pokemon, type in Y. ");
-	continueChar = fgetc(stdin);
 	fflush(stdin);
+	//TODO:NewLINE errors. reads newline that wasn't taken out of stdin.
+	continueChar = fgetc(stdin);
+	printf("Continue char is %c\n", continueChar);
+	
 }
 
 GlobalDestroyer(1,0,0);
