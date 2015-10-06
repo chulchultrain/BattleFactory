@@ -44,7 +44,7 @@ void RidOfNewLine(char *name, unsigned int nameLimit) {
 		
 }
 
-void FillNameTagFiles(char *nameDir, char *entryFileName) {
+void FillNameTagFiles(char *nameDir, char *entryFileName, char *region) {
 	struct stat *st = malloc(sizeof(struct stat));
 	
 	//for every entry in ur entryfile, put it in the correct outputfile. Must append. 

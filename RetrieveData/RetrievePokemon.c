@@ -24,10 +24,11 @@ if(fin == 0) {
 else 
 	printf("Successful open\n");
 **/
-char line[MAX_POKEDEX_LINE] = {0};
-while( fgets(line,MAX_POKEDEX_LINE - 5, fin) != 0) 
-	printf("%s", line);
-
+if( fin != 0) {
+	char line[MAX_POKEDEX_LINE] = {0};
+	while( fgets(line,MAX_POKEDEX_LINE - 5, fin) != 0) 
+		printf("%s", line); 
+					}
 //fclose(fin);
 
 
@@ -88,13 +89,13 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 	for(i = 0; i < MAX_REGIONS && regionPointer[i] != 0; i++)
 		printf("%s - %u\n", regionPointer[i], i);	
 
-	char c;
-	c = fgetc(stdin);
-	if( c >= 48 && c < 58) { //CHANGE TO WHILE LOOP
-		i =  c - '0';
-		AppendArrayToArray( regionPointer[i], MAX_REGION_SUBDIR_LENGTH, entryFileDir, fileDirLimit);
-		return 0;
-			}
+	char buffer[MAX_LINE_LENGTH];
+	unsigned int uPtr[1];	
+
+	fgets(buffer,MAX_LINE_LENGTH,stdin);
+	if( !StringToUnsignedInt(buffer, MAX_LINE_LENGTH, uPtr) ) {
+		AppendArrayToArray( *(regionPointer + uPtr[0]), MAX_REGION_SUBDIR_LENGTH, entryFileDir, fileDirLimit);
+		return 0; }
 	else 
 		return 1; // something idk maybe an error msg. maybe return function shoudl also error 0,1
 
@@ -102,10 +103,10 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 
 
 
-void TopLevel(char *name) {
+void TopLevel(char *name, unsigned int name_limit) {
 
 	unsigned int statTable[NUM_OF_STATS];
-	GetBaseStatsForPokemonName(name, MAX_NAME, statTable, NUM_OF_STATS);
+	GetBaseStatsForPokemonName(name, name_limit, statTable, NUM_OF_STATS);
 	
 	unsigned int i = 0;
 
@@ -140,15 +141,15 @@ void TopLevel(char *name) {
 	}
 	else 
 		printf("Successful open\n");
+
+	//display entries
 	ConsolePrintPokemonEntryFile(fin);
 
-	//TODO: DBL FREE ERROR DUE TO CONSOLEPRINTPOKEMONENTRY OPENING FILE 
+	//TODO: DBL FREE ERROR DUE TO CONSOLEPRINTPOKEMONENTRY CLOSING FILE 
 	fclose(fin);
-	//display entries
-
 
 	//choose which entries.
-
+	printf("Which Entry would you like to pick? ");
 
 	//make func to order entries and efficiently retrieve. not multiple file Open and close
 

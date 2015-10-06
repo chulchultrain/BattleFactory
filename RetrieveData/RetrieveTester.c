@@ -1,12 +1,13 @@
 #include <RetrieveData/RetrievePokemon.h>
 #include <GlobalDestroyer/GlobalDestroyer.h>
+#include <SpecialConstants/SpecialConstants.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 int main() {
 
 //TODO:change with makefile to nonmagic value
-char buffer[21] = {0};
+char buffer[MAX_NAME] = {0};
 
 printf("The Application to Help Get Higher Records in Pokemon Platinum Battle Factory\n");
 
@@ -16,18 +17,18 @@ int i;
 
 while(continueChar == 'Y') {
 	printf("Enter Pokemon Name you which to find. ");
-	fgets(buffer,21,stdin);
-	fflush(stdin);
+	fgets(buffer,MAX_NAME,stdin);
+	//fflush(stdin);
 	//modulize
 	i = 0;
-	while(i < 21 && buffer[i] != '\n')
+	while(i < MAX_NAME && buffer[i] != '\n')
 		i++;
 	buffer[i] = 0;
 
 
-	TopLevel(buffer);
+	TopLevel(buffer, MAX_NAME);
 	printf("To continue with another pokemon, type in Y. ");
-	fflush(stdin);
+	//fflush(stdin); cant flush input buffers according to internet
 	//TODO:NewLINE errors. reads newline that wasn't taken out of stdin.
 	continueChar = fgetc(stdin);
 	printf("Continue char is %c\n", continueChar);

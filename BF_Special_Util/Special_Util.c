@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 
+
 unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *product) {
 	unsigned int temp = 0;
 	unsigned int i;
@@ -10,14 +11,16 @@ unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned 
 		if( line[i] >= '0' && line[i] <= '9') {
 			temp *= 10;
 			temp += (line[i] - '0'); 
-			printf("unsigned int is %u\n", temp);
+		//	printf("unsigned int is %u\n", temp);
 				}
-		else
+		else {
+			*product = 0;	
 			return 1;
+			}
 
 	}
 	*product = temp;
-	printf("unsigned int is %u\n", *product);
+	//printf("unsigned int is %u\n", *product);
 
 
 	return 0;

@@ -13,11 +13,13 @@ char entryFile2[100] = ENTRY_FILE2_OF_DATA;
 char entryFile3[100] = ENTRY_FILE3_OF_DATA;
 char entryFile4[100] = ENTRY_FILE4_OF_DATA;
 
+char region[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_DPP;
 
-FillNameTagFiles(nameDir, entryFile);
-FillNameTagFiles(nameDir, entryFile2);
-FillNameTagFiles(nameDir, entryFile3);
-FillNameTagFiles(nameDir, entryFile4);
+
+FillNameTagFiles(nameDir, entryFile, region);
+FillNameTagFiles(nameDir, entryFile2, region);
+FillNameTagFiles(nameDir, entryFile3, region);
+FillNameTagFiles(nameDir, entryFile4, region);
 
 
 

@@ -69,7 +69,7 @@ $(TG_DIR)/TagGenTester.o: $(TG_DIR)/FillDataFiles.h $(TG_DIR)/TagGenTester.c $(S
 $(RD_DIR)/RetrievePokemon.o: $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h $(SU_DIR)/Special_Util.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(RD_DIR)/RetrievePokemon.c -o $(RD_DIR)/RetrievePokemon.o
 
-$(RD_DIR)/RetrieveTester.o: $(RD_DIR)/RetrieveTester.c $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h
+$(RD_DIR)/RetrieveTester.o: $(RD_DIR)/RetrieveTester.c $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h $(SC_DIR)/SpecialConstants.h $(GD_DIR)/GlobalDestroyer.h
 	gcc $(FLAGS) $(RD_DIR)/RetrieveTester.c -o $(RD_DIR)/RetrieveTester.o
 
 clean: 
