@@ -8,12 +8,16 @@
 
 
 
-void WriteNameTagFile(FILE *entryFilePtr, char *nameDir, char *entryName, struct stat *st) {
+void WriteNameTagFile(FILE *entryFilePtr, char *nameDir, char *entryName, char *region, struct stat *st) {
 	char outputFileName[MAX_FILE_NAME] = {0};
 	unsigned int i = 0;
 	i = InsertArrayInArray(nameDir, MAX_FILE_NAME, outputFileName, i, MAX_FILE_NAME);
 
+	AppendArrayToArray(region, MAX_REGION_SUBDIR_LENGTH, outputFileName, MAX_FILE_NAME);
+
 	i = InsertArrayInArray(entryName, MAX_NAME, outputFileName, i, MAX_FILE_NAME);
+
+	
 
 	printf("%s\n", outputFileName);
 	FILE *outputFile = fopen(outputFileName, "a");
@@ -56,7 +60,7 @@ void FillNameTagFiles(char *nameDir, char *entryFileName, char *region) {
 	
 	while ( fgets(name, MAX_NAME, entryFilePtr) != 0) {
 		RidOfNewLine(name, MAX_NAME);
-		WriteNameTagFile(entryFilePtr, nameDir, name, st);
+		WriteNameTagFile(entryFilePtr, nameDir, name, region,st);
 	}
 
 	fclose(entryFilePtr);

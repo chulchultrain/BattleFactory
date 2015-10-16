@@ -124,9 +124,7 @@ Fire/Flying
 Solarbeam
 Solar Beam
 Sunny Day
-Will
-O
-Wisp
+Will-O-Wisp
 Overheat
 White Herb
 Modest
@@ -269,8 +267,7 @@ Adamant
 Pidgeot
 Normal/Flying
 Wing Attack
-Sand
-Attack
+Sand-Attack
 Sand Attack
 Facade
 Tailwind
@@ -284,8 +281,7 @@ Normal/Flying
 Steel Wing
 Return
 Aerial Ace
-U
-Turn
+U-Turn
 Razor Claw
 Adamant
 255 Atk
@@ -331,8 +327,7 @@ Drill Peck
 Faint Attack
 Feint Attack
 Frustration
-U
-Turn
+U-Turn
 Cheri Berry
 Adamant
 255 Atk
@@ -420,8 +415,7 @@ Adamant
 
 Sandshrew
 Ground
-Sand
-Attack
+Sand-Attack
 Sand Attack
 Dig
 Sandstorm
@@ -566,8 +560,7 @@ Normal
 Sing
 Encore
 Follow Me
-Wake
-Up Slap
+Wake-Up Slap
 BrightPowder
 Adamant
 255 HP
@@ -600,9 +593,7 @@ Fire
 Ember
 Confuse Ray
 Swift
-Will
-O
-Wisp
+Will-O-Wisp
 BrightPowder
 Calm
 255 SD
@@ -857,8 +848,7 @@ Persian
 Normal
 Slash
 Swagger
-U
-Turn
+U-Turn
 Captivate
 Silk Scarf
 Jolly
@@ -969,9 +959,7 @@ Fire
 Crunch
 Extremespeed
 Extreme Speed
-Will
-O
-Wisp
+Will-O-Wisp
 Fire Fang
 Lum Berry
 Jolly
@@ -1396,9 +1384,7 @@ Fire
 Stomp
 Tail Whip
 Flame Wheel
-Will
-O
-Wisp
+Will-O-Wisp
 Chesto Berry
 Adamant
 255 Atk
@@ -1441,8 +1427,7 @@ Adamant
 
 Rapidash
 Fire
-Double
-edge
+Double-edge
 Hypnosis
 Megahorn
 Flare Blitz
@@ -2230,8 +2215,7 @@ Normal
 Sing
 Egg Bomb
 Softboiled
-Soft
-Boiled
+Soft-Boiled
 Focus Punch
 Lucky Punch
 Impish
@@ -2263,8 +2247,7 @@ Bold
 
 Kangaskhan
 Normal
-Double
-edge
+Double-edge
 Reversal
 Endure
 Crunch
@@ -2479,8 +2462,7 @@ Bug/Flying
 Swords Dance
 Aerial Ace
 Night Slash
-X
-Scissor
+X-Scissor
 BrightPowder
 Adamant
 255 Atk
@@ -2557,9 +2539,7 @@ Fire
 Fire Punch
 Smokescreen
 Mach Punch
-Will
-O
-Wisp
+Will-O-Wisp
 Lansat Berry
 Jolly
 255 Atk
@@ -2581,8 +2561,7 @@ Bug
 Swords Dance
 Earthquake
 Rock Slide
-X
-Scissor
+X-Scissor
 Coba Berry
 Adamant
 255 Atk
@@ -2593,8 +2572,7 @@ Bug
 Flail
 Endure
 Revenge
-X
-Scissor
+X-Scissor
 Salac Berry
 Jolly
 255 Atk
@@ -2603,8 +2581,7 @@ Jolly
 Pinsir
 Bug
 Superpower
-X
-Scissor
+X-Scissor
 Giga Impact
 Stone Edge
 Lax Incense
@@ -2617,8 +2594,7 @@ Bug
 Guillotine
 Earthquake
 Close Combat
-X
-Scissor
+X-Scissor
 Scope Lens
 Adamant
 255 Atk
@@ -2867,8 +2843,7 @@ Adamant
 
 Flareon
 Fire
-Sand
-Attack
+Sand-Attack
 Sand Attack
 Flail
 Endure
@@ -2880,12 +2855,9 @@ Jolly
 
 Flareon
 Fire
-Mud
-Slap
+Mud-Slap
 Shadow Ball
-Will
-O
-Wisp
+Will-O-Wisp
 Overheat
 White Herb
 Modest
@@ -3060,8 +3032,7 @@ Adamant
 
 Snorlax
 Normal
-Double
-edge
+Double-edge
 Earthquake
 Crunch
 Zen Headbutt
@@ -3142,8 +3113,7 @@ Electric/Flying
 Drill Peck
 Steel Wing
 Twister
-U
-Turn
+U-Turn
 King
 s Rock
 Jolly
@@ -3188,8 +3158,7 @@ Fire/Flying
 Sky Attack
 Steel Wing
 Return
-U
-Turn
+U-Turn
 Power Herb
 Adamant
 255 Atk

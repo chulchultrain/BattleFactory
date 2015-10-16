@@ -111,8 +111,7 @@ Infernape
 Fire/Fighting
 Fire Punch
 Fake Out
-U
-Turn
+U-Turn
 Close Combat
 Coba Berry
 Jolly
@@ -291,8 +290,7 @@ Adamant
 
 Staraptor
 Normal/Flying
-U
-Turn
+U-Turn
 Close Combat
 Brave Bird
 Giga Impact
@@ -338,8 +336,7 @@ Kricketot
 Bug
 Growl
 Bide
-Mud
-Slap
+Mud-Slap
 Bug Bite
 Liechi Berry
 Relaxed
@@ -451,8 +448,7 @@ Roserade
 Grass/Poison
 Stun Spore
 Sludge Bomb
-Mud
-Slap
+Mud-Slap
 Magical Leaf
 Coba Berry
 Calm
@@ -690,8 +686,7 @@ Vespiquen
 Bug/Flying
 Toxic
 Destiny Bond
-X
-Scissor
+X-Scissor
 Heal Order
 Persim Berry
 Careful
@@ -703,10 +698,8 @@ Vespiquen
 Bug/Flying
 Pursuit
 Aerial Ace
-U
-Turn
-X
-Scissor
+U-Turn
+X-Scissor
 Muscle Band
 Adamant
 255 HP
@@ -827,8 +820,7 @@ Modest
 Shellos
 Water
 Harden
-Mud
-Slap
+Mud-Slap
 Icy Wind
 Water Pulse
 Lax Incense
@@ -926,9 +918,7 @@ Adamant
 Drifloon
 Ghost/Flying
 Icy Wind
-Will
-O
-Wisp
+Will-O-Wisp
 Air Cutter
 Ominous Wind
 Petaya Berry
@@ -948,9 +938,7 @@ Modest
 255 SD
 
 Drifblim
-Ghost/Flying Will
-O
-Wisp
+Ghost/Flying Will-O-Wisp
 Facade
 Trick
 Payback
@@ -1336,8 +1324,7 @@ Adamant
 255 Atk
 
 Gabite
-Dragon/Ground Sand
-Attack
+Dragon/Ground Sand-Attack
 Sand Attack
 Dragon Rage
 Slash
@@ -1578,8 +1565,7 @@ Adamant
 Croagunk
 Poison/Fighting Swagger
 Taunt
-Wake
-Up Slap
+Wake-Up Slap
 Poison Jab
 Black Sludge
 Adamant
@@ -1591,8 +1577,7 @@ Poison/Fighting
 Brick Break
 Knock Off
 Poison Jab
-X
-Scissor
+X-Scissor
 Black Sludge
 Adamant
 255 Atk
@@ -1668,8 +1653,7 @@ Lumineon
 Water
 Water Gun
 Attract
-U
-Turn
+U-Turn
 Captivate
 Wacan Berry
 Bashful
@@ -1784,8 +1768,7 @@ Dark/Ice
 Counter
 Metal Claw
 Night Slash
-X
-Scissor
+X-Scissor
 Focus Sash
 Adamant
 255 Atk
@@ -2026,9 +2009,7 @@ Magmortar
 Fire
 Fire Blast
 Sunny Day
-Will
-O
-Wisp
+Will-O-Wisp
 Focus Blast
 Heat Rock
 Modest
@@ -2129,8 +2110,7 @@ Yanmega
 Bug/Flying
 Steel Wing
 Aerial Ace
-U
-Turn
+U-Turn
 Night Slash
 Muscle Band
 Adamant
@@ -2188,8 +2168,7 @@ Grass
 Synthesis
 Sunny Day
 Leaf Blade
-X
-Scissor
+X-Scissor
 Heat Rock
 Adamant
 255 Atk
@@ -2200,8 +2179,7 @@ Grass
 Bite
 Aerial Ace
 Leaf Blade
-X
-Scissor
+X-Scissor
 Quick Claw
 Adamant
 255 Atk
@@ -2276,18 +2254,16 @@ Gliscor
 Ground/Flying Guillotine
 Counter
 Earthquake
-U
-Turn
+U-Turn
 Focus Sash
 Jolly
 255 HP
-255 Spd
+255 SA
 
 Gliscor
 Ground/Flying Earthquake
 Aerial Ace
-X
-Scissor
+X-Scissor
 Stone Edge
 Expert Belt
 Adamant
@@ -2328,8 +2304,7 @@ Adamant
 255 Atk
 
 Mamoswine
-Ice/Ground Double
-edge
+Ice/Ground Double-edge
 Earthquake
 Ice Fang
 Stone Edge
@@ -2338,8 +2313,7 @@ Adamant
 255 HP
 255 Atk
 
-Porygon
-Z
+Porygon-Z
 Normal
 Tri Attack
 Conversion 2
@@ -2350,8 +2324,7 @@ Modest
 255 HP
 255 SD
 
-Porygon
-Z
+Porygon-Z
 Normal
 Thunder Wave
 Recover
@@ -2362,8 +2335,7 @@ Timid
 255 SA
 255 SD
 
-Porygon
-Z
+Porygon-Z
 Normal
 Ice Beam
 Psychic
@@ -2374,8 +2346,7 @@ Modest
 255 HP
 255 SD
 
-Porygon
-Z
+Porygon-Z
 Normal
 Thunderbolt
 Recover
@@ -2411,8 +2382,7 @@ Jolly
 Gallade
 Psychic/Fighting
 Aerial Ace
-X
-Scissor
+X-Scissor
 Psycho Cut
 Stone Edge
 Scope Lens
@@ -2478,9 +2448,7 @@ Modest
 
 Dusknoir
 Ghost
-Will
-O
-Wisp
+Will-O-Wisp
 Shadow Punch
 Fling
 Trick Room

@@ -341,8 +341,7 @@ Modest
 
 Crobat
 Poison/Flying
-X
-Scissor
+X-Scissor
 Brave Bird
 Zen Headbutt
 Cross Poison
@@ -558,8 +557,7 @@ Rock
 Earthquake
 Mimic
 Selfdestruct
-Self
-Destruct
+Self-Destruct
 Stone Edge
 Life Orb
 Adamant
@@ -647,8 +645,7 @@ Aipom
 Normal
 Thunder Wave
 Fake Out
-U
-Turn
+U-Turn
 Double Hit
 Silk Scarf
 Adamant
@@ -966,8 +963,7 @@ Adamant
 255 Def
 
 Forretress
-Bug/Steel Double
-edge
+Bug/Steel Double-edge
 Earthquake
 Explosion
 Rock Slide
@@ -1136,8 +1132,7 @@ Scizor
 Bug/Steel
 Swords Dance
 Baton Pass
-X
-Scissor
+X-Scissor
 Bullet Punch
 BrightPowder
 Impish
@@ -1160,8 +1155,7 @@ Bug/Steel
 Quick Attack
 Reversal
 Endure
-X
-Scissor
+X-Scissor
 Salac Berry
 Jolly
 255 Atk
@@ -1171,8 +1165,7 @@ Scizor
 Bug/Steel
 Aerial Ace
 Night Slash
-X
-Scissor
+X-Scissor
 Iron Head
 Occa Berry
 Adamant
@@ -1416,8 +1409,7 @@ Supersonic
 Bubblebeam
 Bubble Beam
 Aurora Beam
-Mud
-Slap
+Mud-Slap
 Petaya Berry
 Modest
 255 SA
@@ -1517,8 +1509,7 @@ Skarmory
 Steel/Flying
 Rock Slide
 Steel Wing
-X
-Scissor
+X-Scissor
 Brave Bird
 Life Orb
 Adamant
@@ -1529,9 +1520,7 @@ Houndour
 Dark/Fire
 Bite
 Roar
-Will
-O
-Wisp
+Will-O-Wisp
 Fire Fang
 Charcoal
 Adamant
@@ -1565,9 +1554,7 @@ Dark/Fire
 Flamethrower
 Sludge Bomb
 Shadow Ball
-Will
-O
-Wisp
+Will-O-Wisp
 Passho Berry
 Modest
 255 SA
@@ -1868,8 +1855,7 @@ Counter
 Toxic
 Double Team
 Softboiled
-Soft
-Boiled
+Soft-Boiled
 Chesto Berry
 Calm
 255 HP
@@ -1891,8 +1877,7 @@ Normal
 Sing
 Counter
 Softboiled
-Soft
-Boiled
+Soft-Boiled
 Dream Eater
 Leftovers
 Calm

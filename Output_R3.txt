@@ -12,8 +12,7 @@ Timid
 Grovyle
 Grass
 Swift
-Mud
-Slap
+Mud-Slap
 Detect
 Magical Leaf
 Coba Berry
@@ -59,8 +58,7 @@ Grass
 Aerial Ace
 Leaf Blade
 Night Slash
-X
-Scissor
+X-Scissor
 Scope Lens
 Adamant
 255 Atk
@@ -82,8 +80,7 @@ Fire
 Ember
 Double Team
 Mirror Move
-Mud
-Slap
+Mud-Slap
 Charcoal
 Docile
 255 Atk
@@ -93,8 +90,7 @@ Combusken
 Fire/Fighting
 Fire Punch
 Double Kick
-Sand
-Attack
+Sand-Attack
 Sand Attack
 Quick Attack
 Liechi Berry
@@ -103,8 +99,7 @@ Adamant
 255 Atk
 
 Combusken
-Fire/Fighting Sand
-Attack
+Fire/Fighting Sand-Attack
 Sand Attack
 Flamethrower
 Slash
@@ -160,8 +155,7 @@ Adamant
 Mudkip
 Water
 Growl
-Mud
-Slap
+Mud-Slap
 Icy Wind
 Water Pulse
 Mystic Water
@@ -374,8 +368,7 @@ Faint Attack
 Feint Attack
 Fake Out
 Seed Bomb
-X
-Scissor
+X-Scissor
 Persim Berry
 Jolly
 255 Atk
@@ -432,8 +425,7 @@ Normal/Flying
 Growl
 Facade
 Aerial Ace
-U
-Turn
+U-Turn
 Toxic Orb
 Adamant
 255 Atk
@@ -641,8 +633,7 @@ Adamant
 
 Ninjask
 Bug/Flying
-Sand
-Attack
+Sand-Attack
 Sand Attack
 Baton Pass
 Aerial Ace
@@ -657,8 +648,7 @@ Bug/Flying
 Baton Pass
 Aerial Ace
 Night Slash
-X
-Scissor
+X-Scissor
 Razor Fang
 Adamant
 255 HP
@@ -666,8 +656,7 @@ Adamant
 
 Shedinja
 Bug/Ghost
-Sand
-Attack
+Sand-Attack
 Sand Attack
 Confuse Ray
 Fury Cutter
@@ -1017,8 +1006,7 @@ Bug
 Quick Attack
 Confuse Ray
 Helping Hand
-U
-Turn
+U-Turn
 Liechi Berry
 Jolly
 255 Atk
@@ -1174,9 +1162,7 @@ Camerupt
 Fire/Ground
 Amnesia
 Magnitude
-Will
-O
-Wisp
+Will-O-Wisp
 Rock Tomb
 Focus Band
 Brave
@@ -1200,8 +1186,7 @@ Fire
 Ember
 Smog
 Amnesia
-Mud
-Slap
+Mud-Slap
 Petaya Berry
 Bold
 255 Def
@@ -1266,8 +1251,7 @@ Adamant
 
 Vibrava
 Ground/Dragon Supersonic
-Mud
-Slap
+Mud-Slap
 Dragonbreath
 Dragon Breath
 Ominous Wind
@@ -1491,9 +1475,7 @@ Adamant
 Solrock
 Rock/Psychic
 Rock Slide
-Will
-O
-Wisp
+Will-O-Wisp
 Cosmic Power
 Zen Headbutt
 Passho Berry
@@ -1574,8 +1556,7 @@ Water/Dark
 Swords Dance
 Crabhammer
 Crunch
-X
-Scissor
+X-Scissor
 Quick Claw
 Adamant
 255 Atk
@@ -1585,8 +1566,7 @@ Baltoy
 Ground/Psychic
 Psybeam
 Light Screen
-Mud
-Slap
+Mud-Slap
 Ancientpower
 Ancient Power
 TwistedSpoon
@@ -1714,8 +1694,7 @@ Rock/Bug
 Earthquake
 Rock Slide
 Iron Defense
-X
-Scissor
+X-Scissor
 Razor Claw
 Adamant
 255 Atk
@@ -1746,8 +1725,7 @@ Adamant
 Armaldo
 Rock/Bug
 Earthquake
-X
-Scissor
+X-Scissor
 Cross Poison
 Stone Edge
 Life Orb
@@ -1834,9 +1812,7 @@ Careful
 
 Shuppet
 Ghost
-Will
-O
-Wisp
+Will-O-Wisp
 Knock Off
 Grudge
 Shadow Sneak
@@ -1848,9 +1824,7 @@ Adamant
 Banette
 Ghost
 Spite
-Will
-O
-Wisp
+Will-O-Wisp
 Knock Off
 Shadow Sneak
 Rawst Berry
@@ -1862,9 +1836,7 @@ Banette
 Ghost
 Faint Attack
 Feint Attack
-Will
-O
-Wisp
+Will-O-Wisp
 Shadow Claw
 Trick Room
 Colbur Berry
@@ -1876,9 +1848,7 @@ Duskull
 Ghost
 Confuse Ray
 Pain Split
-Will
-O
-Wisp
+Will-O-Wisp
 Shadow Sneak
 Spell Tag
 Adamant
@@ -1889,9 +1859,7 @@ Dusclops
 Ghost
 Confuse Ray
 Pain Split
-Will
-O
-Wisp
+Will-O-Wisp
 Shadow Sneak
 Rawst Berry
 Impish
@@ -1980,8 +1948,7 @@ Absol
 Dark
 Aerial Ace
 Night Slash
-X
-Scissor
+X-Scissor
 Psycho Cut
 Razor Claw
 Jolly
