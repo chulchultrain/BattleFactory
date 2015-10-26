@@ -15,14 +15,14 @@ def TagTokenStart(ch):
 	return False
 
 def TagTokenEnd(ch):
-	if ch == '>'
+	if ch == '>':
 		return True
 	return False
 
 #Trims off the white space characters at the end of a string
 def TrimEndingWhiteSpace(line):
 	i = len(line) - 1
-	while i >= 0 and isspace(line[i]):
+	while i >= 0 and line[i].isspace():
 		i -= 1
 	if i < len(line) - 1:
 		return line[:i+1]
@@ -33,7 +33,7 @@ def TrimEndingWhiteSpace(line):
 #Trims off the white space characters at the beginning of a string
 def TrimBeginningWhiteSpace(line):
 	i = 0
-	while i < len(line) and isspace(line[i]):
+	while i < len(line) and line[i].isspace():
 		i += 1
 	
 	if i > 0:
@@ -55,13 +55,13 @@ def FilterNameFromEntry(line):
 
 	name = line[0:i]
 	line = line[i + 1:]
-	TrimEndingWhiteSpace(line)
+	name = TrimEndingWhiteSpace(name)
 	return name,line
 
 
 #Discards a Tag Token which is <...stuff inside tag token....>
 #Assumes that TagToken is in the beginning of string. Will discard everything before the tag token too.
-def DiscardTagToken(entry):
+def DiscardTagTokenFromEntry(line):
 	start = 0
 	while start < len(line) and not TagTokenStart(line[start]):
 		start += 1
@@ -75,7 +75,7 @@ def DiscardTagToken(entry):
 	return line[end + 1:]
 
 def ValidTypeChar(ch):
-	if not isspace(ch):
+	if not ch.isspace():
 		return True
 	else:
 		return False
@@ -92,12 +92,12 @@ def FilterTypeFromEntry(line):
 	return line[0:i],line[i:]
 
 #returns 2-tuple move, line without move
-def FilterMoveFromLine(line):
+def FilterMoveFromEntry(line):
 	line = TrimBeginningWhiteSpace(line)
 	i = 0
 	while i < len(line) and not TagTokenStart(line[i]):
 		i += 1
-	i >= len(line):
+	if i >= len(line):
 		return '',''
 	
 	return line[0:i],line[i:]
@@ -123,13 +123,14 @@ def IsBetweenItemAndNature(ch):
 def FilterItemFromEntry(line):
 	line = TrimBeginningWhiteSpace(line)
 	i = 0
-	while i < len(line) and not IsBetweenItemAndNature(line[i]) # '\n' separates the Item from the Nature
+	while i < len(line) and not IsBetweenItemAndNature(line[i]): # '\n' separates the Item from the Nature
 		i += 1
 	if i < len(line):
 		item = line[0:i]
 		item = TrimEndingWhiteSpace(item)
 		return item, line[i:]
 	else:
+		line = TrimEndingWhiteSpace(line)
 		return line,''
 
 def IsEVStart(ch):
@@ -138,10 +139,16 @@ def IsEVStart(ch):
 	else:
 		return False
 
+def IsNatureEnd(ch):
+	if ch.isspace():
+		return True
+	else:
+		return False
+
 def FilterNatureFromEntry(line):
 	line = TrimBeginningWhiteSpace(line)
 	i = 0
-	while i < len(line) and IsEVStart(line[i]):
+	while i < len(line) and not IsNatureEnd(line[i]):
 		i += 1
 	
 	if i < len(line):
@@ -149,12 +156,14 @@ def FilterNatureFromEntry(line):
 		item = TrimEndingWhiteSpace(item)
 		return item, line[i:]
 	else:
+		line = TrimEndingWhiteSpace(line)
 		return line,''
 
 def ExistsEVInLine(line):
 	i = 0
 	while i < len(line) and not IsEVStart(line[i]):
 		i += 1
+		#print i
 	if i < len(line):
 		return True
 	else:
@@ -163,28 +172,29 @@ def ExistsEVInLine(line):
 def IsBetweenEVs(ch):
 	if ch == '\n':
 		return True
-	else
+	else:
 		return False
 
 def FilterEVFromEntry(line):
 	i = 0
 	line = TrimBeginningWhiteSpace(line)
-	while i < len(line) and IsBetweenEVs(ch):
+	while i < len(line) and not IsBetweenEVs(line[i]):
 		i += 1
 	if i < len(line):
 		EV = line[0:i]
 		EV = TrimEndingWhiteSpace(EV)
 		return EV, line[i:]
 	else:
+		line = TrimEndingWhiteSpace(line)
 		return line,''
 
 def ParsePokemon(line):
-	results = ''
+	result = ''
 	name, line = FilterNameFromEntry(line) #get name
 	line = DiscardTagTokenFromEntry(line)
 	typeData,line = FilterTypeFromEntry(line) #get type
 
-	results = name + '\n'
+	result = name + '\n'
 	result += (typeData + '\n')
 
 	while ExistsMoveTagInLine(line): 
@@ -192,26 +202,52 @@ def ParsePokemon(line):
 		line = DiscardTagTokenFromEntry(line)
 		result += (move + '\n')
 
-	#TODO
+
 	item, line = FilterItemFromEntry(line)
 	nature, line = FilterNatureFromEntry(line)
 
+	#print nature
 	result += (item + '\n')
 	result += (nature + '\n')
+
 
 	while ExistsEVInLine(line):
 		EV, line = FilterEVFromEntry(line)
 		result += (EV + '\n')
 		
-	print result
+	return result
 
 
+
+
+def NotFinishedEntry(line): #TODO
+	if line != '\n':
+		return True
+	else:
+		return False
+
+def FilterFile(inputFileName,outputFileName):
+	fin = open(inputFileName,'r')
+	fout = open(outputFileName, 'w')
+	ProcessFinished = False
 	
+	while not ProcessFinished:
+		line = fin.readline()
+		entry = line
+		while line != '' and NotFinishedEntry(line):
+			entry += line
+			line = fin.readline()
+		if line != '':
+			fout.write( ParsePokemon(entry) + '\n')
+		else: #line == '' therefore no more entries
+			ProcessFinished = True
 
 
 
-
-
+FilterFile("Battle_Frontier_Kanto.txt","Output_1.txt")
+#FilterFile("Battle_Frontier_Johto.txt","Output_2.txt")
+#FilterFile("Battle_Frontier_Hoenn.txt","Output_3.txt")
+#FilterFile("Battle_Frontier_Sinnoh.txt","Output_4.txt")
 
 
 
