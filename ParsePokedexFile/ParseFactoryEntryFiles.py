@@ -1,3 +1,13 @@
+#Purpose of this script is to take all the usable data and present it in a format for my other programs to understand.
+#The information we will be taking from the files will be
+#Name	- string
+#Type	- string
+#Move List - string of numbers
+#Item - string
+#Nature - string
+#EV List 
+
+
 #Parse Name
 #Parse UselessToken
 #Parse Type
@@ -6,7 +16,7 @@
 
 import sys
 
-
+moveDexString = "dex/techdex/"
 
 
 def TagTokenStart(ch):
@@ -91,16 +101,37 @@ def FilterTypeFromEntry(line):
 
 	return line[0:i],line[i:]
 
+
+
 #returns 2-tuple move, line without move
 def FilterMoveFromEntry(line):
 	line = TrimBeginningWhiteSpace(line)
-	i = 0
-	while i < len(line) and not TagTokenStart(line[i]):
-		i += 1
-	if i >= len(line):
-		return '',''
+
+	j = line.find(moveDexString)
+	if j == -1:
+		return line,''
+	else:
+		j += len(moveDexString)
+
+	#move is of form /dex/techdex/### so we parse out ###
+	move = ''
+	while  j < len(line) and not TagTokenEnd(line[j]):
+		if line[j] >= '0' and line[j] <= '9':
+			move += line[j]
+			j += 1
+		else:
+			break;
+
 	
-	return line[0:i],line[i:]
+
+	if j < len(line):
+		if TagTokenEnd(line[j]):
+			j += 1
+		move = TrimEndingWhiteSpace(move)
+		return move,line[j:]
+	else:
+		line = TrimEndingWhiteSpace(line)
+		return line,''
 
 
 
@@ -199,7 +230,7 @@ def ParsePokemon(line):
 
 	while ExistsMoveTagInLine(line): 
 		move,line = FilterMoveFromEntry(line)
-		line = DiscardTagTokenFromEntry(line)
+		#line = DiscardTagTokenFromEntry(line)
 		result += (move + '\n')
 
 
