@@ -14,6 +14,35 @@
 #Parse move Parse UselessToken repeat
 #Parse Empty New Line
 
+entryInputDir = "../BASE/UNREFINED/UNFILTERED_FACTORY_ENTRIES/"
+DPPRegionSubDir = "DPP/"
+regionSubDir = DPPRegionSubDir
+DPPInputFileNameList = {"Kanto.txt":"R1.txt","Johto.txt":"R2.txt","Hoenn.txt":"R3.txt","Sinnoh.txt":"R4.txt"}
+inputFileNameList = DPPInputFileNameList
+
+fullNameInputFileList = {}
+
+entryOutputDir = "../BASE/UNREFINED/PARTIAL_FILTER_ENTRIES/"
+
+for entry in inputFileNameList:
+	fullNameInputFileList[entryInputDir + regionSubDir + entry] = entryOutputDir + regionSubDir + DPPInputFileNameList[entry]
+	
+for entry in fullNameInputFileList:
+	print entry, fullNameInputFileList[entry]
+
+
+#DPPOutputFileNameList = DPPInputFileNameList
+
+#fullNameOutputFileList = []
+
+#for entry in outputFileNameList:
+#	fullNameOutputFileList += [entryOutputDir + regionSubDir + entry]
+	
+
+#for entry in fullNameOutputFileList
+#	print entry
+
+
 import sys
 
 moveDexString = "dex/techdex/"
@@ -274,11 +303,8 @@ def FilterFile(inputFileName,outputFileName):
 			ProcessFinished = True
 
 
-
-FilterFile("Battle_Frontier_Kanto.txt","Output_1.txt")
-#FilterFile("Battle_Frontier_Johto.txt","Output_2.txt")
-#FilterFile("Battle_Frontier_Hoenn.txt","Output_3.txt")
-#FilterFile("Battle_Frontier_Sinnoh.txt","Output_4.txt")
+for entry in fullNameInputFileList:
+	FilterFile(entry,fullNameInputFileList[entry])
 
 
 

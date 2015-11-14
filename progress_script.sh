@@ -10,7 +10,7 @@ TG_DIR=$BF_DIR/TagGenerator
 SC_DIR=$BF_DIR/SpecialConstants
 RD_DIR=$BF_DIR/RetrieveData
 RTI_DIR=$BF_DIR/RipTheInternet
-PPF_DIR=$BF_DIR/ParsePokedexsFile
+PPF_DIR=$BF_DIR/ParsePokedexFile
 echo $BF_DIR
 echo $PokemonEntry_DIR
 echo $Pokedex_DIR

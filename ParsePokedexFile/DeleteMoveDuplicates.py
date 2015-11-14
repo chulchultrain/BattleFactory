@@ -22,6 +22,24 @@
 #	Nature
 #	EV Lines
 
+entryInputDir = "../BASE/UNREFINED/PARTIAL_FILTER_ENTRIES/"
+DPPRegionSubDir = "DPP/"
+regionSubDir = DPPRegionSubDir
+DPPInputFileNameList = {"R1.txt":"Filter_R1.txt","R2.txt":"Filter_R2.txt","R3.txt":"Filter_R3.txt","R4.txt":"Filter_R4.txt"}
+
+inputFileNameList = DPPInputFileNameList
+
+fullNameInputFileList = {}
+
+entryOutputDir = "../BASE/UNREFINED/FULL_FILTER_ENTRIES/"
+
+for entry in inputFileNameList:
+	fullNameInputFileList[entryInputDir + regionSubDir + entry] = entryOutputDir + regionSubDir + DPPInputFileNameList[entry]
+	
+for entry in fullNameInputFileList:
+	print entry, fullNameInputFileList[entry]
+
+
 #We need to find a way to know which lines are moves.
 #As of right now, we know that every move is a number.
 
@@ -73,9 +91,9 @@ def ParsePokemonEntryFile(inputFile, outputFile):
 	fin.close()
 	fout.close()
 
-ParsePokemonEntryFile("Output_1.txt","Output_1F.txt")
-ParsePokemonEntryFile("Output_2.txt","Output_2F.txt")
-ParsePokemonEntryFile("Output_3.txt","Output_3F.txt")
-ParsePokemonEntryFile("Output_4.txt","Output_4F.txt")
+	processFinished = False #reset var for next call
+
+for entry in fullNameInputFileList:
+	ParsePokemonEntryFile(entry, fullNameInputFileList[entry])
 
 
