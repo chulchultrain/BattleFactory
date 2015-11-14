@@ -65,9 +65,10 @@ void FillNameTagFiles(char *nameDir, char *entryFileName, char *region) {
 
 	fclose(entryFilePtr);
 	}
-	else
+	else {
+		printf("Open file failure\n");
 		exit(1);
-	
+	}
 
 }
 

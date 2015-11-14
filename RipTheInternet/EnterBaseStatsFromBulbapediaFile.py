@@ -1,30 +1,35 @@
 
 
+baseStatOutputDir = "../BASE/STATS/"
+baseStatInputDir = "../BASE/UNREFINED/UNFILTERED_BASE_STATS/"
+baseStatFileName = "bulbapediastats.txt"
+
 def ParsePokemon(fin):
-	line = fin.readline()
 
-	line2 = fin.readline()
 
-	
-	FL = line.split()
-	SL = line2.split()
-	#print FL
-	#print SL
 
-	index = int(FL[1][0:3])
+	FL = fin.readline().split() #first line split into tokens
+	SL = fin.readline().split() #second line split into tokens
 
-	outputName = ''
-	i = 3
+	index = int(FL[1][0:3]) #the pokemon ID number
 
+	outputName = '' #the name of the pokemon may or may not include a parentheses suffix indicating that it is special
+	i = 3 #magic value of 3 because first line format is *418* 	418 </wiki/Buizel_(Pok%C3%A9mon)> 	Buizel
+
+	#retrieve main part of name
 	while i < len(FL):
 		outputName += FL[i]
 		i += 1
 		if i < len(FL): 
 			outputName += ' '
 
-	outputData = ''
 
-	i = 1
+	outputData = '' #the stats to be output
+
+	i = 1 #magic value of 1 because second line format always has one useless token in the beginning
+
+	#if the pokemon is special, the 2nd token starts with a parentheses, and we keep processing tokens until we reach the closing paren.
+	#
 	if SL[1][0] == '(':
 		#print "mega"
 		megaEnd = 2
@@ -37,9 +42,14 @@ def ParsePokemon(fin):
 		outputName += (' ' + SL[megaEnd])
 		i += 1
 
-	print outputName
+	print outputName #debug statement to make sure outputName is correct
 	
+
+
 	counter = 0
+
+	#go through the 8 stats and
+	#retrieve the 6 important stats
 	while i < len(SL) and counter < 8:
 		if counter < 6:
 			outputData += SL[i]
@@ -47,9 +57,9 @@ def ParsePokemon(fin):
 		i += 1
 		counter += 1
 
+	#The 8 stats may not have all been gone through
 	if counter < 8:
-		line3 = fin.readline()
-		TL = line3.split()
+		TL = fin.readline().split()
 		c = 0
 		while counter < 8:
 			if counter < 6:
@@ -62,12 +72,12 @@ def ParsePokemon(fin):
 
 	
 
-	fout = open("../BASE/STATS/" + outputName, 'w')	
+	fout = open(baseStatOutputDir + outputName, 'w')	
 	fout.write(outputData)
 	return index
 
 def TopLevel():
-	fin = open("bulbapediastats.txt",'r')
+	fin = open(baseStatInputDir + baseStatFileName,'r')
 	line = fin.readline()
 	while line.find("# </wiki/National_Pok%C3%A9dex>") < 0:
 		line = fin.readline()

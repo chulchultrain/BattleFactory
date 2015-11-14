@@ -9,7 +9,8 @@ Special_Util_DIR=$BF_DIR/BF_Special_Util
 TG_DIR=$BF_DIR/TagGenerator
 SC_DIR=$BF_DIR/SpecialConstants
 RD_DIR=$BF_DIR/RetrieveData
-
+RTI_DIR=$BF_DIR/RipTheInternet
+PPF_DIR=$BF_DIR/ParsePokedexsFile
 echo $BF_DIR
 echo $PokemonEntry_DIR
 echo $Pokedex_DIR
@@ -29,6 +30,10 @@ cd $TG_DIR
 git add FillDataFiles.c FillDataFiles.h TagGenTester.c
 cd $SC_DIR
 git add SpecialConstants.h
+cd $PPF_DIR
+git add DeleteMoveDuplicates.py ParseFactoryEntryFiles.py
+cd $RTI_DIR
+git add EnterBaseStatsFromBulbapediaFile.py
 cd $RD_DIR
 git add RetrievePokemon.h RetrievePokemon.c RetrieveTester.c
 cd $BF_DIR

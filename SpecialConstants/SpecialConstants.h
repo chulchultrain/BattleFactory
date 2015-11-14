@@ -30,6 +30,10 @@ File to store Special constants and include here so that do not have to #define 
 #define MAX_MOVE_NAME 21
 #endif
 
+#ifndef FULL_FILTER_ENTRIES
+#define FULL_FILTER_ENTRIES "BASE/UNREFINED/FULL_FILTER_ENTRIES/"
+#endif
+
 #ifndef BASE_STATS_DIR
 #define BASE_STATS_DIR "BASE/STATS/"
 #endif
@@ -77,19 +81,19 @@ File to store Special constants and include here so that do not have to #define 
 //make sub dirs for the other gens when necessary.
 
 #ifndef ENTRY_FILE1_OF_DATA
-#define ENTRY_FILE1_OF_DATA "Output_R1.txt"
+#define ENTRY_FILE1_OF_DATA "Filter_R1.txt"
 #endif
 
 #ifndef ENTRY_FILE2_OF_DATA
-#define ENTRY_FILE2_OF_DATA "Output_R2.txt"
+#define ENTRY_FILE2_OF_DATA "Filter_R2.txt"
 #endif
 
 #ifndef ENTRY_FILE3_OF_DATA
-#define ENTRY_FILE3_OF_DATA "Output_R3.txt"
+#define ENTRY_FILE3_OF_DATA "Filter_R3.txt"
 #endif
 
 #ifndef ENTRY_FILE4_OF_DATA
-#define ENTRY_FILE4_OF_DATA "Output_R4.txt"
+#define ENTRY_FILE4_OF_DATA "Filter_R4.txt"
 #endif
 
 #ifndef MAX_POKEMONENTRY_IN_MEM
