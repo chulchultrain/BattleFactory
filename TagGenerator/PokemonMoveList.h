@@ -5,8 +5,11 @@ Stores data on every pokemon move. Indexed by the actual index of the move.
 TODO: Make an entry in GlobalDestroyer for this kind of data structure.
 */
 
+typedef struct PokemonMovePrivate PokemonMovePrivate;
 
 typedef struct PokemonMoveList {
+
+PokemonMovePrivate *mem;
 
 /*
 @Method - SetPokemonMoveFromIndex(PokemonEntry *ptr, int moveIndex, int entryMoveNum) 

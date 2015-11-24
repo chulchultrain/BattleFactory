@@ -16,10 +16,10 @@ typedef struct MoveData {
 /*
 private part to provide encapsulation.
 */
-typedef struct PokemonMoveListPrivate {
+struct PokemonMoveListPrivate {
     MoveData moves[MAX_MOVES]
     
-} PokemonMoveListPrivate;
+};
 
 /*
 Zero out moveData struct.
