@@ -12,6 +12,7 @@ processFinished = False
 tagBegin = '</wiki/'
 
 moveTagEnd = '_(move)>'
+typeTagEnd = '_(type)>'
 
 unrefinedDir = "../BASE/UNREFINED/"
 
@@ -60,11 +61,39 @@ def ExistsMoveTagInLine(line):
 	else:
 		return False
 
+#As of right now, the above function is sufficient to test. I add this indirection for later upgrade if i feel like it.
+def ExistsTypeTagInLine(line):
+	return ExistsMoveTagInLine(line)
+
 def IsNumber(ch):
 	if ch >= '0' and ch <= '9':
 		return True
 	else:
 		return False
+
+def ParseInformationFromTag(tag, tagBegin, tagEnd):
+
+	#Sanity Check on parameters
+	if len(tag) < (len(tagBegin) + len(tagEnd)) or len(tagBegin) == 0 or len(tagEnd) == 0:
+		return None #exception handle?
+
+	i = 0
+	info = ''
+	i = tag.find(tagBegin)
+
+	if i < 0:
+		return None #Maybe later return something that states that no information exists
+	
+	i += len(tagBegin)	
+	j = tag.find(tagEnd)
+	
+	if j > i:
+		info = tag[i:j]
+		return info
+	else: #either tagEnd doesn't exist in tag or tagEnd occurs before tagStart
+		return None #exception handle
+
+	
 
 def ParseIndexFromLine(line):
 	i = 0
@@ -83,16 +112,17 @@ def ParseIndexFromLine(line):
 def ParseNameFromLine(line):
 	i = 0
 	name = ''
-	i = line.find(tagBegin) + len(tagBegin)
-	if i >= len(line):
+	i = line.find(tagBegin)
+	if i == -1:
 		return None,''
 	else:
+		i += len(tagBegin)
 		line = line[i:]
 		i = 0
 
 	i = line.find(moveTagEnd)
 
-	if i >= len(line):
+	if i == -1:
 		return None,''
 	else:
 		name = line[0:i]
@@ -100,8 +130,33 @@ def ParseNameFromLine(line):
 		if i >= len(line):
 			return name,''
 		else:
-			return name,line[i:]
+			line = TrimBeginningWhiteSpace(line[i:])
+			return name, line
 	
+def ParseMoveTypeFromLine(line):
+	i = 0
+	moveType = ''
+	i = line.find(tagBegin)
+	if i == -1:
+		return None,''
+	else:
+		i += len(tagBegin)
+		line = line[i:]
+		i = 0
+
+	i = line.find(typeTagEnd)
+	
+	if i == -1:
+		return None,''
+	else:
+		moveType = line[0:i]
+		i += len(typeTagEnd)
+		if i >= len(line):
+			return moveType,''
+		else:
+			line = TrimBeginningWhtieSpace(line[i:])
+			return moveType,line
+
 
 def ParseMove(fin):
 
@@ -116,7 +171,8 @@ def ParseMove(fin):
 		name,line = ParseNameFromLine(line)
 
 	#Parse Move Type
-
+	if ExistsTypeTagInLine(line):
+		moveType,line = ParseMoveTypeFromLine(line)
 	#Parse Move Category
 
 	#Ignore Contest Condition
@@ -130,8 +186,9 @@ def ParseMove(fin):
 #def ParseMoveFile(inputFileFullName,outputFileFullName):
 #	global processFinished
 	
-gg = "123 Chimchar </wiki/Chimchar_(move)>\n"
+gg = "123 Chimchar </wiki/Chimchar_(move)>\n Hello"
 index,gg = ParseIndexFromLine(gg) 
 print index,gg
 name,gg = ParseNameFromLine(gg)
-print name,gg
+print name
+print gg
