@@ -9,6 +9,8 @@
 
 processFinished = False
 
+endOfNonDataLine = "</wiki/Power> 	Accuracy </wiki/Accuracy> 	Gen </wiki/Generation>\n"
+
 tagBegin = '</wiki/'
 
 nameTagEnd = '_(move)>'
@@ -189,6 +191,7 @@ def OnlyOfListEntries(dataSet,benchMarkList):
 def IsEntryEnd(line):
 	validEndChars = ['I','X','V']
 	tokens = line.split()
+	#print tokens
 	if OnlyOfListEntries(tokens[-1],validEndChars):
 		return True
 	else:
@@ -213,19 +216,25 @@ def FilterNumberInString(token):
 	return FilterNonListEntries(token,numberList)
 
 def ParseMove(fin):
-
+	global processFinished
 
 	line = fin.readline()
+	if line == '\n' and line == '':
+		return None
+
 	entryData = line	
 	while line != '' and not IsEntryEnd(line):
+	#	print entryData
 		line = fin.readline()
 		entryData += line
-	
+	print entryData
 	tokenList = entryData.split()
+	if len(tokenList) == 0:
+		return None
+	#print tokenList
+	print "herp derp"
 
-	result = ''
-
-	index = name = moveType = moveCategory = damage = ''
+	result = index = name = moveType = moveCategory = damage = ''
 
 
 
@@ -257,12 +266,27 @@ def ParseMove(fin):
 	return result 
 
 
+def ReachBeginningOfData(fin,endingLine):
+	line = fin.readline()
+	while line != '' and line != endingLine:
+		line = fin.readline()
+
+	if line == '':
+		print "REACHED END OF STREAM"
 
 def ParseMoveFile(inputFileFullName,outputFileFullName):
-#	global processFinished
+	global processFinished
 	fin = open(inputFileFullName,'r')
 	fout = open(outputFileFullName,'w')
-	fout.write(ParseMove(fin))
+
+	ReachBeginningOfData(fin,endOfNonDataLine)
+
+	data = ParseMove(fin)
+	while data != None:
+		fout.write(data)		
+		data = ParseMove(fin)
+
+
 
 	fin.close()
 	fout.close()
