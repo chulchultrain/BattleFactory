@@ -1,8 +1,0 @@
-1 	Pound </wiki/Pound_(move)> 	Normal </wiki/Normal_(type)> 	Physical
-</wiki/Physical_move> 	Tough </wiki/Tough_(condition)> 	35 	40* 	100% 	I
-2 	Karate Chop </wiki/Karate_Chop_(move)>* 	Fighting
-</wiki/Fighting_(type)> 	Physical </wiki/Physical_move> 	Tough
-</wiki/Tough_(condition)> 	25 	50 	100% 	I
-3 	Double Slap </wiki/Double_Slap_(move)> 	Normal
-</wiki/Normal_(type)> 	Physical </wiki/Physical_move> 	Cute
-</wiki/Cute_(condition)> 	10 	15 	85% 	I
