@@ -245,7 +245,7 @@ def ParseMove(fin):
 	#Parse Move Category
 	moveCategory = ParseInfoFromTag(entryData,tagBegin,categoryTagEnd)
 	#Parse Move Damage
-	damage = FilterNumberInString(tokenList[-3])
+	damage = FilterNonNumberFromString(tokenList[-3])
 
 
 	result += index + '\n'

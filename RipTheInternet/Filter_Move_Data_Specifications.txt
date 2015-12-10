@@ -1,0 +1,42 @@
+Need to parse move data into a text file keeping only the useful parts.
+
+The useful parts:
+	Index
+	Name
+	Damage
+	Type
+	Category
+	
+Index:
+	The number used by the Pokemon system to identify the move. (Unsigned Integer)
+	Domain:
+		(0 to infinity)
+
+Name:
+	The string of characters used by the Pokemon system to identify the move. (string of char)
+	Domain:
+		(string of chars)
+
+Damage:
+	The number used to denote the base power of the move. (Unsigned Integer)
+	Domain:
+		(0 to infinity)
+
+Type:
+	The string of characters used to denote the elemental type of the move. (string of char)
+	Domain:
+		(string of chars)
+
+Category:
+	The string of characters used to denote how the move is facilitated. (string of char)
+	Domain:
+		Physical, Special, Status
+
+
+
+
+
+
+
+
+
