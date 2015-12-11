@@ -6,17 +6,17 @@
 #Move Name
 #Move Type
 #Move Category
-
-processFinished = False
+#Move Damage
 
 endOfNonDataLine = "</wiki/Power> 	Accuracy </wiki/Accuracy> 	Gen </wiki/Generation>\n"
 
+#tag data
 tagBegin = '</wiki/'
-
 nameTagEnd = '_(move)>'
 categoryTagEnd = '_move>'
 typeTagEnd = '_(type)>'
 
+#file location data
 unrefinedDir = "../BASE/UNREFINED/"
 
 inputDir = unrefinedDir + "/UNFILTERED_MOVE_LIST/"
@@ -25,7 +25,8 @@ inputFileName = "bulbapedia_move_list.txt"
 outputDir = unrefinedDir + "/FILTERED_MOVE_LIST/"
 outputFileName = "Filtered_Move_List.txt"
 
-startingLine="</wiki/Power> 	Accuracy </wiki/Accuracy> 	Gen </wiki/Generation>\n"
+fullInputFileName = inputDir + inputFileName
+fullOutputFileName = outputDir + outputFileName
 
 def TagTokenStart(ch):
 	if ch == '<':
@@ -102,7 +103,7 @@ def ParseInfoFromTag(tag, tagBegin, tagEnd):
 	i += len(tagBegin)
 	
 	if j > i:
-		info = tag[i:j]
+		info = tag[i:j].replace('_',' ')
 		return info
 	else: #either tagEnd doesn't exist in tag or tagEnd occurs before tagStart
 		return None #exception handle
@@ -123,63 +124,8 @@ def ParseIndexFromLine(line):
 		line = TrimBeginningWhiteSpace(line)
 		return index,line
 
-def ParseNameFromLine(line):
-	i = 0
-	name = ''
-	i = line.find(tagBegin)
-	if i == -1:
-		return None,''
-	else:
-		i += len(tagBegin)
-		line = line[i:]
-		i = 0
-
-	i = line.find(moveTagEnd)
-
-	if i == -1:
-		return None,''
-	else:
-		name = line[0:i]
-		i += len(moveTagEnd)
-		if i >= len(line):
-			return name,''
-		else:
-			line = TrimBeginningWhiteSpace(line[i:])
-			return name, line
 
 
-def ParseAllTagInfoFromLine(line):
-	move = ParseInfoFromTag(line,tagBegin,nameTagEnd)
-	moveType = ParseInfoFromTag(line,tagBegin,typeTagEnd)
-	moveCategory = ParseInfoFromTag(line,tagBegin,categoryTagEnd)
-	print move,moveType,moveCategory
-	return move,moveType,moveCategory
-
-
-	
-def ParseMoveTypeFromLine(line):
-	i = 0
-	moveType = ''
-	i = line.find(tagBegin)
-	if i == -1:
-		return None,''
-	else:
-		i += len(tagBegin)
-		line = line[i:]
-		i = 0
-
-	i = line.find(typeTagEnd)
-	
-	if i == -1:
-		return None,''
-	else:
-		moveType = line[0:i]
-		i += len(typeTagEnd)
-		if i >= len(line):
-			return moveType,''
-		else:
-			line = TrimBeginningWhtieSpace(line[i:])
-			return moveType,line
 
 def OnlyOfListEntries(dataSet,benchMarkList):
 	for entry in dataSet:
@@ -189,7 +135,7 @@ def OnlyOfListEntries(dataSet,benchMarkList):
 
 #tests if line is last line of entry 
 def IsEntryEnd(line):
-	validEndChars = ['I','X','V']
+	validEndChars = ['I','X','V','*']
 	tokens = line.split()
 	#print tokens
 	if OnlyOfListEntries(tokens[-1],validEndChars):
@@ -216,48 +162,24 @@ def FilterNumberInString(token):
 	return FilterNonListEntries(token,numberList)
 
 def ParseMove(fin):
-	global processFinished
-
 	line = fin.readline()
-	if line == '\n' and line == '':
+	if line == '\n' or line == '':
 		return None
 
 	entryData = line	
 	while line != '' and not IsEntryEnd(line):
-	#	print entryData
 		line = fin.readline()
 		entryData += line
-	print entryData
+
 	tokenList = entryData.split()
-	if len(tokenList) == 0:
-		return None
-	#print tokenList
-	print "herp derp"
 
-	result = index = name = moveType = moveCategory = damage = ''
-
-
-
-
-		
-
-
-	#Parse Index
 	index = tokenList[0]
-	#Parse Name
-
 	name = ParseInfoFromTag(entryData,tagBegin,nameTagEnd)
-
-	#Parse Move Type
 	moveType = ParseInfoFromTag(entryData,tagBegin,typeTagEnd)
-
-	#Parse Move Category
 	moveCategory = ParseInfoFromTag(entryData,tagBegin,categoryTagEnd)
-	#Parse Move Damage
 	damage = FilterNumberInString(tokenList[-3])
 
-
-	result += index + '\n'
+	result = index + '\n'
 	result += name + '\n'
 	result += moveType + '\n'
 	result += moveCategory + '\n'
@@ -271,7 +193,7 @@ def ReachBeginningOfData(fin,endingLine):
 	while line != '' and line != endingLine:
 		line = fin.readline()
 
-	if line == '':
+	if line == '': #should never reach this
 		print "REACHED END OF STREAM"
 
 def ParseMoveFile(inputFileFullName,outputFileFullName):
@@ -294,7 +216,7 @@ def ParseMoveFile(inputFileFullName,outputFileFullName):
 
 
 
-ParseMoveFile('testInput.txt','testOutput.txt')
+ParseMoveFile(fullInputFileName,fullOutputFileName)
 
 
 
