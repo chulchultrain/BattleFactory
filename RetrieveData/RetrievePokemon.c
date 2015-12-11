@@ -86,6 +86,7 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 
 	printf("Choose which game by typing an integer\n");
 	unsigned int i;
+
 	for(i = 0; i < MAX_REGIONS && regionPointer[i] != 0; i++)
 		printf("%s - %u\n", regionPointer[i], i);	
 

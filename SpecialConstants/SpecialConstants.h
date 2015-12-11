@@ -47,7 +47,7 @@ File to store Special constants and include here so that do not have to #define 
 #endif
 
 #ifndef MAX_REGION_SUBDIR_LENGTH
-#define MAX_REGION_SUBDIR_LENGTH 8
+#define MAX_REGION_SUBDIR_LENGTH 10
 #endif
 
 #ifndef SUB_DIR_EMERALD
