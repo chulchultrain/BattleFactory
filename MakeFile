@@ -57,7 +57,7 @@ $(PD_DIR)/Pokedex.o: $(PD_DIR)/Pokedex.c $(PD_DIR)/Pokedex.h $(GD_DIR)/GlobalDes
 $(GD_DIR)/GlobalDestroyer.o: $(GD_DIR)/GlobalDestroyer.c $(GD_DIR)/GlobalDestroyer.h $(PE_DIR)/PokemonEntry.h $(PD_DIR)/Pokedex.h
 	gcc $(FLAGS) $(GD_DIR)/GlobalDestroyer.c -o $(GD_DIR)/GlobalDestroyer.o
 
-$(SU_DIR)/Special_Util.o: $(SU_DIR)/Special_Util.c $(SU_DIR)/Special_Util.h
+$(SU_DIR)/Special_Util.o: $(SU_DIR)/Special_Util.c $(GD_DIR)/GlobalDestroyer.h $(SU_DIR)/Special_Util.h 
 	gcc $(FLAGS) $(SU_DIR)/Special_Util.c -o $(SU_DIR)/Special_Util.o
 
 $(TG_DIR)/FillDataFiles.o: $(TG_DIR)/FillDataFiles.c $(TG_DIR)/FillDataFiles.h $(SU_DIR)/Special_Util.h $(SC_DIR)/SpecialConstants.h

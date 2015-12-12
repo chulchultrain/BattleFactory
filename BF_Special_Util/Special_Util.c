@@ -1,6 +1,6 @@
 #include <BF_Special_Util/Special_Util.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <GlobalDestroyer/GlobalDestroyer.h>
 
 
 
@@ -68,5 +68,18 @@ unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, un
 		j++; }
 
 	return i;
+
+}
+
+
+
+void SafeReadLine(char *line, unsigned int limit, FILE *fin,unsigned int safeDestruct) {
+	if(safeDestruct) {
+		if( fgets(line, limit, fin) == 0)
+			GlobalDestroyer(1,0,0);
+	}
+	else {
+		fgets(line,limit,fin);
+	}
 
 }

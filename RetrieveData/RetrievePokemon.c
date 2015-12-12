@@ -35,11 +35,96 @@ if( fin != 0) {
 }
 
 
+
+void GoToEntryChoice(FILE *fin, unsigned int choice) {
+	unsigned int i = 0;
+	char line[MAX_POKEDEX_LINE] = {0};
+	for(i = 0; i < choice; i++) {
+		while( line[0] != '\n')
+			if(fgets(line,MAX_POKEDEX_LINE - 5, fin) == 0)
+				GlobalDestroyer(1,0,0);
+	}
+}
+
+Type TokenToType(char *token) {
+	switch(token[0]) {
+		case 'B': return BUG;
+		case 'D': 
+			switch(token[1]) {
+				case 'a': return DARK;
+				case 'r': return DRAGON;
+				}
+		case 'E': return ELECTRIC;
+		case 'F':
+			switch(token[1]) {
+				case 'i': return FIRE;
+				case 'l': return FLYING;
+				}
+		case 'G':
+			switch(token[2]) {
+				case 'a': return GRASS;
+				case 'o': return GROUND;
+				}
+		case 'I': return ICE;
+		case 'N': return NORMAL;
+		case 'P': switch(token[1]) {
+				case 'o': return POISON;
+				case 's': return PSYCHIC;
+				}
+		case 'S': return STEEL;
+		case 'W': return WATER;
+	}	
+	return NONE;
+
+}
+
+
+void TypeLineIntoEntry(char *typeLine,PokemonEntry *pEntry) {
+
+	unsigned int i = 0;
+	unsigned int hasTwoTypes = 0;
+	for(i = 0; typeLine[0] != 0 && i < MAX_LINE_LENGTH; i++)
+		if( typeLine[i] == '/') {
+			hasTwoTypes = 1;
+			i += 1;
+			break; }
+		
+	//TODO:CHANGE POKEMONENTRY TO accept values not pointers and then change these accordingly.
+	Type *t1 = malloc(sizeof(Type)); 
+	*t1 = TokenToType(typeLine);
+	Type *t2 = malloc(sizeof(Type));
+	if( hasTwoTypes == 1) {
+		*t2 = TokenToType(typeLine + i);
+	}
+	pEntry->SetPrimaryType(pEntry,t1);
+	pEntry->SetSecondaryType(pEntry,t2);
+}
+
+//Augments the pokemonEntry based on which selection was made. 0,1,2,3
+void EntryDataIntoPokemonEntry(char *fullEntryFileName, PokemonEntry *pEntry,unsigned int choice) {
+
+	FILE *fin = fopen(fullEntryFileName,"r");
+	if(fin == 0) {
+		GlobalDestroyer(1,0,0);
+	}
+	else 
+		printf("Successful open\n");
+
+	//move file pointer to correct position in file, then parse data
+	GoToEntryChoice(fin,choice);
+	char typeLine[MAX_LINE_LENGTH] = {0};
+	SafeReadLine(typeLine,MAX_LINE_LENGTH - 5, fin,1);
+	TypeLineIntoEntry(typeLine,pEntry);
+	
+	fclose(fin);
+}
+
+
 // the file should have each stat on a different line, statName statAmount 
 void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit) {
 
 	unsigned int i = 0; //array offset
-	int val = 0;
+	unsigned int val;
 	char buffer[MAX_LINE_LENGTH] = {0};
 
 	while(i < statArrayLimit && fgets(buffer, MAX_LINE_LENGTH, fptr) != 0) {
@@ -103,10 +188,10 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 }
 
 
-
 void TopLevel(char *name, unsigned int name_limit) {
 
 	unsigned int statTable[NUM_OF_STATS];
+
 	GetBaseStatsForPokemonName(name, name_limit, statTable, NUM_OF_STATS);
 	
 	unsigned int i = 0;
@@ -122,7 +207,7 @@ void TopLevel(char *name, unsigned int name_limit) {
 	pEntry->SetSpecialDefense(pEntry, (statTable + 4));
 	pEntry->SetSpeed(pEntry, (statTable + 5));	
 
-	pEntry->ConsolePrint(pEntry);
+
 	//choose region/game for correct BF entries
 
 
@@ -133,21 +218,14 @@ void TopLevel(char *name, unsigned int name_limit) {
 
 	AppendArrayToArray(name, MAX_NAME, entryFileName, MAX_FILE_NAME);
 	
-	//make a char for rest of entries
-
-	printf("EntryFileName is %s\n", entryFileName);
-	FILE *fin = fopen(entryFileName,"r");
-	if(fin == 0) {
-		GlobalDestroyer(1,0,0);
-	}
-	else 
-		printf("Successful open\n");
-
 	//display entries
-	ConsolePrintPokemonEntryFile(fin);
 
-	//TODO: DBL FREE ERROR DUE TO CONSOLEPRINTPOKEMONENTRY CLOSING FILE 
-	fclose(fin);
+	//TODO: Now that we have the list of all moves file, we should use it to create the actual entries.
+	//Insert the moves + their data into the entries.
+
+	
+	EntryDataIntoPokemonEntry(entryFileName, pEntry,0);
+	pEntry->ConsolePrint(pEntry);
 
 	//choose which entries.
 	printf("Which Entry would you like to pick? ");

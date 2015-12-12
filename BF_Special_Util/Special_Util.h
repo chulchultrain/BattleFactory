@@ -3,6 +3,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdio.h>
 #include <unistd.h>
 
 //Making the Directory. Just Make a struct stat *st pointer and malloc and then use it in the function. That's all.
@@ -27,6 +28,7 @@ unsigned int InsertArrayInArray(char *src, unsigned int srcLimit, char *dest, un
 //appends full array to another array. aka index 0 to first occurence of NULL, then index 0 
 unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, unsigned int destLimit);
 
-
+//same thing as fgets. However, if it fails, then it calls the global destroyer.if safeDestruct flag is set.
+void SafeReadLine(char *line, unsigned int limit, FILE *fptr,unsigned int safeDestruct);
 
 #endif
