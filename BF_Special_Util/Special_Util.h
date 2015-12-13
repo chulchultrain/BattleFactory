@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <GlobalDestroyer/GlobalDestroyer.h>
 
 //Making the Directory. Just Make a struct stat *st pointer and malloc and then use it in the function. That's all.
 void MakeDir(char *dirName, struct stat *st);

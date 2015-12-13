@@ -17,12 +17,12 @@
 entryInputDir = "../BASE/UNREFINED/UNFILTERED_FACTORY_ENTRIES/"
 DPPRegionSubDir = "DPP/"
 regionSubDir = DPPRegionSubDir
-DPPInputFileNameList = {"Kanto.txt":"R1.txt","Johto.txt":"R2.txt","Hoenn.txt":"R3.txt","Sinnoh.txt":"R4.txt"}
+DPPInputFileNameList = {"Kanto.txt":"Filter_R1.txt","Johto.txt":"Filter_R2.txt","Hoenn.txt":"Filter_R3.txt","Sinnoh.txt":"Filter_R4.txt"}
 inputFileNameList = DPPInputFileNameList
 
 fullNameInputFileList = {}
 
-entryOutputDir = "../BASE/UNREFINED/PARTIAL_FILTER_ENTRIES/"
+entryOutputDir = "../BASE/UNREFINED/FULL_FILTER_ENTRIES/"
 
 for entry in inputFileNameList:
 	fullNameInputFileList[entryInputDir + regionSubDir + entry] = entryOutputDir + regionSubDir + DPPInputFileNameList[entry]
@@ -130,7 +130,13 @@ def FilterTypeFromEntry(line):
 
 	return line[0:i],line[i:]
 
-
+def RidOfBeginningZeroes(num):
+	i = 0
+	while i < len(num) and num[i] == '0':
+		i += 1
+#	if i != 0:
+#		print num[i:]
+	return num[i:]
 
 #returns 2-tuple move, line without move
 def FilterMoveFromEntry(line):
@@ -157,9 +163,11 @@ def FilterMoveFromEntry(line):
 		if TagTokenEnd(line[j]):
 			j += 1
 		move = TrimEndingWhiteSpace(move)
+		move = RidOfBeginningZeroes(move)
 		return move,line[j:]
 	else:
 		line = TrimEndingWhiteSpace(line)
+		line = RidOfBeginningZeroes(move)
 		return line,''
 
 
@@ -304,6 +312,7 @@ def FilterFile(inputFileName,outputFileName):
 
 
 for entry in fullNameInputFileList:
+	print entry, fullNameInputFileList[entry]
 	FilterFile(entry,fullNameInputFileList[entry])
 
 

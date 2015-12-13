@@ -100,6 +100,13 @@ void TypeLineIntoEntry(char *typeLine,PokemonEntry *pEntry) {
 	pEntry->SetSecondaryType(pEntry,t2);
 }
 
+void MoveLineIntoEntry(char *moveLine, PokemonEntry *pEntry) {
+	unsigned int movePtr[1]; //convoluted due to StringToUnsignedInt only be able to store in pointer.
+	StringToUnsignedInt(moveLine,MAX_LINE_LENGTH,movePtr);
+	
+	
+}
+
 //Augments the pokemonEntry based on which selection was made. 0,1,2,3
 void EntryDataIntoPokemonEntry(char *fullEntryFileName, PokemonEntry *pEntry,unsigned int choice) {
 
@@ -115,6 +122,8 @@ void EntryDataIntoPokemonEntry(char *fullEntryFileName, PokemonEntry *pEntry,uns
 	char typeLine[MAX_LINE_LENGTH] = {0};
 	SafeReadLine(typeLine,MAX_LINE_LENGTH - 5, fin,1);
 	TypeLineIntoEntry(typeLine,pEntry);
+
+	
 	
 	fclose(fin);
 }
@@ -209,16 +218,12 @@ void TopLevel(char *name, unsigned int name_limit) {
 
 
 	//choose region/game for correct BF entries
-
-
-
 	char entryFileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
 
 	unsigned int errorMsg = CorrectRegionPrompt(entryFileName, MAX_FILE_NAME);
 
 	AppendArrayToArray(name, MAX_NAME, entryFileName, MAX_FILE_NAME);
-	
-	//display entries
+
 
 	//TODO: Now that we have the list of all moves file, we should use it to create the actual entries.
 	//Insert the moves + their data into the entries.
@@ -227,10 +232,7 @@ void TopLevel(char *name, unsigned int name_limit) {
 	EntryDataIntoPokemonEntry(entryFileName, pEntry,0);
 	pEntry->ConsolePrint(pEntry);
 
-	//choose which entries.
 	printf("Which Entry would you like to pick? ");
-
-	//make func to order entries and efficiently retrieve. not multiple file Open and close
 
 	
 

@@ -1,6 +1,5 @@
 #include <BF_Special_Util/Special_Util.h>
 #include <stdlib.h>
-#include <GlobalDestroyer/GlobalDestroyer.h>
 
 
 
@@ -25,6 +24,7 @@ unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned 
 
 	return 0;
 }
+
 
 void MakeDir(char *dirName, struct stat *st) {
 	if(dirName != 0 && st != 0) {
@@ -75,8 +75,10 @@ unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, un
 
 void SafeReadLine(char *line, unsigned int limit, FILE *fin,unsigned int safeDestruct) {
 	if(safeDestruct) {
-		if( fgets(line, limit, fin) == 0)
-			GlobalDestroyer(1,0,0);
+		if( fgets(line, limit, fin) == 0) {
+			GlobalDestroyer(1,0,0); 
+						}
+
 	}
 	else {
 		fgets(line,limit,fin);
