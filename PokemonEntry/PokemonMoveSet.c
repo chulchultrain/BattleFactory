@@ -25,30 +25,30 @@ void GetPokemonMoveSetSecondMoveName(PokemonMoveSet *obj, char *dest, unsigned i
 void GetPokemonMoveSetThirdMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit);
 void GetPokemonMoveSetFourthMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit);
 
-void SetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *original, unsigned int *damage);
-void SetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *original, unsigned int *damage);
-void SetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *original, unsigned int *damage);
-void SetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *original, unsigned int *damage);
+void SetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *original, unsigned int damage);
+void SetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *original, unsigned int damage);
+void SetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *original, unsigned int damage);
+void SetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *original, unsigned int damage);
 
 unsigned int GetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *obj);
 unsigned int GetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *obj);
 unsigned int GetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *obj);
 unsigned int GetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *obj);
 
-void SetPokemonMoveSetFirstMoveType(PokemonMoveSet *original, Type *t);
-void SetPokemonMoveSetSecondMoveType(PokemonMoveSet *original, Type *t);
-void SetPokemonMoveSetThirdMoveType(PokemonMoveSet *original, Type *t);
-void SetPokemonMoveSetFourthMoveType(PokemonMoveSet *original, Type *t);
+void SetPokemonMoveSetFirstMoveType(PokemonMoveSet *original, Type t);
+void SetPokemonMoveSetSecondMoveType(PokemonMoveSet *original, Type t);
+void SetPokemonMoveSetThirdMoveType(PokemonMoveSet *original, Type t);
+void SetPokemonMoveSetFourthMoveType(PokemonMoveSet *original, Type t);
 
 Type GetPokemonMoveSetFirstMoveType(PokemonMoveSet *obj);
 Type GetPokemonMoveSetSecondMoveType(PokemonMoveSet *obj);
 Type GetPokemonMoveSetThirdMoveType(PokemonMoveSet *obj);
 Type GetPokemonMoveSetFourthMoveType(PokemonMoveSet *obj);
 
-void SetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *original, MoveCategory *m);
-void SetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *original, MoveCategory *m);
-void SetPokemonMoveSetThirdMoveCategory(PokemonMoveSet *original, MoveCategory *m);
-void SetPokemonMoveSetFourthMoveCategory(PokemonMoveSet *original, MoveCategory *m);
+void SetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *original, MoveCategory m);
+void SetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *original, MoveCategory m);
+void SetPokemonMoveSetThirdMoveCategory(PokemonMoveSet *original, MoveCategory m);
+void SetPokemonMoveSetFourthMoveCategory(PokemonMoveSet *original, MoveCategory m);
 
 MoveCategory GetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *obj);
 MoveCategory GetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *obj);
@@ -194,16 +194,16 @@ void GetPokemonMoveSetFourthMoveName(PokemonMoveSet *obj, char *dest, unsigned i
 }
 
 
-void SetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *original, unsigned int *damage) {
+void SetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *original, unsigned int damage) {
 	original->mem->first->SetDamage(original->mem->first,damage);
 }
-void SetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *original, unsigned int *damage) {
+void SetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *original, unsigned int damage) {
 	original->mem->second->SetDamage(original->mem->second,damage);
 }
-void SetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *original, unsigned int *damage) {
+void SetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *original, unsigned int damage) {
 	original->mem->third->SetDamage(original->mem->third,damage);
 }
-void SetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *original, unsigned int *damage) {
+void SetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *original, unsigned int damage) {
 	original->mem->fourth->SetDamage(original->mem->fourth,damage);
 }
 
@@ -224,20 +224,20 @@ unsigned int GetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *obj) {
 	return obj->mem->fourth->GetDamage(obj->mem->fourth);
 }
 
-void SetPokemonMoveSetFirstMoveType(PokemonMoveSet *original, Type *t) {
+void SetPokemonMoveSetFirstMoveType(PokemonMoveSet *original, Type t) {
 	original->mem->first->SetType(original->mem->first,t);
 }
 
 
-void SetPokemonMoveSetSecondMoveType(PokemonMoveSet *original, Type *t) {
+void SetPokemonMoveSetSecondMoveType(PokemonMoveSet *original, Type t) {
 	original->mem->second->SetType(original->mem->second,t);
 }
 
-void SetPokemonMoveSetThirdMoveType(PokemonMoveSet *original, Type *t) {
+void SetPokemonMoveSetThirdMoveType(PokemonMoveSet *original, Type t) {
 	original->mem->third->SetType(original->mem->third,t);
 }
 
-void SetPokemonMoveSetFourthMoveType(PokemonMoveSet *original, Type *t) {
+void SetPokemonMoveSetFourthMoveType(PokemonMoveSet *original, Type t) {
 	original->mem->fourth->SetType(original->mem->fourth,t);
 }
 
@@ -258,16 +258,16 @@ Type GetPokemonMoveSetFourthMoveType(PokemonMoveSet *obj) {
 }
 
 
-void SetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *original, MoveCategory *m) {
+void SetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *original, MoveCategory m) {
 	original->mem->first->SetCategory(original->mem->first,m);
 }
-void SetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *original, MoveCategory *m) {
+void SetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *original, MoveCategory m) {
 	original->mem->second->SetCategory(original->mem->second,m);
 }
-void SetPokemonMoveSetThirdMoveCategory(PokemonMoveSet *original, MoveCategory *m) {
+void SetPokemonMoveSetThirdMoveCategory(PokemonMoveSet *original, MoveCategory m) {
 	original->mem->third->SetCategory(original->mem->third,m);
 }
-void SetPokemonMoveSetFourthMoveCategory(PokemonMoveSet *original, MoveCategory *m) {
+void SetPokemonMoveSetFourthMoveCategory(PokemonMoveSet *original, MoveCategory m) {
 	original->mem->fourth->SetCategory(original->mem->fourth,m);
 }
 

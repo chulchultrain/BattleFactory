@@ -14,17 +14,17 @@ unsigned int Speed;
 
 };
 
-void SetHitPoints(PokemonStats* original, const unsigned int* HitPoints);
+void SetHitPoints(PokemonStats* original, unsigned int HitPoints);
 
-void SetAttack(PokemonStats* original, const unsigned int* Attack);
+void SetAttack(PokemonStats* original, unsigned int Attack);
 
-void SetDefense(PokemonStats* original, const unsigned int* Defense);
+void SetDefense(PokemonStats* original, unsigned int Defense);
 
-void SetSpecialAttack(PokemonStats* original, const unsigned int* SpecialAttack);
+void SetSpecialAttack(PokemonStats* original, unsigned int SpecialAttack);
 
-void SetSpecialDefense(PokemonStats* original, const unsigned int* SpecialDefense);
+void SetSpecialDefense(PokemonStats* original, unsigned int SpecialDefense);
 
-void SetSpeed(PokemonStats* original, const unsigned int* Speed);
+void SetSpeed(PokemonStats* original, unsigned int Speed);
 
 unsigned int GetHitPoints(PokemonStats* obj);
 unsigned int GetAttack(PokemonStats* obj);
@@ -83,7 +83,7 @@ PokemonStats* CopyPokemonStats(PokemonStats* original) {
 //Currently no default parameters wtf c doesnt have function overloading
 //read that should pass constant pointers instead of by value to avoid creating new 
 //objects. Although primitives arent nearly as costly.
-PokemonStats* FullNewPokemonStats(const unsigned int* HP,const unsigned int* A,const unsigned int* D,const unsigned int* SpA, const unsigned int* SpD, const unsigned int* S) {
+PokemonStats* FullNewPokemonStats(unsigned int HP,unsigned int A,unsigned int D,unsigned int SpA, unsigned int SpD, unsigned int S) {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
 	if (pokeStats == 0)
 		GlobalDestroyer(1,0,0);
@@ -91,12 +91,12 @@ PokemonStats* FullNewPokemonStats(const unsigned int* HP,const unsigned int* A,c
 	if (pokeStats->mem == 0) {
 		GlobalDestroyer(1,0,0);
 		}
-	pokeStats->mem->HitPoints = *HP;
-	pokeStats->mem->Attack = *A;
-	pokeStats->mem->Defense = *D;
-	pokeStats->mem->SpecialAttack = *SpA;
-	pokeStats->mem->SpecialDefense = *SpD;
-	pokeStats->mem->Speed = *S;
+	pokeStats->mem->HitPoints = HP;
+	pokeStats->mem->Attack = A;
+	pokeStats->mem->Defense = D;
+	pokeStats->mem->SpecialAttack = SpA;
+	pokeStats->mem->SpecialDefense = SpD;
+	pokeStats->mem->Speed = S;
 
 	SetPokemonStatsFunctionPointers(pokeStats);
 
@@ -149,28 +149,28 @@ void DeletePokemonStats(PokemonStats* recall){
 	}
 }
 
-void SetHitPoints(PokemonStats* original, const unsigned int* HitPoints) {
-	original->mem->HitPoints = *HitPoints;
+void SetHitPoints(PokemonStats* original, unsigned int HitPoints) {
+	original->mem->HitPoints = HitPoints;
 }
 
-void SetAttack(PokemonStats* original, const unsigned int* Attack) {
-	original->mem->Attack = *Attack;
+void SetAttack(PokemonStats* original, unsigned int Attack) {
+	original->mem->Attack = Attack;
 }
 
-void SetDefense(PokemonStats* original, const unsigned int* Defense) {
-	original->mem->Defense = *Defense;
+void SetDefense(PokemonStats* original, unsigned int Defense) {
+	original->mem->Defense = Defense;
 }
 
-void SetSpecialAttack(PokemonStats* original, const unsigned int* SpecialAttack) {
-	original->mem->SpecialAttack = *SpecialAttack;
+void SetSpecialAttack(PokemonStats* original, unsigned int SpecialAttack) {
+	original->mem->SpecialAttack = SpecialAttack;
 }
 
-void SetSpecialDefense(PokemonStats* original, const unsigned int* SpecialDefense) {
-	original->mem->SpecialDefense = *SpecialDefense;
+void SetSpecialDefense(PokemonStats* original, unsigned int SpecialDefense) {
+	original->mem->SpecialDefense = SpecialDefense;
 }
 
-void SetSpeed(PokemonStats* original, const unsigned int* Speed) {
-	original->mem->Speed = *Speed;
+void SetSpeed(PokemonStats* original, unsigned int Speed) {
+	original->mem->Speed = Speed;
 }
 
 

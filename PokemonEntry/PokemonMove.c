@@ -15,6 +15,25 @@ MoveCategory moveCat;
 
 void SetPokemonMoveFunctionPointers(PokemonMove *movePtr);
 
+void copyMoveName(const char* source, char* dest);
+void SetPokemonMovePrivateData(PokemonMovePrivate *mem);
+
+
+void MoveTypeConsolePrint(Type obj);
+void MoveCategoryConsolePrint(MoveCategory obj);
+
+void MoveConsolePrint(PokemonMove *obj);
+
+void SetMoveName(PokemonMove *original, char *moveName);
+void SetMoveDamage(PokemonMove *original, unsigned int D);
+void SetMoveType(PokemonMove *original, Type t);
+void SetMoveCategory(PokemonMove *original, MoveCategory m);
+
+void GetMoveName(PokemonMove *obj, char *dest, unsigned int limit);
+Type GetMoveType(PokemonMove *obj);
+unsigned int GetMoveDamage(PokemonMove *obj);
+MoveCategory GetMoveCategory(PokemonMove *obj);
+
 void copyMoveName(const char* source, char* dest) {
 	int i = 0;
 	while(i < MAX_MOVE_NAME && source[i] != 0) {
@@ -115,24 +134,24 @@ void SetMoveName(PokemonMove *original, char *moveName) {
 	copyMoveName(moveName, original->mem->name);
 }
 
-void SetMoveDamage(PokemonMove *original, unsigned int *D) {
-	original->mem->damage = *D;
+void SetMoveDamage(PokemonMove *original, unsigned int D) {
+	original->mem->damage = D;
 }
 
 unsigned int GetMoveDamage(PokemonMove *obj) {
 	return obj->mem->damage;
 }
 
-void SetMoveType(PokemonMove *original, Type *t) {
-	original->mem->moveType = *t;
+void SetMoveType(PokemonMove *original, Type t) {
+	original->mem->moveType = t;
 }
 
 Type GetMoveType(PokemonMove *obj) {
 	return obj->mem->moveType;
 }
 
-void SetMoveCategory(PokemonMove *original, MoveCategory *m) {
-	original->mem->moveCat = *m;
+void SetMoveCategory(PokemonMove *original, MoveCategory m) {
+	original->mem->moveCat = m;
 }
 
 MoveCategory GetMoveCategory(PokemonMove *obj) {

@@ -29,7 +29,7 @@ New Constructor and Copy Constructor.
 
 
 
-void PETest(unsigned int *HP, unsigned int *A, unsigned int *D, unsigned int *SpA, unsigned int *SpD, unsigned int *S, Type *t1, Type *t2, char* name, char *m1, char *m2, char *m3, char *m4, MoveCategory *m) {
+void PETest(unsigned int HP, unsigned int A, unsigned int D, unsigned int SpA, unsigned int SpD, unsigned int S, Type t1, Type t2, char* name, char *m1, char *m2, char *m3, char *m4, MoveCategory m) {
 PokemonEntry *result = NewPokemonEntry();
 printf("BEFORENAME\n\n\n\n");
 printf("name is %s\n", name);
@@ -63,30 +63,20 @@ int main() {
 	char move3[30] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	char move4[30] = "";
 
-	MoveCategory *moveCat = malloc(sizeof(MoveCategory));
-	*moveCat = PHYSICAL;
-
-	Type *t1 = malloc(sizeof(Type));
-	*t1 = NONE;
-	Type *t2 = malloc(sizeof(Type));
-	*t2 = DRAGON;
-	unsigned int *hp = malloc(sizeof(unsigned int));
-	*hp = 1;
-	unsigned int *a = malloc(sizeof(unsigned int));
-	*a = 2;
-	unsigned int *d = malloc(sizeof(unsigned int));
-	*d = 3;
-	unsigned int *SpA = malloc(sizeof(unsigned int));
-	*SpA = 4;
-	unsigned int *SpD = malloc(sizeof(unsigned int));
-	*SpD = 5;
-	unsigned int *S = malloc(sizeof(unsigned int));
-	*S = 6;
+	MoveCategory moveCat = PHYSICAL;
+	Type t1 = NONE;
+	Type t2 = DRAGON;
+	unsigned int hp = 1;
+	unsigned int a = 2;
+	unsigned int d = 3;
+	unsigned int SpA = 4;
+	unsigned int SpD = 5;
+	unsigned int S = 6;
 
 	PETest(hp,a,d,SpA,SpD,S,t1,t2,overFlowName,move1,move2,move3,move4, moveCat);
-	*moveCat = SPECIAL;
+	moveCat = SPECIAL;
 	PETest(hp,a,d,SpA,SpD,S,t1,t2,emptyName,move1,move2,move3,move4, moveCat);
-	*moveCat = STATUS;
+	moveCat = STATUS;
 	PETest(hp,a,d,SpA,SpD,S,t1,t2,oneName,move1,move2,move3,move4, moveCat);
 	return 0;
 }

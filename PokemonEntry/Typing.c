@@ -14,11 +14,11 @@ struct TypeContainerPrivate {
 
 
 
-void SetPrimaryType(TypeContainer* original,const Type* primary);
+void SetPrimaryType(TypeContainer* original, Type primary);
 
-void SetSecondaryType(TypeContainer* original,const Type* secondary);
+void SetSecondaryType(TypeContainer* original, Type secondary);
 
-void SetBothTypes(TypeContainer* original,const Type* primary,const Type* secondary);
+void SetBothTypes(TypeContainer* original, Type primary, Type secondary);
 
 void SetTypeContainerFunctionPointers(TypeContainer* original);
 
@@ -69,7 +69,7 @@ TypeContainer *CopyTypeContainer(TypeContainer* original) {
 
 }
 
-TypeContainer *FullTypeContainer(Type* type1, Type* type2){
+TypeContainer *FullTypeContainer(Type type1, Type type2){
 	TypeContainer *result = malloc(sizeof(TypeContainer));
 	if (result == 0)
 		GlobalDestroyer(1,0,0);
@@ -77,8 +77,8 @@ TypeContainer *FullTypeContainer(Type* type1, Type* type2){
 	if (result->mem == 0)
 		GlobalDestroyer(1,0,0);
 	SetTypeContainerMemory(result->mem);
-	result->mem->primary = *type1;
-	result->mem->secondary = *type2;
+	result->mem->primary = type1;
+	result->mem->secondary = type2;
 	SetTypeContainerFunctionPointers(result);	
 	return result;
 
@@ -116,17 +116,17 @@ void DeleteTypeContainer(TypeContainer* recall) {
 
 }
 
-void SetPrimaryType(TypeContainer* original,const Type* primary) {
-	original->mem->primary = *primary;
+void SetPrimaryType(TypeContainer* original, Type primary) {
+	original->mem->primary = primary;
 }
 
-void SetSecondaryType(TypeContainer* original,const Type* secondary) {
-	original->mem->secondary = *secondary;
+void SetSecondaryType(TypeContainer* original, Type secondary) {
+	original->mem->secondary = secondary;
 }
 
-void SetBothTypes(TypeContainer* original,const Type* primary,const Type* secondary) {
-	original->mem->primary = *primary;
-	original->mem->secondary = *secondary;
+void SetBothTypes(TypeContainer* original,Type primary, Type secondary) {
+	original->mem->primary = primary;
+	original->mem->secondary = secondary;
 }
 
 void SetTypeContainerFunctionPointers(TypeContainer* original) {
