@@ -1,4 +1,5 @@
 #include <BF_Special_Util/Special_Util.h>
+#include <SpecialConstants/SpecialConstants.h>
 #include <stdlib.h>
 
 
@@ -23,6 +24,31 @@ unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned 
 
 
 	return 0;
+}
+
+
+unsigned int UnsignedIntToString(unsigned int num, char *line, unsigned int limit) {
+	unsigned int len = 0;
+	unsigned int tempNum = num;
+	char temp[MAX_LINE_LENGTH] = {0};
+	for(len = 0; len < limit && tempNum > 0;len++) {
+		temp[len] = tempNum % 10;
+		tempNum /= 10;
+
+	}
+
+	if(tempNum > 0) {
+		return 1;
+	}
+
+	while( len >= 0) {
+		line[len] = (temp[len] + 48);
+		len--;
+	}
+
+	return 0;
+	
+
 }
 
 
@@ -85,3 +111,26 @@ void SafeReadLine(char *line, unsigned int limit, FILE *fin,unsigned int safeDes
 	}
 
 }
+
+//RNL stands for remove new line
+void SafeReadLineRNL(char *line, unsigned int limit, FILE *fin,unsigned int safeDestruct) {
+	if(safeDestruct) {
+		if( fgets(line, limit, fin) == 0) {
+			GlobalDestroyer(1,0,0); 
+						}
+
+	}
+	else {
+		fgets(line,limit,fin);
+		int i = 0;
+		for(i = 0; i < limit; i++) {
+			if(line[i] == '\n') {
+				line[i] = 0;
+				break;
+				}
+		}
+	}
+
+}
+
+

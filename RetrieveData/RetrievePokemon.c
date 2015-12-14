@@ -71,11 +71,25 @@ Type TokenToType(char *token) {
 				case 'o': return POISON;
 				case 's': return PSYCHIC;
 				}
+		case 'R': return ROCK;
 		case 'S': return STEEL;
 		case 'W': return WATER;
 	}	
 	return NONE;
 
+}
+
+MoveCategory TokenToCategory(char *token) {
+
+	switch(token[0]) {
+		case 'P': return PHYSICAL;
+		case 'S': 
+			switch(token[1]) {
+				case 'p': return SPECIAL;
+				case 't': return STATUS;
+				}
+	}
+	return EMPTY;
 }
 
 
@@ -90,20 +104,65 @@ void TypeLineIntoEntry(char *typeLine,PokemonEntry *pEntry) {
 			break; }
 		
 	//TODO:CHANGE POKEMONENTRY TO accept values not pointers and then change these accordingly.
-	Type *t1 = malloc(sizeof(Type)); 
-	*t1 = TokenToType(typeLine);
-	Type *t2 = malloc(sizeof(Type));
+	Type t1 = TokenToType(typeLine);
+	Type t2 = NONE;
 	if( hasTwoTypes == 1) {
-		*t2 = TokenToType(typeLine + i);
+		t2 = TokenToType(typeLine + i);
 	}
 	pEntry->SetPrimaryType(pEntry,t1);
 	pEntry->SetSecondaryType(pEntry,t2);
 }
 
-void MoveLineIntoEntry(char *moveLine, PokemonEntry *pEntry) {
-	unsigned int movePtr[1]; //convoluted due to StringToUnsignedInt only be able to store in pointer.
-	StringToUnsignedInt(moveLine,MAX_LINE_LENGTH,movePtr);
+void MoveLineIntoEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice) {
+
+	int i;
+	char indexString[MAX_LINE_LENGTH] = {0};
+	char moveName[MAX_NAME] = {0};
+	char typeString[MAX_NAME] = {0};
+	char categoryString[MAX_NAME] = {0};
+	char damageString[MAX_NAME] = {0};
+
+	unsigned int moveIndex[1];
+	unsigned int moveDamage[1];
+
+	for(i = 0; i < MAX_LINE_LENGTH && moveLine[i] >= '0' && moveLine[i] <= '9'; i++)
+		indexString[i] = moveLine[i];
+
+
+	char inputFileName[MAX_FILE_NAME] = MOVES_DIRECTORY;
+
+	AppendArrayToArray(indexString, MAX_LINE_LENGTH, inputFileName, MAX_FILE_NAME);
+
+	FILE *fin = fopen(inputFileName,"r");
+
+	SafeReadLine(indexString,MAX_LINE_LENGTH,fin,1);
+	SafeReadLineRNL(moveName,MAX_NAME,fin,1);
+	StringToUnsignedInt(indexString,MAX_LINE_LENGTH,moveIndex);
+	SafeReadLineRNL(typeString,MAX_NAME,fin,1);
+	SafeReadLineRNL(categoryString,MAX_NAME,fin,1);
+	SafeReadLine(damageString,MAX_NAME,fin,1);
 	
+	StringToUnsignedInt(damageString,MAX_NAME,moveDamage);
+
+	Type moveType = TokenToType(typeString);
+	MoveCategory moveCategory = TokenToCategory(categoryString);
+
+
+	switch(choice) {
+
+	case 0:
+	pEntry->SetFirstMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
+	break;
+	case 1:
+	pEntry->SetSecondMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
+	break;
+	case 2:
+	pEntry->SetThirdMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
+	break;
+	case 3:
+	pEntry->SetFourthMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
+	break;
+	}	
 	
 }
 
@@ -120,10 +179,12 @@ void EntryDataIntoPokemonEntry(char *fullEntryFileName, PokemonEntry *pEntry,uns
 	//move file pointer to correct position in file, then parse data
 	GoToEntryChoice(fin,choice);
 	char typeLine[MAX_LINE_LENGTH] = {0};
+	char moveLine[MAX_LINE_LENGTH] = {0};
 	SafeReadLine(typeLine,MAX_LINE_LENGTH - 5, fin,1);
 	TypeLineIntoEntry(typeLine,pEntry);
 
-	
+	SafeReadLine(moveLine,MAX_LINE_LENGTH - 5, fin,1);
+	MoveLineIntoEntry(moveLine,pEntry,0);
 	
 	fclose(fin);
 }
@@ -209,12 +270,12 @@ void TopLevel(char *name, unsigned int name_limit) {
 	//create entry using basestats and name.
 	PokemonEntry *pEntry = NewPokemonEntry();
 	pEntry->SetName(pEntry, name);
-	pEntry->SetHitPoints(pEntry, statTable);
-	pEntry->SetAttack(pEntry, (statTable + 1));
-	pEntry->SetDefense(pEntry, (statTable + 2));
-	pEntry->SetSpecialAttack(pEntry, (statTable + 3));
-	pEntry->SetSpecialDefense(pEntry, (statTable + 4));
-	pEntry->SetSpeed(pEntry, (statTable + 5));	
+	pEntry->SetHitPoints(pEntry, statTable[0]);
+	pEntry->SetAttack(pEntry, statTable[1]);
+	pEntry->SetDefense(pEntry, statTable[2]);
+	pEntry->SetSpecialAttack(pEntry, statTable[3]);
+	pEntry->SetSpecialDefense(pEntry, statTable[4]);
+	pEntry->SetSpeed(pEntry, statTable[5]);	
 
 
 	//choose region/game for correct BF entries

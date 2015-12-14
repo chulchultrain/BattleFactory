@@ -23,6 +23,8 @@ Successful call will return 0, and set pointer properly.
 **/
 unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *);
 
+unsigned int UnsignedIntToString(unsigned int num, char *str, unsigned int limit);
+
 //start = start index in the destination array. This function will always try to put the full src array into an index of the dest array.
 unsigned int InsertArrayInArray(char *src, unsigned int srcLimit, char *dest, unsigned int start, unsigned int destLimit);
 
@@ -31,5 +33,8 @@ unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, un
 
 //same thing as fgets. However, if it fails, then it calls the global destroyer.if safeDestruct flag is set.
 void SafeReadLine(char *line, unsigned int limit, FILE *fptr,unsigned int safeDestruct);
+
+//same thing as SafeReadLine. removes newline
+void SafeReadLineRNL(char *line, unsigned int limit, FILE *fin,unsigned int safeDestruct);
 
 #endif

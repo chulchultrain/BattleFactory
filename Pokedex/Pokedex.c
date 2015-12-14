@@ -271,6 +271,7 @@ Type TakeTypeFromToken(char *line) {
 				case 'o': return POISON;
 				case 's': return PSYCHIC;
 				}
+		case 'R': return ROCK;
 		case 'S': return STEEL;
 		case 'W': return WATER;
 	}	

@@ -42,6 +42,10 @@ File to store Special constants and include here so that do not have to #define 
 #define ENTRY_DIRECTORY "BASE/ENTRY/"
 #endif
 
+#ifndef MOVES_DIRECTORY
+#define MOVES_DIRECTORY "BASE/MOVES/"
+#endif
+
 #ifndef MAX_REGIONS
 #define MAX_REGIONS 9
 #endif
