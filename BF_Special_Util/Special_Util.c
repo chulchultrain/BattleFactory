@@ -118,6 +118,15 @@ void SafeReadLineRNL(char *line, unsigned int limit, FILE *fin,unsigned int safe
 		if( fgets(line, limit, fin) == 0) {
 			GlobalDestroyer(1,0,0); 
 						}
+		else {
+			int i = 0;
+			for(i = 0; i < limit; i++) {
+				if(line[i] == '\n') {
+					line[i] = 0;
+					break;
+					}	
+			}	
+		}
 
 	}
 	else {

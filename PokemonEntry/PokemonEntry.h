@@ -50,7 +50,7 @@ MoveCategory GetSecondMoveCategory(PokemonEntry *obj);
 MoveCategory GetThirdMoveCategory(PokemonEntry *obj);
 MoveCategory GetFourthMoveCategory(PokemonEntry *obj);
 
-void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit);
+void GetName(PokemonEntry *obj, char* dest, unsigned int limit);
 
 unsigned int GetHitPoints(PokemonEntry *obj);
 unsigned int GetAttack(PokemonEntry *obj);

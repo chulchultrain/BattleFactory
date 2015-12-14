@@ -13,6 +13,6 @@ void ConsolePrintPokemonEntryFile(FILE *fPtr);
 //PokemonEntry *EntryFromFile(char *name, nature, moveset);
 
 
-void TopLevel(char *name, unsigned int name_limit);
+void TopLevel(char *name);
 
 #endif

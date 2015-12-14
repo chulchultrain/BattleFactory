@@ -121,106 +121,47 @@ void MoveLineIntoEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice
 	char typeString[MAX_NAME] = {0};
 	char categoryString[MAX_NAME] = {0};
 	char damageString[MAX_NAME] = {0};
+	char inputFileName[MAX_FILE_NAME] = MOVES_DIRECTORY;
 
 	unsigned int moveIndex[1];
 	unsigned int moveDamage[1];
 
 	for(i = 0; i < MAX_LINE_LENGTH && moveLine[i] >= '0' && moveLine[i] <= '9'; i++)
 		indexString[i] = moveLine[i];
-
-
-	char inputFileName[MAX_FILE_NAME] = MOVES_DIRECTORY;
-
 	AppendArrayToArray(indexString, MAX_LINE_LENGTH, inputFileName, MAX_FILE_NAME);
 
 	FILE *fin = fopen(inputFileName,"r");
 
+	//read data into char arrays
 	SafeReadLine(indexString,MAX_LINE_LENGTH,fin,1);
 	SafeReadLineRNL(moveName,MAX_NAME,fin,1);
-	StringToUnsignedInt(indexString,MAX_LINE_LENGTH,moveIndex);
-	SafeReadLineRNL(typeString,MAX_NAME,fin,1);
-	SafeReadLineRNL(categoryString,MAX_NAME,fin,1);
+	SafeReadLine(typeString,MAX_NAME,fin,1);
+	SafeReadLine(categoryString,MAX_NAME,fin,1);
 	SafeReadLine(damageString,MAX_NAME,fin,1);
 	
+	//filter char array data
+	StringToUnsignedInt(indexString,MAX_LINE_LENGTH,moveIndex);
 	StringToUnsignedInt(damageString,MAX_NAME,moveDamage);
-
 	Type moveType = TokenToType(typeString);
 	MoveCategory moveCategory = TokenToCategory(categoryString);
-
 
 	switch(choice) {
 
 	case 0:
-	pEntry->SetFirstMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
-	break;
+		pEntry->SetFirstMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
+		break;
 	case 1:
-	pEntry->SetSecondMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
-	break;
+		pEntry->SetSecondMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
+		break;
 	case 2:
-	pEntry->SetThirdMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
-	break;
+		pEntry->SetThirdMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
+		break;
 	case 3:
-	pEntry->SetFourthMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
-	break;
+		pEntry->SetFourthMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
+		break;
 	}	
 	
 }
-
-//Augments the pokemonEntry based on which selection was made. 0,1,2,3
-void EntryDataIntoPokemonEntry(char *fullEntryFileName, PokemonEntry *pEntry,unsigned int choice) {
-
-	FILE *fin = fopen(fullEntryFileName,"r");
-	if(fin == 0) {
-		GlobalDestroyer(1,0,0);
-	}
-	else 
-		printf("Successful open\n");
-
-	//move file pointer to correct position in file, then parse data
-	GoToEntryChoice(fin,choice);
-	char typeLine[MAX_LINE_LENGTH] = {0};
-	char moveLine[MAX_LINE_LENGTH] = {0};
-	SafeReadLine(typeLine,MAX_LINE_LENGTH - 5, fin,1);
-	TypeLineIntoEntry(typeLine,pEntry);
-
-	SafeReadLine(moveLine,MAX_LINE_LENGTH - 5, fin,1);
-	MoveLineIntoEntry(moveLine,pEntry,0);
-	
-	fclose(fin);
-}
-
-
-// the file should have each stat on a different line, statName statAmount 
-void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit) {
-
-	unsigned int i = 0; //array offset
-	unsigned int val;
-	char buffer[MAX_LINE_LENGTH] = {0};
-
-	while(i < statArrayLimit && fgets(buffer, MAX_LINE_LENGTH, fptr) != 0) {
-
-		val = StringToUnsignedInt(buffer, MAX_LINE_LENGTH, (statArray + i) );
-		//add Logger function to indicate failure. 
-		i++;
-	}
-
-}
-
-void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
-	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
-	AppendArrayToArray(name, name_limit, fileName, MAX_FILE_NAME);
-	
-	printf("base stat file name is %s\n", fileName);
-
-	FILE *fin = fopen(fileName, "r");
-	if(fin == 0) {
-		GlobalDestroyer(1,0,0);
-	}
-	//Extracts base stats out of file and put into array.
-	ProcessBaseStatsFile(fin, statArray, statArrayLimit);
-	fclose(fin);
-}
-
 
 
 
@@ -257,43 +198,109 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 
 }
 
+//Augments the pokemonEntry based on which selection was made. 0,1,2,3
+void EntryDataIntoPokemonEntry(PokemonEntry *pEntry,unsigned int choice) {
 
-void TopLevel(char *name, unsigned int name_limit) {
+	char entryFileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
+	char name[MAX_NAME] = {0};
+	pEntry->GetName(pEntry,name,MAX_NAME);
+	CorrectRegionPrompt(entryFileName, MAX_FILE_NAME);
+	AppendArrayToArray(name, MAX_NAME, entryFileName, MAX_FILE_NAME);
 
-	unsigned int statTable[NUM_OF_STATS];
+	FILE *fin = fopen(entryFileName,"r");
+	if(fin == 0) {
+		GlobalDestroyer(1,0,0);
+	}
+	else 
+		printf("Successful open\n");
 
-	GetBaseStatsForPokemonName(name, name_limit, statTable, NUM_OF_STATS);
+	//move file pointer to correct position in file, then parse data
+	GoToEntryChoice(fin,choice);
+	char typeLine[MAX_LINE_LENGTH] = {0};
+	char moveLine[MAX_LINE_LENGTH] = {0};
+	SafeReadLine(typeLine,MAX_LINE_LENGTH, fin,1);
+	TypeLineIntoEntry(typeLine,pEntry);
+
+	int i = 0;
+	while( i < 4) {
+		SafeReadLine(moveLine,MAX_LINE_LENGTH - 5, fin,1);
+		MoveLineIntoEntry(moveLine,pEntry,i);
+		i++;
+	}
+
+	fclose(fin);
+}
+
+
+// the file should have each stat on a different line, statName statAmount 
+void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit) {
+
+	unsigned int i = 0; //array offset
+	char buffer[MAX_LINE_LENGTH] = {0};
+
+	while(i < statArrayLimit && fgets(buffer, MAX_LINE_LENGTH, fptr) != 0) {
+
+		StringToUnsignedInt(buffer, MAX_LINE_LENGTH, (statArray + i) );
+		//add Logger function to indicate failure. 
+		i++;
+	}
+
+}
+
+
+
+
+void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
+	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
+	AppendArrayToArray(name, name_limit, fileName, MAX_FILE_NAME);
 	
-	unsigned int i = 0;
+	printf("base stat file name is %s\n", fileName);
+
+	FILE *fin = fopen(fileName, "r");
+	if(fin == 0) {
+		GlobalDestroyer(1,0,0);
+	}
+	//Extracts base stats out of file and put into array.
+	ProcessBaseStatsFile(fin, statArray, statArrayLimit);
+	fclose(fin);
+}
 
 
-	//create entry using basestats and name.
-	PokemonEntry *pEntry = NewPokemonEntry();
-	pEntry->SetName(pEntry, name);
+
+void StatsIntoEntry(PokemonEntry *pEntry) {
+	char name[MAX_NAME] = {0};
+	pEntry->GetName(pEntry,name,MAX_NAME);
+	unsigned int statTable[NUM_OF_STATS];
+	GetBaseStatsForPokemonName(name, MAX_NAME, statTable, NUM_OF_STATS);
+
 	pEntry->SetHitPoints(pEntry, statTable[0]);
 	pEntry->SetAttack(pEntry, statTable[1]);
 	pEntry->SetDefense(pEntry, statTable[2]);
 	pEntry->SetSpecialAttack(pEntry, statTable[3]);
 	pEntry->SetSpecialDefense(pEntry, statTable[4]);
 	pEntry->SetSpeed(pEntry, statTable[5]);	
+		
+}
 
+PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice) {
+	PokemonEntry *pEntry = NewPokemonEntry();
+	pEntry->SetName(pEntry, name);
 
-	//choose region/game for correct BF entries
-	char entryFileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
+	StatsIntoEntry(pEntry);
+	EntryDataIntoPokemonEntry(pEntry,choice);
+//	pEntry->ConsolePrint(pEntry);
 
-	unsigned int errorMsg = CorrectRegionPrompt(entryFileName, MAX_FILE_NAME);
+	return pEntry;
 
-	AppendArrayToArray(name, MAX_NAME, entryFileName, MAX_FILE_NAME);
+}
 
+void TopLevel(char *name) {
 
-	//TODO: Now that we have the list of all moves file, we should use it to create the actual entries.
-	//Insert the moves + their data into the entries.
-
-	
-	EntryDataIntoPokemonEntry(entryFileName, pEntry,0);
+	//create entry using basestats and name.
+	PokemonEntry *pEntry = EntryFromNameChoice(name,1);
 	pEntry->ConsolePrint(pEntry);
 
-	printf("Which Entry would you like to pick? ");
+
 
 	
 
