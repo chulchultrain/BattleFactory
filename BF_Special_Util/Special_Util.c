@@ -7,7 +7,7 @@
 unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *product) {
 	unsigned int temp = 0;
 	unsigned int i;
-	for(i = 0;  i < line_length && line[i] != '\n'; i++) {
+	for(i = 0;  i < line_length && line[i] != 0 && line[i] != '\n'; i++) {
 		if( line[i] >= '0' && line[i] <= '9') {
 			temp *= 10;
 			temp += (line[i] - '0'); 

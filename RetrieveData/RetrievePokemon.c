@@ -217,59 +217,154 @@ void AugmentEntryByNatureLine(char *natureLine, unsigned int line_limit, Pokemon
 
 	typedef enum Stats{ HP, A, D, SA, SD, S} Stats;
 
-	double mod[NUM_OF_NATURES][NUM_OF_STATS];
+	char mod[NUM_OF_NATURES][NUM_OF_STATS];
 	unsigned int i,j;
 
 	for(i = 0; i < NUM_OF_NATURES; i++)
 		for(j = 0; j < NUM_OF_STATS; j++)
 			mod[i][j] = 1;
 
-	mod[LONELY][A] = 1.1;
-	mod[LONELY][D] = .9;
-	mod[BRAVE][A] = 1.1;
-	mod[BRAVE][S] = .9;
-	mod[ADAMANT][A] = 1.1;
-	mod[ADAMANT][SA] = .9;
-	mod[NAUGHTY][A] = 1.1;
-	mod[NAUGHTY][SD] = .9;
+	mod[LONELY][A] = 2;
+	mod[LONELY][D] = 0;
+	mod[BRAVE][A] = 2;
+	mod[BRAVE][S] = 0;
+	mod[ADAMANT][A] = 2;
+	mod[ADAMANT][SA] = 0;
+	mod[NAUGHTY][A] = 2;
+	mod[NAUGHTY][SD] = 0;
 
-	mod[BOLD][D] = 1.1;
-	mod[BOLD][A] = .9;
-	mod[RELAXED][D] = 1.1;
-	mod[RELAXED][S] = .9;
-	mod[IMPISH][D] = 1.1;
-	mod[IMPISH][SA] = .9;
-	mod[LAX][D] = 1.1;
-	mod[LAX][SD] = .9;
+	mod[BOLD][D] = 2;
+	mod[BOLD][A] = 0;
+	mod[RELAXED][D] = 2;
+	mod[RELAXED][S] = 0;
+	mod[IMPISH][D] = 2;
+	mod[IMPISH][SA] = 0;
+	mod[LAX][D] = 2;
+	mod[LAX][SD] = 0;
 
-	mod[TIMID][S] = 1.1;
-	mod[TIMID][A] = .9;
-	mod[HASTY][S] = 1.1;
-	mod[HASTY][D] = .9;
-	mod[JOLLY][S] = 1.1;
-	mod[JOLLY][SA] = .9;
-	mod[NAIVE][S] = 1.1;
-	mod[NAIVE][SD] = .9;
+	mod[TIMID][S] = 2;
+	mod[TIMID][A] = 0;
+	mod[HASTY][S] = 2;
+	mod[HASTY][D] = 0;
+	mod[JOLLY][S] = 2;
+	mod[JOLLY][SA] = 0;
+	mod[NAIVE][S] = 2;
+	mod[NAIVE][SD] = 0;
 	
-	mod[MODEST][SA] = 1.1;
-	mod[MODEST][A] = .9;
-	mod[MILD][SA] = 1.1;
-	mod[MILD][D] = .9;
-	mod[QUIET][SA] = 1.1;
-	mod[QUIET][S] = .9;
-	mod[RASH][SA] = 1.1;
-	mod[RASH][SD] = .9;
+	mod[MODEST][SA] = 2;
+	mod[MODEST][A] = 0;
+	mod[MILD][SA] = 2;
+	mod[MILD][D] = 0;
+	mod[QUIET][SA] = 2;
+	mod[QUIET][S] = 0;
+	mod[RASH][SA] = 2;
+	mod[RASH][SD] = 0;
 
-	mod[CALM][SD] = 1.1;
-	mod[CALM][A] = .9;
-	mod[GENTLE][SD] = 1.1;
-	mod[GENTLE][D] = .9;
-	mod[SASSY][SD] = 1.1;
-	mod[SASSY][S] = .9;
-	mod[CAREFUL][SD] = 1.1;
-	mod[CAREFUL][SA] = .9;
+	mod[CALM][SD] = 2;
+	mod[CALM][A] = 0;
+	mod[GENTLE][SD] = 2;
+	mod[GENTLE][D] = 0;
+	mod[SASSY][SD] = 2;
+	mod[SASSY][S] = 0;
+	mod[CAREFUL][SD] = 2;
+	mod[CAREFUL][SA] = 0;
 
+	Nature entryNat = HARDY; //used for initialization. okay since hardy doesnt affect stats
+
+	switch(natureLine[0]) {
+		case 'A':
+			entryNat = ADAMANT; break;
+		case 'B':
+			switch(natureLine[1]) {
+				case 'a': entryNat = BASHFUL; break;
+				case 'o': entryNat = BOLD; break;
+				case 'r': entryNat = BRAVE; break;
+			} break;
+		case 'C':
+			switch(natureLine[2]) {
+				case 'l': entryNat = CALM; break;
+				case 'r': entryNat = CAREFUL; break;
+			} break;
+		case 'D':
+			entryNat = DOCILE; break;
+		case 'G':
+			entryNat = GENTLE; break;
+		case 'H':
+			switch(natureLine[2]) {
+				case 'r': entryNat = HARDY; break;
+				case 's': entryNat = HASTY; break;
+			} break;
+		case 'I':
+			entryNat = IMPISH; break;
+			//impish
+		case 'J':
+			entryNat = JOLLY; break;
+			//jolly
+		case 'L': 
+			switch(natureLine[1]) {
+				case 'a': entryNat = LAX; break;
+				case 'o': entryNat = LONELY; break; 
+			} break;
+		case 'M':
+			switch(natureLine[1]) {
+				case 'i': entryNat = MILD; break;
+				case 'o': entryNat = MODEST; break;
+			}
+			//modest,mild
+		case 'N':
+			switch(natureLine[2]) {
+				case 'i': entryNat = NAIVE; break;
+				case 'u': entryNat = NAUGHTY; break;
+			} break;
+			//naughty, naive
+		case 'Q':
+			switch(natureLine[3]) {
+				case 'e': entryNat = QUIET; break;
+				case 'r': entryNat = QUIRKY; break;
+			} break;
+			//quiet quirky
+		case 'R':
+			switch(natureLine[1]) {
+				case 'a': entryNat = RASH; break;
+				case 'e': entryNat = RELAXED; break;
+			} break;
+			//relaxed,rash
+		case 'S':
+			switch(natureLine[1]) {
+				case 'a': entryNat = SASSY; break;	
+				case 'e': entryNat = SERIOUS; break;
+			} break;
+			//serious,sassy
+		case 'T':
+			entryNat = TIMID; break;
+			//timid
+	}
+
+	printf("Nature is %u\n",entryNat);
 	
+	unsigned augStats[NUM_OF_STATS] = {0};
+	augStats[HP] = pEntry->GetHitPoints(pEntry);
+	augStats[A] = pEntry->GetAttack(pEntry);
+	augStats[D] = pEntry->GetDefense(pEntry);
+	augStats[SA] = pEntry->GetSpecialAttack(pEntry);
+	augStats[SD] = pEntry->GetSpecialDefense(pEntry);
+	augStats[S] = pEntry->GetSpeed(pEntry);
+
+	i = 0;
+	for(j = 0; j < NUM_OF_STATS; j++) 
+		if(mod[entryNat][j] == 2) {
+			augStats[j] += (augStats[j] / 10);
+		}
+		if(mod[entryNat][j] == 0) {
+			augStats[j] -= (augStats[j] / 10);
+		} 
+
+	pEntry->SetHitPoints(pEntry, augStats[HP]);
+	pEntry->SetAttack(pEntry, augStats[A]);
+	pEntry->SetDefense(pEntry, augStats[D]);
+	pEntry->SetSpecialAttack(pEntry, augStats[SA]);
+	pEntry->SetSpecialDefense(pEntry, augStats[SD]);
+	pEntry->SetSpeed(pEntry, augStats[S]);
 
 }
 
@@ -279,29 +374,36 @@ void PutEVLineIntoTable(char *EVLine, unsigned int line_limit, unsigned int *EVT
 	for(i = 0;i < line_limit && i < MAX_NAME && EVLine[i] >= '0' && EVLine[i] <= '9'; i++)
 		num[i] = EVLine[i];
 
+
+
 	while( EVLine[i] < 'A' || EVLine[i] > 'Z')
 		i++;
 
+	printf("%s\n", num);
+
 	switch(EVLine[i]) {
-		case 'A': 	StringToUnsignedInt(num, line_limit, (EVTable + 1) ); 
+		case 'A': 	StringToUnsignedInt(num, MAX_NAME, (EVTable + 1) ); 
 				break;
-		case 'D':	StringToUnsignedInt(num, line_limit, (EVTable + 2) ); 
+		case 'D':	StringToUnsignedInt(num, MAX_NAME, (EVTable + 2) ); 
 				break;
 
-		case 'H':	StringToUnsignedInt(num, line_limit, EVTable);
+		case 'H':	StringToUnsignedInt(num, MAX_NAME, EVTable);
 				break;
 		
 		case 'S':
 			switch(EVLine[i + 1]) {
-				case 'A':	StringToUnsignedInt(num, line_limit, (EVTable + 3) ); 
+				case 'A':	StringToUnsignedInt(num, MAX_NAME, (EVTable + 3) ); 
 						break;
-				case 'D':	StringToUnsignedInt(num, line_limit, (EVTable + 4) );
+				case 'D':	StringToUnsignedInt(num, MAX_NAME, (EVTable + 4) );
 						break;
-				case 'p':	StringToUnsignedInt(num, line_limit, (EVTable + 5) );
+				case 'p':	StringToUnsignedInt(num, MAX_NAME, (EVTable + 5) );
 						break; 
 			} 		
 
 	}
+
+	for(i = 0; i < 6; i++)
+		printf("EVS are %u\n",EVTable[i]);
 
 
 }
@@ -311,6 +413,7 @@ unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, 
 	val *= level;
 	val /= 100; 
 	val += 5;
+	printf("print hp %u\n",val);
 	return val;
 }
 
@@ -319,6 +422,7 @@ unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, uns
 	val *= level;
 	val /= 100; 
 	val += (level + 10);
+	printf("print stat %u\n",val);
 	return val;
 }
 
