@@ -17,11 +17,16 @@ void EntryDataIntoPokemonEntry(PokemonEntry *pEntry,unsigned int choice);
 void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
 void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
 void StatsIntoEntry(PokemonEntry *pEntry);
-void AugmentEntryByNatureLine(char *natureLine,PokemonEntry *pEntry);
+void AugmentEntryByNatureLine(char *natureLine, unsigned int line_limit,PokemonEntry *pEntry);
 PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice);
 
-void PutEVLineIntoTable(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
 
+unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
+unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
+
+void PutEVLineIntoTable(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
+void EntryStatsFromEVIVNature(unsigned int *EVTable, unsigned int IV, char *natureLine, unsigned int line_length, PokemonEntry *pEntry);
+ 
 void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2);
 
 void TopLevel(char *name);
@@ -118,7 +123,7 @@ void TypeLineIntoEntry(char *typeLine,PokemonEntry *pEntry) {
 	}
 	pEntry->SetPrimaryType(pEntry,t1);
 	pEntry->SetSecondaryType(pEntry,t2);
-}
+} 
 
 void MoveLineIntoEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice) {
 
@@ -205,7 +210,7 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 
 }
 
-void AugmentEntryByNatureLine(char *natureLine,PokemonEntry *pEntry) {
+void AugmentEntryByNatureLine(char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
 
 	typedef enum Nature{ HARDY, LONELY, BRAVE, ADAMANT, NAUGHTY, BOLD, DOCILE, RELAXED, IMPISH, LAX, TIMID, 
 	HASTY, SERIOUS, JOLLY, NAIVE, MODEST, MILD, QUIET, BASHFUL, RASH, CALM, GENTLE, SASSY, CAREFUL, QUIRKY } Nature;
@@ -264,6 +269,7 @@ void AugmentEntryByNatureLine(char *natureLine,PokemonEntry *pEntry) {
 	mod[CAREFUL][SD] = 1.1;
 	mod[CAREFUL][SA] = .9;
 
+	
 
 }
 
@@ -298,6 +304,42 @@ void PutEVLineIntoTable(char *EVLine, unsigned int line_limit, unsigned int *EVT
 	}
 
 
+}
+
+unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level) {
+	unsigned int val = 2 * base + IV + (EV / 4);
+	val *= level;
+	val /= 100; 
+	val += 5;
+	return val;
+}
+
+unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level) {
+	unsigned int val = 2 * base + IV + (EV / 4);
+	val *= level;
+	val /= 100; 
+	val += (level + 10);
+	return val;
+}
+
+void EntryStatsFromEVIVNature(unsigned int *EVTable, unsigned int IV, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
+	unsigned int hitPoints,attack, defense, specialAttack, specialDefense, speed;
+	hitPoints = CalcHPStat( pEntry->GetHitPoints(pEntry), EVTable[0], IV, 100);
+
+	attack = CalcNonHPStat( pEntry->GetAttack(pEntry), EVTable[1], IV, 100);
+	defense = CalcNonHPStat( pEntry->GetDefense(pEntry), EVTable[2], IV, 100);
+	specialAttack = CalcNonHPStat( pEntry->GetSpecialAttack(pEntry), EVTable[3], IV, 100);
+	specialDefense = CalcNonHPStat( pEntry->GetSpecialDefense(pEntry), EVTable[4], IV, 100);
+	speed = CalcNonHPStat( pEntry->GetSpeed(pEntry), EVTable[5], IV, 100);
+
+	pEntry->SetHitPoints(pEntry, hitPoints);
+	pEntry->SetAttack(pEntry, attack);
+	pEntry->SetDefense(pEntry, defense);
+	pEntry->SetSpecialAttack(pEntry, specialAttack);
+	pEntry->SetSpecialDefense(pEntry, specialDefense);
+	pEntry->SetSpeed(pEntry, speed);
+
+	AugmentEntryByNatureLine(natureLine, line_limit, pEntry);
 }
 
 //Augments the pokemonEntry based on which selection was made. 0,1,2,3
@@ -344,11 +386,13 @@ void EntryDataIntoEntry(PokemonEntry *pEntry,unsigned int choice) {
 		SafeReadLine(EVLine,MAX_NAME, fin, 1);
 
 	}
+	
+	unsigned int IV = 0;
 
+	EntryStatsFromEVIVNature(EVTable, IV, natureLine, MAX_LINE_LENGTH, pEntry);
 	
 	
-	
-	AugmentEntryByNatureLine(natureLine,pEntry);
+
 
 	fclose(fin);
 }
