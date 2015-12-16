@@ -260,9 +260,9 @@ Type TakeTypeFromToken(char *line) {
 				case 'a':
 					return FAIRY;
 				case 'i': 
-				switch(line[2]):
+				switch(line[2]) {
 					case 'g': return FIGHTING;	
-					case 'i': return FIRE;
+					case 'i': return FIRE; }
 				case 'l': return FLYING;
 				}
 		case 'G':

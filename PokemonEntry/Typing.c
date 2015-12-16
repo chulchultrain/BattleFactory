@@ -3,7 +3,7 @@
 #include <GlobalDestroyer/GlobalDestroyer.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <SpecialConstants/SpecialConstants.h>
 
 
 struct TypeContainerPrivate {
@@ -190,11 +190,11 @@ To make more efficient later, and to keep from re creating a huge array every ti
 keep a global data struct for this. Or perhaps to just have 1 and pass it into the parameters of this.
 */
 double DamageModFromTypes(Type attack, Type defend) {
-	double mod[MAX_TYPES][MAX_TYPES];
+	double mod[NUM_OF_TYPES][NUM_OF_TYPES];
 
 	int i,j;
-	for(i = 0; i < MAX_TYPES; i++)
-		for(j = 0; j < MAX_TYPES; j++)
+	for(i = 0; i < NUM_OF_TYPES; i++)
+		for(j = 0; j < NUM_OF_TYPES; j++)
 			mod[i][j] = 1;
 
 	mod[NORMAL][ROCK] = mod[NORMAL][STEEL] = .5;
@@ -227,7 +227,7 @@ double DamageModFromTypes(Type attack, Type defend) {
 	mod[GHOST][NORMAL] = 0;
 	
 	mod[STEEL][ROCK] = mod[STEEL][ICE] = 2;
-	mod[STEEL][FIRE] = mod[STEEL][WATER] mod[STEEL][STEEL] = mod[STEEL][ELECTRIC] = .5;
+	mod[STEEL][FIRE] = mod[STEEL][WATER] = mod[STEEL][STEEL] = mod[STEEL][ELECTRIC] = .5;
 	
 	mod[FIRE][BUG] = mod[FIRE][STEEL] = mod[FIRE][GRASS] = mod[FIRE][ICE] = 2;
 	mod[FIRE][ROCK] = mod[FIRE][FIRE] = mod[FIRE][WATER] = mod[FIRE][DRAGON] = .5;

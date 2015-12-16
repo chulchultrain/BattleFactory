@@ -17,12 +17,12 @@ void EntryDataIntoPokemonEntry(PokemonEntry *pEntry,unsigned int choice);
 void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
 void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
 void StatsIntoEntry(PokemonEntry *pEntry);
-void AugmentEntryByNatureLine(char *natureLine,pEntry);
+void AugmentEntryByNatureLine(char *natureLine,PokemonEntry *pEntry);
 PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice);
 
+void PutEVLineIntoTable(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
 
-
-void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2)
+void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2);
 
 void TopLevel(char *name);
 
@@ -62,9 +62,9 @@ Type TokenToType(char *token) {
 				case 'a':
 					return FAIRY;
 				case 'i': 
-				switch(line[2]):
+				switch(token[2]) {
 					case 'g': return FIGHTING;	
-					case 'i': return FIRE;
+					case 'i': return FIRE; }
 				case 'l': return FLYING;
 				}
 		case 'G':
@@ -206,7 +206,98 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 }
 
 void AugmentEntryByNatureLine(char *natureLine,PokemonEntry *pEntry) {
+
+	typedef enum Nature{ HARDY, LONELY, BRAVE, ADAMANT, NAUGHTY, BOLD, DOCILE, RELAXED, IMPISH, LAX, TIMID, 
+	HASTY, SERIOUS, JOLLY, NAIVE, MODEST, MILD, QUIET, BASHFUL, RASH, CALM, GENTLE, SASSY, CAREFUL, QUIRKY } Nature;
+
+	typedef enum Stats{ HP, A, D, SA, SD, S} Stats;
+
+	double mod[NUM_OF_NATURES][NUM_OF_STATS];
+	unsigned int i,j;
+
+	for(i = 0; i < NUM_OF_NATURES; i++)
+		for(j = 0; j < NUM_OF_STATS; j++)
+			mod[i][j] = 1;
+
+	mod[LONELY][A] = 1.1;
+	mod[LONELY][D] = .9;
+	mod[BRAVE][A] = 1.1;
+	mod[BRAVE][S] = .9;
+	mod[ADAMANT][A] = 1.1;
+	mod[ADAMANT][SA] = .9;
+	mod[NAUGHTY][A] = 1.1;
+	mod[NAUGHTY][SD] = .9;
+
+	mod[BOLD][D] = 1.1;
+	mod[BOLD][A] = .9;
+	mod[RELAXED][D] = 1.1;
+	mod[RELAXED][S] = .9;
+	mod[IMPISH][D] = 1.1;
+	mod[IMPISH][SA] = .9;
+	mod[LAX][D] = 1.1;
+	mod[LAX][SD] = .9;
+
+	mod[TIMID][S] = 1.1;
+	mod[TIMID][A] = .9;
+	mod[HASTY][S] = 1.1;
+	mod[HASTY][D] = .9;
+	mod[JOLLY][S] = 1.1;
+	mod[JOLLY][SA] = .9;
+	mod[NAIVE][S] = 1.1;
+	mod[NAIVE][SD] = .9;
 	
+	mod[MODEST][SA] = 1.1;
+	mod[MODEST][A] = .9;
+	mod[MILD][SA] = 1.1;
+	mod[MILD][D] = .9;
+	mod[QUIET][SA] = 1.1;
+	mod[QUIET][S] = .9;
+	mod[RASH][SA] = 1.1;
+	mod[RASH][SD] = .9;
+
+	mod[CALM][SD] = 1.1;
+	mod[CALM][A] = .9;
+	mod[GENTLE][SD] = 1.1;
+	mod[GENTLE][D] = .9;
+	mod[SASSY][SD] = 1.1;
+	mod[SASSY][S] = .9;
+	mod[CAREFUL][SD] = 1.1;
+	mod[CAREFUL][SA] = .9;
+
+
+}
+
+void PutEVLineIntoTable(char *EVLine, unsigned int line_limit, unsigned int *EVTable) {
+	char num[MAX_NAME] = {0};
+	int i;
+	for(i = 0;i < line_limit && i < MAX_NAME && EVLine[i] >= '0' && EVLine[i] <= '9'; i++)
+		num[i] = EVLine[i];
+
+	while( EVLine[i] < 'A' || EVLine[i] > 'Z')
+		i++;
+
+	switch(EVLine[i]) {
+		case 'A': 	StringToUnsignedInt(num, line_limit, (EVTable + 1) ); 
+				break;
+		case 'D':	StringToUnsignedInt(num, line_limit, (EVTable + 2) ); 
+				break;
+
+		case 'H':	StringToUnsignedInt(num, line_limit, EVTable);
+				break;
+		
+		case 'S':
+			switch(EVLine[i + 1]) {
+				case 'A':	StringToUnsignedInt(num, line_limit, (EVTable + 3) ); 
+						break;
+				case 'D':	StringToUnsignedInt(num, line_limit, (EVTable + 4) );
+						break;
+				case 'p':	StringToUnsignedInt(num, line_limit, (EVTable + 5) );
+						break; 
+			} 		
+
+	}
+
+
 }
 
 //Augments the pokemonEntry based on which selection was made. 0,1,2,3
@@ -231,6 +322,7 @@ void EntryDataIntoEntry(PokemonEntry *pEntry,unsigned int choice) {
 	char moveLine[MAX_LINE_LENGTH] = {0};
 	char itemLine[MAX_LINE_LENGTH] = {0};
 	char natureLine[MAX_LINE_LENGTH] = {0};
+	char EVLine[MAX_NAME] = {0};
 	SafeReadLine(typeLine,MAX_LINE_LENGTH, fin,1);
 	TypeLineIntoEntry(typeLine,pEntry);
 
@@ -243,8 +335,20 @@ void EntryDataIntoEntry(PokemonEntry *pEntry,unsigned int choice) {
 
 	SafeReadLine(itemLine,MAX_LINE_LENGTH,fin,1);
 	SafeReadLine(natureLine,MAX_LINE_LENGTH,fin,1);
+
+	i = 0;
+	unsigned int EVTable[NUM_OF_STATS] = {0};
+	SafeReadLine(EVLine,MAX_NAME, fin, 1);
+	while( EVLine[0] != '\n') {
+		PutEVLineIntoTable(EVLine, MAX_NAME,EVTable);
+		SafeReadLine(EVLine,MAX_NAME, fin, 1);
+
+	}
+
 	
-	AugmentEntryByNature(natureLine,pEntry);
+	
+	
+	AugmentEntryByNatureLine(natureLine,pEntry);
 
 	fclose(fin);
 }
@@ -311,14 +415,13 @@ PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice) {
 
 }
 
+/*
 void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2) {
-	unsigned int OnetoTwo[MAX_NUM_MOVES];
-	unsigned int TwotoOne[MAX_NUM_MOVES];
-
-	
+	double OnetoTwo[MAX_NUM_MOVES];
+	double TwotoOne[MAX_NUM_MOVES];
 	
 }
-
+*/
 
 void TopLevel(char *name) {
 
