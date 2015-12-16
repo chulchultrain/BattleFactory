@@ -1,9 +1,10 @@
 #ifndef __TYPING_H_INCLUDED__
 #define __TYPING_H_INCLUDED__
 
-typedef enum Type { NONE, NORMAL, GRASS, BUG, FIRE, WATER, ICE, ELECTRIC, FLYING, ROCK, GROUND, POISON, PSYCHIC, DARK, STEEL, DRAGON }Type;
+typedef enum Type { NONE, NORMAL, FIGHTING, FLYING, POISON, GROUND, ROCK, BUG, GHOST, STEEL, FIRE, WATER, GRASS, ELECTRIC, PSYCHIC, ICE, DRAGON, DARK, FAIRY }Type;
 
 typedef struct TypeContainerPrivate TypeContainerPrivate;
+
 
 
 /*
@@ -48,6 +49,8 @@ void ResetTypeContainerData(TypeContainer* recall);
 
 void ResetTypeContainerAll(TypeContainer* recall);
 
+
+double DamageModFromTypes(Type t1, Type t2);
 
 #endif
 

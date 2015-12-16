@@ -257,7 +257,12 @@ Type TakeTypeFromToken(char *line) {
 		case 'E': return ELECTRIC;
 		case 'F':
 			switch(line[1]) {
-				case 'i': return FIRE;
+				case 'a':
+					return FAIRY;
+				case 'i': 
+				switch(line[2]):
+					case 'g': return FIGHTING;	
+					case 'i': return FIRE;
 				case 'l': return FLYING;
 				}
 		case 'G':

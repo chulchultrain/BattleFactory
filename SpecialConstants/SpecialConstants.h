@@ -26,6 +26,10 @@ File to store Special constants and include here so that do not have to #define 
 #define NUM_OF_STATS 6
 #endif
 
+#ifndef MAX_NUM_MOVES
+#define MAX_NUM_MOVES 4
+#endif
+
 #ifndef MAX_MOVE_NAME
 #define MAX_MOVE_NAME 21
 #endif

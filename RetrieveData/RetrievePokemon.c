@@ -6,34 +6,36 @@
 #include <stdlib.h>
 
 
+void ConsolePrintPokemonEntryFile(FILE *fin);
+void GoToEntryChoice(FILE *fin, unsigned int choice);
+Type TokenToType(char *token);
+MoveCategory TokenToCategory(char *token);
+void TypeLineIntoEntry(char *typeLine,PokemonEntry *pEntry);
+void MoveLineIntoEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice);
+unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit);
+void EntryDataIntoPokemonEntry(PokemonEntry *pEntry,unsigned int choice);
+void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
+void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
+void StatsIntoEntry(PokemonEntry *pEntry);
+void AugmentEntryByNatureLine(char *natureLine,pEntry);
+PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice);
+
+
+
+void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2)
+
+void TopLevel(char *name);
+
+
 void ConsolePrintPokemonEntryFile(FILE *fin) {
-/**
-char fileName[MAX_FILE_NAME] = ENTRY_DIRECTORY SUB_DIR_DPP;
-printf("NAME_DIRECTORY_OF_DATA is %s \n", fileName);
-int i;
-for(i = 0; i < MAX_FILE_NAME; i++)
-	if(fileName[i] == 0)
-		break;
-InsertArrayInArray(name,MAX_NAME,fileName,i,MAX_FILE_NAME);
-printf("NAME_DIRECTORY_OF_DATA is %s \n", fileName);
-//char fileName2[MAX_FILE_NAME] = "BASE/NAME/Charizard";
-FILE *fin = fopen(fileName,"r");
-if(fin == 0) {
-	GlobalDestroyer(1,0,0);
-}
-else 
-	printf("Successful open\n");
-**/
 if( fin != 0) {
 	char line[MAX_POKEDEX_LINE] = {0};
 	while( fgets(line,MAX_POKEDEX_LINE - 5, fin) != 0) 
 		printf("%s", line); 
-					}
-//fclose(fin);
+				}
 
 
 }
-
 
 
 void GoToEntryChoice(FILE *fin, unsigned int choice) {
@@ -57,7 +59,12 @@ Type TokenToType(char *token) {
 		case 'E': return ELECTRIC;
 		case 'F':
 			switch(token[1]) {
-				case 'i': return FIRE;
+				case 'a':
+					return FAIRY;
+				case 'i': 
+				switch(line[2]):
+					case 'g': return FIGHTING;	
+					case 'i': return FIRE;
 				case 'l': return FLYING;
 				}
 		case 'G':
@@ -198,8 +205,12 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 
 }
 
+void AugmentEntryByNatureLine(char *natureLine,PokemonEntry *pEntry) {
+	
+}
+
 //Augments the pokemonEntry based on which selection was made. 0,1,2,3
-void EntryDataIntoPokemonEntry(PokemonEntry *pEntry,unsigned int choice) {
+void EntryDataIntoEntry(PokemonEntry *pEntry,unsigned int choice) {
 
 	char entryFileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
 	char name[MAX_NAME] = {0};
@@ -218,6 +229,8 @@ void EntryDataIntoPokemonEntry(PokemonEntry *pEntry,unsigned int choice) {
 	GoToEntryChoice(fin,choice);
 	char typeLine[MAX_LINE_LENGTH] = {0};
 	char moveLine[MAX_LINE_LENGTH] = {0};
+	char itemLine[MAX_LINE_LENGTH] = {0};
+	char natureLine[MAX_LINE_LENGTH] = {0};
 	SafeReadLine(typeLine,MAX_LINE_LENGTH, fin,1);
 	TypeLineIntoEntry(typeLine,pEntry);
 
@@ -227,6 +240,11 @@ void EntryDataIntoPokemonEntry(PokemonEntry *pEntry,unsigned int choice) {
 		MoveLineIntoEntry(moveLine,pEntry,i);
 		i++;
 	}
+
+	SafeReadLine(itemLine,MAX_LINE_LENGTH,fin,1);
+	SafeReadLine(natureLine,MAX_LINE_LENGTH,fin,1);
+	
+	AugmentEntryByNature(natureLine,pEntry);
 
 	fclose(fin);
 }
@@ -287,38 +305,25 @@ PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice) {
 	pEntry->SetName(pEntry, name);
 
 	StatsIntoEntry(pEntry);
-	EntryDataIntoPokemonEntry(pEntry,choice);
-//	pEntry->ConsolePrint(pEntry);
+	EntryDataIntoEntry(pEntry,choice);
 
 	return pEntry;
 
 }
 
+void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2) {
+	unsigned int OnetoTwo[MAX_NUM_MOVES];
+	unsigned int TwotoOne[MAX_NUM_MOVES];
+
+	
+	
+}
+
+
 void TopLevel(char *name) {
 
-	//create entry using basestats and name.
 	PokemonEntry *pEntry = EntryFromNameChoice(name,1);
 	pEntry->ConsolePrint(pEntry);
 
-
-
-	
-
 }
-
-
-
-
-
-/**
-void EntryFromFile(PokemonEntry *entry, FILE *fptr, unsigned int whichEntry) {
-
-	//char fileName[MAX_FILE_NAME] = ENTRY_DIRECTORY SUB_DIR_DPP;
-
-	//create PokemonEntry, with name.
-	//based on whichEntry, parse out the correct entry, and update stats, nature, moveset accordingly
-
-}
-
-**/
 

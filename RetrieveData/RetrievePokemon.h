@@ -10,8 +10,7 @@ Console Print all entries of the Pokemon desired.
 **/
 void ConsolePrintPokemonEntryFile(FILE *fPtr);
 
-//PokemonEntry *EntryFromFile(char *name, nature, moveset);
-
+PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice)
 
 void TopLevel(char *name);
 
