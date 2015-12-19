@@ -222,6 +222,10 @@ void DeletePokemonEntry(PokemonEntry* recall){
 	
 }
 
+void DestroyPokemonEntry(PokemonEntry *recall,unsigned int flag) {
+
+}
+
 void SetPokemonName(PokemonEntry* original, const char* name) {	
 	copyName(name, original->mem->name);
 }

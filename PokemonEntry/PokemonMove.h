@@ -46,5 +46,8 @@ void ResetPokemonMoveData(PokemonMove *recall);
 void DeletePokemonMove(PokemonMove *recall);
 
 
+MoveCategory TokenToCategory(char *token);
+
+
 
 #endif

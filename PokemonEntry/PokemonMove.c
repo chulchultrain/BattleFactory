@@ -34,6 +34,10 @@ Type GetMoveType(PokemonMove *obj);
 unsigned int GetMoveDamage(PokemonMove *obj);
 MoveCategory GetMoveCategory(PokemonMove *obj);
 
+//-------------------------------------
+
+
+
 void copyMoveName(const char* source, char* dest) {
 	int i = 0;
 	while(i < MAX_MOVE_NAME && source[i] != 0) {
@@ -197,3 +201,19 @@ void DeletePokemonMove(PokemonMove *recall) {
 	}
 
 }
+
+
+//-----------------------------
+MoveCategory TokenToCategory(char *token) {
+
+	switch(token[0]) {
+		case 'P': return PHYSICAL;
+		case 'S': 
+			switch(token[1]) {
+				case 'p': return SPECIAL;
+				case 't': return STATUS;
+				}
+	}
+	return EMPTY;
+}
+

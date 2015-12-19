@@ -8,24 +8,28 @@
 
 void ConsolePrintPokemonEntryFile(FILE *fin);
 void GoToEntryChoice(FILE *fin, unsigned int choice);
-Type TokenToType(char *token);
-MoveCategory TokenToCategory(char *token);
-void TypeLineIntoEntry(char *typeLine,PokemonEntry *pEntry);
-void MoveLineIntoEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice);
-unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit);
-void EntryDataIntoPokemonEntry(PokemonEntry *pEntry,unsigned int choice);
-void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
-void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
-void StatsIntoEntry(PokemonEntry *pEntry);
-void AugmentEntryByNatureLine(char *natureLine, unsigned int line_limit,PokemonEntry *pEntry);
-PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice);
 
+void TypeLineToEntry(char *typeLine,PokemonEntry *pEntry);
+void MoveLineToEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice);
+void NatureLineToEntry(char *natureLine, unsigned int line_limit,PokemonEntry *pEntry);
+
+unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit);
+void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsigned int level);
+void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
+void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
+void BaseStatsToEntry(PokemonEntry *pEntry);
+
+
+PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice);
+PokemonEntry *NewEntryFromData(char *name,unsigned int choice, unsigned int IV, unsigned int level);
+void SetEntryFromNameChoice(PokemonEntry *entry, char *name, unsigned int choice);
+void SetEntryFromData(PokemonEntry *entry, char *name,unsigned int choice, unsigned int IV, unsigned int level);
 
 unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
 unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
 
-void PutEVLineIntoTable(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
-void EntryStatsFromEVIVNature(unsigned int *EVTable, unsigned int IV, char *natureLine, unsigned int line_length, PokemonEntry *pEntry);
+void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
+void StatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry);
  
 void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2);
 
@@ -53,59 +57,11 @@ void GoToEntryChoice(FILE *fin, unsigned int choice) {
 	}
 }
 
-Type TokenToType(char *token) {
-	switch(token[0]) {
-		case 'B': return BUG;
-		case 'D': 
-			switch(token[1]) {
-				case 'a': return DARK;
-				case 'r': return DRAGON;
-				}
-		case 'E': return ELECTRIC;
-		case 'F':
-			switch(token[1]) {
-				case 'a':
-					return FAIRY;
-				case 'i': 
-				switch(token[2]) {
-					case 'g': return FIGHTING;	
-					case 'i': return FIRE; }
-				case 'l': return FLYING;
-				}
-		case 'G':
-			switch(token[2]) {
-				case 'a': return GRASS;
-				case 'o': return GROUND;
-				}
-		case 'I': return ICE;
-		case 'N': return NORMAL;
-		case 'P': switch(token[1]) {
-				case 'o': return POISON;
-				case 's': return PSYCHIC;
-				}
-		case 'R': return ROCK;
-		case 'S': return STEEL;
-		case 'W': return WATER;
-	}	
-	return NONE;
-
-}
-
-MoveCategory TokenToCategory(char *token) {
-
-	switch(token[0]) {
-		case 'P': return PHYSICAL;
-		case 'S': 
-			switch(token[1]) {
-				case 'p': return SPECIAL;
-				case 't': return STATUS;
-				}
-	}
-	return EMPTY;
-}
 
 
-void TypeLineIntoEntry(char *typeLine,PokemonEntry *pEntry) {
+
+
+void TypeLineToEntry(char *typeLine,PokemonEntry *pEntry) {
 
 	unsigned int i = 0;
 	unsigned int hasTwoTypes = 0;
@@ -125,7 +81,7 @@ void TypeLineIntoEntry(char *typeLine,PokemonEntry *pEntry) {
 	pEntry->SetSecondaryType(pEntry,t2);
 } 
 
-void MoveLineIntoEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice) {
+void MoveLineToEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice) {
 
 	int i;
 	char indexString[MAX_LINE_LENGTH] = {0};
@@ -210,15 +166,18 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 
 }
 
-void AugmentEntryByNatureLine(char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
+void NatureLineToEntry(char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
 
 	typedef enum Nature{ HARDY, LONELY, BRAVE, ADAMANT, NAUGHTY, BOLD, DOCILE, RELAXED, IMPISH, LAX, TIMID, 
 	HASTY, SERIOUS, JOLLY, NAIVE, MODEST, MILD, QUIET, BASHFUL, RASH, CALM, GENTLE, SASSY, CAREFUL, QUIRKY } Nature;
 
 	typedef enum Stats{ HP, A, D, SA, SD, S} Stats;
 
-	char mod[NUM_OF_NATURES][NUM_OF_STATS];
+	static char mod[NUM_OF_NATURES][NUM_OF_STATS];
+	static unsigned int flag = 0;
 	unsigned int i,j;
+	if(flag == 0) {
+
 
 	for(i = 0; i < NUM_OF_NATURES; i++)
 		for(j = 0; j < NUM_OF_STATS; j++)
@@ -267,7 +226,8 @@ void AugmentEntryByNatureLine(char *natureLine, unsigned int line_limit, Pokemon
 	mod[SASSY][SD] = 2;
 	mod[SASSY][S] = 0;
 	mod[CAREFUL][SD] = 2;
-	mod[CAREFUL][SA] = 0;
+	mod[CAREFUL][SA] = 0; 
+	flag = 1; }
 
 	Nature entryNat = HARDY; //used for initialization. okay since hardy doesnt affect stats
 
@@ -368,13 +328,11 @@ void AugmentEntryByNatureLine(char *natureLine, unsigned int line_limit, Pokemon
 
 }
 
-void PutEVLineIntoTable(char *EVLine, unsigned int line_limit, unsigned int *EVTable) {
+void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable) {
 	char num[MAX_NAME] = {0};
 	int i;
 	for(i = 0;i < line_limit && i < MAX_NAME && EVLine[i] >= '0' && EVLine[i] <= '9'; i++)
 		num[i] = EVLine[i];
-
-
 
 	while( EVLine[i] < 'A' || EVLine[i] > 'Z')
 		i++;
@@ -426,15 +384,15 @@ unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, uns
 	return val;
 }
 
-void EntryStatsFromEVIVNature(unsigned int *EVTable, unsigned int IV, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
+void StatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
 	unsigned int hitPoints,attack, defense, specialAttack, specialDefense, speed;
-	hitPoints = CalcHPStat( pEntry->GetHitPoints(pEntry), EVTable[0], IV, 100);
+	hitPoints = CalcHPStat( pEntry->GetHitPoints(pEntry), EVTable[0], IV, level);
 
-	attack = CalcNonHPStat( pEntry->GetAttack(pEntry), EVTable[1], IV, 100);
-	defense = CalcNonHPStat( pEntry->GetDefense(pEntry), EVTable[2], IV, 100);
-	specialAttack = CalcNonHPStat( pEntry->GetSpecialAttack(pEntry), EVTable[3], IV, 100);
-	specialDefense = CalcNonHPStat( pEntry->GetSpecialDefense(pEntry), EVTable[4], IV, 100);
-	speed = CalcNonHPStat( pEntry->GetSpeed(pEntry), EVTable[5], IV, 100);
+	attack = CalcNonHPStat( pEntry->GetAttack(pEntry), EVTable[1], IV, level);
+	defense = CalcNonHPStat( pEntry->GetDefense(pEntry), EVTable[2], IV, level);
+	specialAttack = CalcNonHPStat( pEntry->GetSpecialAttack(pEntry), EVTable[3], IV, level);
+	specialDefense = CalcNonHPStat( pEntry->GetSpecialDefense(pEntry), EVTable[4], IV, level);
+	speed = CalcNonHPStat( pEntry->GetSpeed(pEntry), EVTable[5], IV, level);
 
 	pEntry->SetHitPoints(pEntry, hitPoints);
 	pEntry->SetAttack(pEntry, attack);
@@ -443,11 +401,11 @@ void EntryStatsFromEVIVNature(unsigned int *EVTable, unsigned int IV, char *natu
 	pEntry->SetSpecialDefense(pEntry, specialDefense);
 	pEntry->SetSpeed(pEntry, speed);
 
-	AugmentEntryByNatureLine(natureLine, line_limit, pEntry);
+	NatureLineToEntry(natureLine, line_limit, pEntry);
 }
 
 //Augments the pokemonEntry based on which selection was made. 0,1,2,3
-void EntryDataIntoEntry(PokemonEntry *pEntry,unsigned int choice) {
+void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsigned int level) {
 
 	char entryFileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
 	char name[MAX_NAME] = {0};
@@ -468,14 +426,14 @@ void EntryDataIntoEntry(PokemonEntry *pEntry,unsigned int choice) {
 	char moveLine[MAX_LINE_LENGTH] = {0};
 	char itemLine[MAX_LINE_LENGTH] = {0};
 	char natureLine[MAX_LINE_LENGTH] = {0};
-	char EVLine[MAX_NAME] = {0};
+	char EVLine[MAX_LINE_LENGTH] = {0};
 	SafeReadLine(typeLine,MAX_LINE_LENGTH, fin,1);
-	TypeLineIntoEntry(typeLine,pEntry);
+	TypeLineToEntry(typeLine,pEntry);
 
 	int i = 0;
-	while( i < 4) {
+	while( i < MAX_NUM_MOVES) {
 		SafeReadLine(moveLine,MAX_LINE_LENGTH - 5, fin,1);
-		MoveLineIntoEntry(moveLine,pEntry,i);
+		MoveLineToEntry(moveLine,pEntry,i);
 		i++;
 	}
 
@@ -486,24 +444,19 @@ void EntryDataIntoEntry(PokemonEntry *pEntry,unsigned int choice) {
 	unsigned int EVTable[NUM_OF_STATS] = {0};
 	SafeReadLine(EVLine,MAX_NAME, fin, 1);
 	while( EVLine[0] != '\n') {
-		PutEVLineIntoTable(EVLine, MAX_NAME,EVTable);
-		SafeReadLine(EVLine,MAX_NAME, fin, 1);
+		EVLineToArray(EVLine, MAX_LINE_LENGTH,EVTable);
+		SafeReadLine(EVLine,MAX_LINE_LENGTH, fin, 1);
 
 	}
 	
-	unsigned int IV = 0;
 
-	EntryStatsFromEVIVNature(EVTable, IV, natureLine, MAX_LINE_LENGTH, pEntry);
-	
-	
-
-
+	StatsToEntry(EVTable, IV, level, natureLine,MAX_LINE_LENGTH, pEntry);
 	fclose(fin);
 }
 
 
 // the file should have each stat on a different line, statName statAmount 
-void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit) {
+void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit) {
 
 	unsigned int i = 0; //array offset
 	char buffer[MAX_LINE_LENGTH] = {0};
@@ -520,7 +473,7 @@ void ProcessBaseStatsFile(FILE *fptr, unsigned int *statArray, unsigned int stat
 
 
 
-void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
+void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
 	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
 	AppendArrayToArray(name, name_limit, fileName, MAX_FILE_NAME);
 	
@@ -531,17 +484,17 @@ void GetBaseStatsForPokemonName(char *name, unsigned int name_limit, unsigned in
 		GlobalDestroyer(1,0,0);
 	}
 	//Extracts base stats out of file and put into array.
-	ProcessBaseStatsFile(fin, statArray, statArrayLimit);
+	BaseStatsFileToArray(fin, statArray, statArrayLimit);
 	fclose(fin);
 }
 
 
 
-void StatsIntoEntry(PokemonEntry *pEntry) {
+void BaseStatsToEntry(PokemonEntry *pEntry) {
 	char name[MAX_NAME] = {0};
 	pEntry->GetName(pEntry,name,MAX_NAME);
 	unsigned int statTable[NUM_OF_STATS];
-	GetBaseStatsForPokemonName(name, MAX_NAME, statTable, NUM_OF_STATS);
+	BaseStatsFromName(name, MAX_NAME, statTable, NUM_OF_STATS);
 
 	pEntry->SetHitPoints(pEntry, statTable[0]);
 	pEntry->SetAttack(pEntry, statTable[1]);
@@ -552,29 +505,40 @@ void StatsIntoEntry(PokemonEntry *pEntry) {
 		
 }
 
-PokemonEntry *EntryFromNameChoice(char *name, unsigned int choice) {
+PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice) {
 	PokemonEntry *pEntry = NewPokemonEntry();
 	pEntry->SetName(pEntry, name);
 
-	StatsIntoEntry(pEntry);
-	EntryDataIntoEntry(pEntry,choice);
+	BaseStatsToEntry(pEntry);
+	DataToEntry(pEntry,choice,0,100);
 
 	return pEntry;
 
 }
 
-/*
-void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2) {
-	double OnetoTwo[MAX_NUM_MOVES];
-	double TwotoOne[MAX_NUM_MOVES];
-	
+PokemonEntry *NewEntryFromData(char *name,unsigned int choice, unsigned int IV, unsigned int level) {
+	PokemonEntry *pEntry = NewPokemonEntry();
+	pEntry->SetName(pEntry, name);
+
+	BaseStatsToEntry(pEntry);
+	DataToEntry(pEntry,choice,IV,level);
+
+	return pEntry;
 }
-*/
 
-void TopLevel(char *name) {
+void SetEntryFromNameChoice(PokemonEntry *pEntry, char *name, unsigned int choice) {
+	pEntry->SetName(pEntry, name);
 
-	PokemonEntry *pEntry = EntryFromNameChoice(name,1);
-	pEntry->ConsolePrint(pEntry);
+	BaseStatsToEntry(pEntry);
+	DataToEntry(pEntry,choice,0,100);
+}
 
+
+
+void SetEntryFromData(PokemonEntry *pEntry, char *name,unsigned int choice, unsigned int IV, unsigned int level) {
+	pEntry->SetName(pEntry, name);
+
+	BaseStatsToEntry(pEntry);
+	DataToEntry(pEntry,choice,IV,level);
 }
 

@@ -65,6 +65,12 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 
 **/
 	}
+	else if(mallocFailFlag == 2) { //only kill off one item. used for clever multilayer delete and if delete used outside of global destroy
+		switch(type) {
+			int mallocFailFlag
+		} 
+		
+	}
 	else { //new entry added to array of pointers, to be deleted later
 
 		switch(type) {

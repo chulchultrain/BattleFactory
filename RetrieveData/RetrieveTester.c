@@ -26,7 +26,7 @@ while(continueChar == 'Y') {
 	buffer[i] = 0;
 
 
-	TopLevel(buffer);
+	PokemonEntry *entry = EntryFromData(buffer,0,0,100);
 	printf("To continue with another pokemon, type in Y. ");
 	//fflush(stdin); cant flush input buffers according to internet
 	//TODO:NewLINE errors. reads newline that wasn't taken out of stdin.
