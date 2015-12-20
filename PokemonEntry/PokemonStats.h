@@ -4,6 +4,8 @@
 typedef struct PokemonStatsPrivate PokemonStatsPrivate;
 
 /*
+
+void SetL(PokemonStats *this, unsigned int level);
 void SetHP(PokemonStats* this, unsigned int HitPoints);
 void SetA(PokemonStats* this, unsigned int Attack);
 void SetD(PokemonStats* this, unsigned int Defense);
@@ -17,6 +19,7 @@ unsigned int GetD(PokemonStats *this);
 unsigned int GetSpA(PokemonStats *this);
 unsigned int GetSpD(PokemonStats *this);
 unsigned int GetS(PokemonStats *this);
+unsigned int GetL(PokemonStats *this);
 
 void ConsolePrint(PokemonStats *this);
 */
@@ -25,6 +28,7 @@ typedef struct PokemonStats{
 
 PokemonStatsPrivate *mem;
 
+void (*SetL)();
 void (*SetHP)();
 void (*SetA)();
 void (*SetD)();
@@ -33,6 +37,7 @@ void (*SetSpD)();
 void (*SetS)();
 void (*ConsolePrint)();
 
+unsigned int(*GetL)();
 unsigned int(*GetHP)();
 unsigned int(*GetA)();
 unsigned int(*GetD)();

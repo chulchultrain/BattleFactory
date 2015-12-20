@@ -214,6 +214,7 @@ void DestroyTablePointer(PokedexEntry *recall) {
 
 void DeletePokedex(Pokedex *recall) {
 	if(recall != 0) {
+		GlobalDestroyer(2,recall,POKEDEX);
 
 		int i;
 		if( recall->mem != 0) {

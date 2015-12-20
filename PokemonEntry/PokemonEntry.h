@@ -15,6 +15,10 @@
 
 typedef struct PokemonEntryPrivate PokemonEntryPrivate;
 /*
+void SetName(PokemonEntry *original, char *name);
+
+void SetLevel(PokemonEntry *original, unsigned int level);
+
 void SetHitPoints(PokemonEntry* original, unsigned int HP);
 void SetAttack(PokemonEntry* original, unsigned int A);
 void SetDefense(PokemonEntry* original, unsigned int D);
@@ -52,6 +56,7 @@ MoveCategory GetFourthMoveCategory(PokemonEntry *obj);
 
 void GetName(PokemonEntry *obj, char* dest, unsigned int limit);
 
+unsigned int GetLevel(PokemonEntry *obj);
 unsigned int GetHitPoints(PokemonEntry *obj);
 unsigned int GetAttack(PokemonEntry *obj);
 unsigned int GetDefense(PokemonEntry *obj);
@@ -70,6 +75,8 @@ PokemonEntryPrivate *mem;
 
 void (*SetName)();
 
+void (*SetLevel)();
+
 void (*SetHitPoints)();
 void (*SetAttack)();
 void (*SetDefense)();
@@ -86,6 +93,7 @@ void (*SetFourthMove)();
 void (*ConsolePrint)();
 
 void (*GetName)();
+unsigned int (*GetLevel)();
 unsigned int (*GetHitPoints)();
 unsigned int (*GetAttack)();
 unsigned int (*GetDefense)();

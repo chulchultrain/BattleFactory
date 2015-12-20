@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 struct PokemonStatsPrivate {
-
+unsigned int Level;
 unsigned int HitPoints;
 unsigned int Attack;
 unsigned int Defense;
@@ -13,7 +13,7 @@ unsigned int SpecialDefense;
 unsigned int Speed;
 
 };
-
+void SetLevel(PokemonStats* original, unsigned int level); 
 void SetHitPoints(PokemonStats* original, unsigned int HitPoints);
 
 void SetAttack(PokemonStats* original, unsigned int Attack);
@@ -26,6 +26,7 @@ void SetSpecialDefense(PokemonStats* original, unsigned int SpecialDefense);
 
 void SetSpeed(PokemonStats* original, unsigned int Speed);
 
+unsigned int GetLevel(PokemonStats* obj);
 unsigned int GetHitPoints(PokemonStats* obj);
 unsigned int GetAttack(PokemonStats* obj);
 unsigned int GetDefense(PokemonStats* obj);
@@ -45,6 +46,7 @@ PokemonStats* NewPokemonStats() {
 	if (pokeStats->mem == 0) {
 		GlobalDestroyer(1,0,0);
 		}
+	pokeStats->mem->Level = 0;
 	pokeStats->mem->HitPoints = 0;
 	pokeStats->mem->Attack = 0;
 	pokeStats->mem->Defense = 0;
@@ -108,6 +110,7 @@ PokemonStats* FullNewPokemonStats(unsigned int HP,unsigned int A,unsigned int D,
 void ResetPokemonStatsData(PokemonStats* recall) {
 	if(recall != 0) {
 		if(recall->mem != 0) {
+			recall->mem->Level = 0;
 			recall->mem->HitPoints = 0;
 			recall->mem->Attack = 0;
 			recall->mem->Defense = 0;
@@ -149,6 +152,10 @@ void DeletePokemonStats(PokemonStats* recall){
 	}
 }
 
+void SetLevel(PokemonStats* original, unsigned int level) {
+	original->mem->Level = level;
+}
+
 void SetHitPoints(PokemonStats* original, unsigned int HitPoints) {
 	original->mem->HitPoints = HitPoints;
 }
@@ -176,7 +183,7 @@ void SetSpeed(PokemonStats* original, unsigned int Speed) {
 
 void SetPokemonStatsFunctionPointers(PokemonStats* original) {
 
-
+	original->SetL = SetLevel;
 	original->SetHP = SetHitPoints;
 	original->SetA = SetAttack;
 	original->SetD = SetDefense;
@@ -184,6 +191,7 @@ void SetPokemonStatsFunctionPointers(PokemonStats* original) {
 	original->SetSpD = SetSpecialDefense;
 	original->SetS = SetSpeed;
 	original->ConsolePrint = PokemonStatsConsolePrint;
+	original->GetL = GetLevel;
 	original->GetHP = GetHitPoints;
 	original->GetA = GetAttack;
 	original->GetD = GetDefense;
@@ -191,6 +199,10 @@ void SetPokemonStatsFunctionPointers(PokemonStats* original) {
 	original->GetSpD = GetSpecialDefense;
 	original->GetS = GetSpeed;
 
+}
+
+unsigned int GetLevel(PokemonStats* obj) {
+	return obj->mem->Level;
 }
 
 unsigned int GetHitPoints(PokemonStats* obj) {
@@ -215,12 +227,13 @@ unsigned int GetSpeed(PokemonStats* obj) {
 }
 
 void PokemonStatsConsolePrint(PokemonStats* obj) {
-	printf("HP is %d\n", obj->mem->HitPoints);
-	printf("Attack is %d\n", obj->mem->Attack);
-	printf("Defense is %d\n", obj->mem->Defense);
-	printf("Special Attack is %d\n", obj->mem->SpecialAttack);
-	printf("Special Defense is %d\n", obj->mem->SpecialDefense);
-	printf("Speed is %d\n", obj->mem->Speed);
+	printf("Level is %u\n",obj->mem->Level);
+	printf("HP is %u\n", obj->mem->HitPoints);
+	printf("Attack is %u\n", obj->mem->Attack);
+	printf("Defense is %u\n", obj->mem->Defense);
+	printf("Special Attack is %u\n", obj->mem->SpecialAttack);
+	printf("Special Defense is %u\n", obj->mem->SpecialDefense);
+	printf("Speed is %u\n", obj->mem->Speed);
 }
 
 

@@ -23,7 +23,7 @@ PokemonMoveSet *moveSet;
 void SetPokemonName(PokemonEntry* original, const char* name);
 
 
-
+void SetEntryL(PokemonEntry *original, unsigned int level);
 
 void SetEntryHP(PokemonEntry* original, unsigned int HP);
 void SetEntryA(PokemonEntry* original, unsigned int A);
@@ -62,6 +62,7 @@ MoveCategory GetEntryFourthMoveCategory(PokemonEntry *obj);
 
 void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit);
 
+unsigned int GetEntryL(PokemonEntry *obj);
 unsigned int GetEntryHP(PokemonEntry *obj);
 unsigned int GetEntryA(PokemonEntry *obj);
 unsigned int GetEntryD(PokemonEntry *obj);
@@ -199,6 +200,7 @@ void ResetPokemonEntryAll(PokemonEntry* recall) {
 
 void DeletePokemonEntry(PokemonEntry* recall){
 	//zero out name before free
+	GlobalDestroyer(2,recall,POKEMONENTRY);
 	if(recall != 0) {
 		if(recall->mem != 0) {
 			ResetPokemonEntryData(recall);
@@ -222,9 +224,7 @@ void DeletePokemonEntry(PokemonEntry* recall){
 	
 }
 
-void DestroyPokemonEntry(PokemonEntry *recall,unsigned int flag) {
 
-}
 
 void SetPokemonName(PokemonEntry* original, const char* name) {	
 	copyName(name, original->mem->name);
@@ -234,6 +234,7 @@ void SetPokemonName(PokemonEntry* original, const char* name) {
 
 void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->SetName = SetPokemonName;
+	original->SetLevel = SetEntryL;
 	original->SetHitPoints = SetEntryHP;
 	original->SetAttack = SetEntryA;
 	original->SetDefense = SetEntryD;
@@ -244,6 +245,7 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->SetSecondaryType = SetEntrySecondaryType;
 	original->ConsolePrint = PokemonEntryConsolePrint;
 	original->GetName = GetEntryName;
+	original->GetLevel = GetEntryL;
 	original->GetHitPoints = GetEntryHP;
 	original->GetAttack = GetEntryA;
 	original->GetDefense = GetEntryD;
@@ -275,6 +277,11 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->GetThirdMoveCategory = GetEntryThirdMoveCategory;
 	original->GetFourthMoveCategory = GetEntryFourthMoveCategory;
 
+}
+
+void SetEntryL(PokemonEntry* original, unsigned int level) {
+	PokemonStats *statsPtr = original->mem->pokeStats;
+	statsPtr->SetL(statsPtr,level);
 }
 
 void SetEntryHP(PokemonEntry* original, unsigned int HP) {
@@ -426,6 +433,11 @@ void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit) {
 	for(i = 0; i<m; i++) {
 		dest[i] = obj->mem->name[i];
 	}
+}
+
+unsigned int GetEntryL(PokemonEntry *obj) {
+	PokemonStats *statsPtr = obj->mem->pokeStats;
+	return statsPtr->GetL(statsPtr);
 }
 
 unsigned int GetEntryHP(PokemonEntry *obj) {

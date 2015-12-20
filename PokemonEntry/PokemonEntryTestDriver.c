@@ -34,6 +34,7 @@ PokemonEntry *result = NewPokemonEntry();
 printf("BEFORENAME\n\n\n\n");
 printf("name is %s\n", name);
 result->SetName(result, name);
+result->SetLevel(result,100);
 printf("AFTERNAME\n\n\n\n");
 result->SetHitPoints(result, HP);
 result->SetAttack(result, A);
