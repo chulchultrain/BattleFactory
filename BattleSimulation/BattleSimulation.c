@@ -16,7 +16,6 @@ unsigned int damage;
 
 } MoveDamage;
 
-
 struct BattleSimPrivate{
 	PokemonEntry *entry1;
 	PokemonEntry *entry2;
@@ -25,19 +24,23 @@ struct BattleSimPrivate{
 	MoveDamage damages[MAX_NUM_MOVES * 2]; //damages[0-MAX_NUM_MOVES) for entry 1 to 2. damages[MAX_NUM_MOVES-) entry 2 to 1
 };
 
-unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsigned int moveChoice);
-void BattleSimSimulate(BattleSim *original);
-void ConsolePrintMoveDamage(MoveDamage md);
-void BattleSimConsolePrint(BattleSim *obj);
-
+//create
 void SetBattleSimFunctionPointers(BattleSim *obj);
 void SetBattleSimMemory(BattleSimPrivate *memPtr);
 
+//initialize
 void BattleSimInitialization(BattleSim *obj);
 
+//simulate
+unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsigned int moveChoice);
+void BattleSimSimulate(BattleSim *original);
 
-void BattleSimCalcAllDamage(BattleSim *original);
+//print
+void ConsolePrintMoveDamage(MoveDamage md);
 void BattleSimConsolePrint(BattleSim *obj);
+
+
+
 
 
 void SetBattleSimMemory(BattleSimPrivate *memPtr) {
@@ -88,6 +91,48 @@ void DeleteBattleSim(BattleSim *obj) {
 		free(obj);
 	}
 }
+
+
+
+void BattleSimInitialization(BattleSim *obj) {
+	char name1[MAX_NAME] = {0};
+	char name2[MAX_NAME] = {0};
+
+	char buffer[MAX_LINE_LENGTH] = {0};
+	unsigned int choice1[1] = {0};
+	unsigned int choice2[1] = {0};
+	unsigned int IV[1] = {0};
+	unsigned int level = 100;
+
+	printf("Entry name of first pokemon of entry: ");
+	SafeReadLineRNL(name1, MAX_NAME,stdin,1); 
+
+	printf("Entry choice of first pokemon: ");
+	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,stdin,1);
+
+	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,choice1);
+
+	printf("Entry name of second pokemon of entry: ");
+	SafeReadLineRNL(name2, MAX_NAME,stdin,1); 
+
+	printf("Entry choice of second pokemon: ");
+	fgets(buffer,MAX_LINE_LENGTH,stdin);	
+
+	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,choice2);
+
+	printf("Entry IVs of Pokemon");
+	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,stdin,1);	
+
+	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,IV);
+
+	PokemonEntry *entry1 = NewEntryFromData(name1,choice1[0],IV[0],level);
+	PokemonEntry *entry2 = NewEntryFromData(name2,choice2[0],IV[0],level);
+
+	obj->mem->entry1 = entry1;
+	obj->mem->entry2 = entry2;
+	
+}
+
 
 //TODO: Change to doubles
 unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsigned int moveChoice) {
@@ -169,47 +214,6 @@ unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsi
 	return damage;
 
 }
-
-
-void BattleSimInitialization(BattleSim *obj) {
-	char name1[MAX_NAME] = {0};
-	char name2[MAX_NAME] = {0};
-
-	char buffer[MAX_LINE_LENGTH] = {0};
-	unsigned int choice1[1] = {0};
-	unsigned int choice2[1] = {0};
-	unsigned int IV[1] = {0};
-	unsigned int level = 100;
-
-	printf("Entry name of first pokemon of entry: ");
-	SafeReadLineRNL(name1, MAX_NAME,stdin,1); 
-
-	printf("Entry choice of first pokemon: ");
-	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,stdin,1);
-
-	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,choice1);
-
-	printf("Entry name of second pokemon of entry: ");
-	SafeReadLineRNL(name2, MAX_NAME,stdin,1); 
-
-	printf("Entry choice of second pokemon: ");
-	fgets(buffer,MAX_LINE_LENGTH,stdin);	
-
-	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,choice2);
-
-	printf("Entry IVs of Pokemon");
-	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,stdin,1);	
-
-	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,IV);
-
-	PokemonEntry *entry1 = NewEntryFromData(name1,choice1[0],IV[0],level);
-	PokemonEntry *entry2 = NewEntryFromData(name2,choice2[0],IV[0],level);
-
-	obj->mem->entry1 = entry1;
-	obj->mem->entry2 = entry2;
-	
-}
-
 
 void BattleSimSimulate(BattleSim *original) {
 

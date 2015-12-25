@@ -5,10 +5,6 @@
 #include <PokemonEntry/PokemonEntry.h>
 #include <stdio.h>
 
-/**First Basic Function
-Console Print all entries of the Pokemon desired.
-**/
-//void ConsolePrintPokemonEntryFile(FILE *fPtr);
 
 //assumes IV = 0 and level = 100
 PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice);

@@ -6,45 +6,29 @@
 #include <stdlib.h>
 
 
-void ConsolePrintPokemonEntryFile(FILE *fin);
-void GoToEntryChoice(FILE *fin, unsigned int choice);
+//pokemon data into entry
+void BaseStatsToEntry(PokemonEntry *pEntry);
+void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
+void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
 
+//entry specific data into entry
+void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsigned int level);
+unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit);
+void GoToEntryChoice(FILE *fin, unsigned int choice);
 void TypeLineToEntry(char *typeLine,PokemonEntry *pEntry);
 void MoveLineToEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice);
 void NatureLineToEntry(char *natureLine, unsigned int line_limit,PokemonEntry *pEntry);
+//refined stats to entry
+unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
+unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
+void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
+void RefinedStatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry);
 
-unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit);
-void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsigned int level);
-void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
-void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
-void BaseStatsToEntry(PokemonEntry *pEntry);
-
-
+//Public calls. Either making a new entry, or modifying an already existing entry structure to contain different data
 PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice);
 PokemonEntry *NewEntryFromData(char *name,unsigned int choice, unsigned int IV, unsigned int level);
 void SetEntryFromNameChoice(PokemonEntry *entry, char *name, unsigned int choice);
 void SetEntryFromData(PokemonEntry *entry, char *name,unsigned int choice, unsigned int IV, unsigned int level);
-
-unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
-unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
-
-void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
-void StatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry);
- 
-void PrintDamageBetweenEntries(PokemonEntry *pEntry1, PokemonEntry *pEntry2);
-
-void TopLevel(char *name);
-
-
-void ConsolePrintPokemonEntryFile(FILE *fin) {
-if( fin != 0) {
-	char line[MAX_POKEDEX_LINE] = {0};
-	while( fgets(line,MAX_POKEDEX_LINE - 5, fin) != 0) 
-		printf("%s", line); 
-				}
-
-
-}
 
 
 void GoToEntryChoice(FILE *fin, unsigned int choice) {
@@ -56,9 +40,6 @@ void GoToEntryChoice(FILE *fin, unsigned int choice) {
 				GlobalDestroyer(1,0,0);
 	}
 }
-
-
-
 
 
 void TypeLineToEntry(char *typeLine,PokemonEntry *pEntry) {
@@ -131,40 +112,6 @@ void MoveLineToEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice) 
 	
 }
 
-
-
-unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) {
-
-	//char entryFileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
-
-	
-	char EMERALD_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_EMERALD;
-	char DPP_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_DPP;
-	char HGSS_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_HGSS;
-	char BW_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_BW;
-	char BW2_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_BW2;
-	char XY_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_XY;
-	char ORAS_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_ORAS;
-
-	char *regionPointer[MAX_REGIONS] = {EMERALD_R, DPP_R, HGSS_R, BW_R, BW2_R, XY_R, ORAS_R};
-
-	printf("Choose which game by typing an integer\n");
-	unsigned int i;
-
-	for(i = 0; i < MAX_REGIONS && regionPointer[i] != 0; i++)
-		printf("%s - %u\n", regionPointer[i], i);	
-
-	char buffer[MAX_LINE_LENGTH];
-	unsigned int uPtr[1];	
-
-	fgets(buffer,MAX_LINE_LENGTH,stdin);
-	if( !StringToUnsignedInt(buffer, MAX_LINE_LENGTH, uPtr) ) {
-		AppendArrayToArray( *(regionPointer + uPtr[0]), MAX_REGION_SUBDIR_LENGTH, entryFileDir, fileDirLimit);
-		return 0; }
-	else 
-		return 1; // something idk maybe an error msg. maybe return function shoudl also error 0,1
-
-}
 
 void NatureLineToEntry(char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
 
@@ -385,7 +332,7 @@ unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, uns
 	return val;
 }
 
-void StatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
+void RefinedStatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
 	unsigned int hitPoints,attack, defense, specialAttack, specialDefense, speed;
 	hitPoints = CalcHPStat( pEntry->GetHitPoints(pEntry), EVTable[0], IV, level);
 
@@ -455,7 +402,7 @@ void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsig
 	}
 	
 
-	StatsToEntry(EVTable, IV, level, natureLine,MAX_LINE_LENGTH, pEntry);
+	RefinedStatsToEntry(EVTable, IV, level, natureLine,MAX_LINE_LENGTH, pEntry);
 	fclose(fin);
 
 	printf("After close data entry file section\n");

@@ -37,4 +37,11 @@ void SafeReadLine(char *line, unsigned int limit, FILE *fptr,unsigned int safeDe
 //same thing as SafeReadLine. removes newline
 void SafeReadLineRNL(char *line, unsigned int limit, FILE *fin,unsigned int safeDestruct);
 
+//given base directory name pointer, append the correct game region to the pointer to the name.
+/*
+Ex: "base/" -> "base/DPP/"
+TODO:change it to accept stdin or something else
+*/
+unsigned int CorrectRegionPrompt(char *baseFileDir, unsigned int fileDirLimit);
+
 #endif
