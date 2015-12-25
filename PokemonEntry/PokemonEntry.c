@@ -116,7 +116,7 @@ PokemonEntry *NewPokemonEntry() {
 	if( result == 0)
 		GlobalDestroyer(1,0,0);
 
-	GlobalDestroyer(0,result,0);	
+	GlobalDestroyer(0,result,POKEMONENTRY);	
 
 	result->mem = malloc(sizeof(PokemonEntryPrivate));
 	if( result->mem == 0) {
@@ -243,6 +243,8 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->SetSpeed = SetEntryS;
 	original->SetPrimaryType = SetEntryPrimaryType;
 	original->SetSecondaryType = SetEntrySecondaryType;
+
+
 	original->ConsolePrint = PokemonEntryConsolePrint;
 	original->GetName = GetEntryName;
 	original->GetLevel = GetEntryL;
@@ -252,6 +254,8 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->GetSpecialAttack = GetEntrySpA;
 	original->GetSpecialDefense = GetEntrySpD;
 	original->GetSpeed = GetEntryS;
+	original->GetPrimaryType = GetEntryPrimary;
+	original->GetSecondaryType = GetEntrySecondary;
 
 	original->SetFirstMove = SetEntryFirstMove;
 	original->SetSecondMove = SetEntrySecondMove;

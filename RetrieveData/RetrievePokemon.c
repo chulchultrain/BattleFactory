@@ -302,7 +302,7 @@ void NatureLineToEntry(char *natureLine, unsigned int line_limit, PokemonEntry *
 
 	printf("Nature is %u\n",entryNat);
 	
-	unsigned augStats[NUM_OF_STATS] = {0};
+	unsigned int augStats[NUM_OF_STATS] = {0};
 	augStats[HP] = pEntry->GetHitPoints(pEntry);
 	augStats[A] = pEntry->GetAttack(pEntry);
 	augStats[D] = pEntry->GetDefense(pEntry);
@@ -325,6 +325,7 @@ void NatureLineToEntry(char *natureLine, unsigned int line_limit, PokemonEntry *
 	pEntry->SetSpecialAttack(pEntry, augStats[SA]);
 	pEntry->SetSpecialDefense(pEntry, augStats[SD]);
 	pEntry->SetSpeed(pEntry, augStats[S]);
+	
 
 }
 
@@ -371,7 +372,7 @@ unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, 
 	val *= level;
 	val /= 100; 
 	val += 5;
-	printf("print hp %u\n",val);
+	printf("print stat %u\n",val);
 	return val;
 }
 
@@ -380,7 +381,7 @@ unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, uns
 	val *= level;
 	val /= 100; 
 	val += (level + 10);
-	printf("print stat %u\n",val);
+	printf("print hp %u\n",val);
 	return val;
 }
 
@@ -407,6 +408,9 @@ void StatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, ch
 //Augments the pokemonEntry based on which selection was made. 0,1,2,3
 void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsigned int level) {
 
+
+	printf("Start of DataToEntry\n");
+	pEntry->SetLevel(pEntry,level);
 	char entryFileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
 	char name[MAX_NAME] = {0};
 	pEntry->GetName(pEntry,name,MAX_NAME);
@@ -420,6 +424,7 @@ void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsig
 	else 
 		printf("Successful open\n");
 
+	printf("After data entry file open section\n");
 	//move file pointer to correct position in file, then parse data
 	GoToEntryChoice(fin,choice);
 	char typeLine[MAX_LINE_LENGTH] = {0};
@@ -452,6 +457,8 @@ void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsig
 
 	StatsToEntry(EVTable, IV, level, natureLine,MAX_LINE_LENGTH, pEntry);
 	fclose(fin);
+
+	printf("After close data entry file section\n");
 }
 
 
@@ -486,6 +493,8 @@ void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statAr
 	//Extracts base stats out of file and put into array.
 	BaseStatsFileToArray(fin, statArray, statArrayLimit);
 	fclose(fin);
+
+	printf("Close base stat file %s\n",fileName);
 }
 
 

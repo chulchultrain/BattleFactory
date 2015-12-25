@@ -4,6 +4,7 @@
 #include <PokemonEntry/PokemonEntry.h>
 #include <Pokedex/Pokedex.h>
 #include <SpecialConstants/SpecialConstants.h>
+#include <BattleSimulation/BattleSimulation.h>
 
 //only one pokedex and one pokemonEntry maximum will be active at one time
 
@@ -46,11 +47,11 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 	static PokemonEntry *pokemonEntryMem[MAX_POKEMONENTRY_IN_MEM] = {0};
 	static Pokedex *pokedexMem[MAX_POKEDEX_IN_MEM] = {0};
-	//static BattleSim *battleSimMem[MAX_BATTLESIM_IN_MEM];
+	static BattleSim *battleSimMem[MAX_BATTLESIM_IN_MEM] = {0};
 
 	static unsigned int pokemonEntryCounter;
 	static unsigned int pokedexCounter;
-	//static unsigned int battleSimCounter;
+	static unsigned int battleSimCounter;
 
 	if(mallocFailFlag == 1) {
 		unsigned int i;
@@ -60,12 +61,12 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 		for(i = 0; i < pokedexCounter; i++)
 			if( pokedexMem[i] != 0)
 				DeletePokedex(pokedexMem[i]);
-/**
-		for(i = 0; i < battleSimCounter && battleSimMem[i] != 0; i++)
-			DeleteBattleSim(battleSimMem[i]);
+		for(i = 0; i < battleSimCounter; i++)
+			if( battleSimMem[i] != 0)
+				DeleteBattleSim(battleSimMem[i]);
 
 
-**/
+
 	}
 	else if(mallocFailFlag == 2) { //only kill off one item. used for clever multilayer delete and if delete used outside of global destroy
 		unsigned int i;
@@ -77,17 +78,32 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 			case POKEDEX:
 						
 						for(i = 0; i < MAX_POKEDEX_IN_MEM && pokedexMem[i] != 0; i++)
-							if(pokedexMem[i] == deletePtr)
+							if(pokedexMem[i] == deletePtr) {
+								//DeletePokedex( (Pokedex *) deletePtr);
+								pokedexMem[i] = 0;
 								break;
-						DeletePokedex( (Pokedex *) deletePtr);
-						pokedexMem[i] = 0;
+							}
+						break;
+
 						//TODO:add so that move array entries to fill the empty slot, then decrement counter
 			case POKEMONENTRY:
 						for(i = 0; i < MAX_POKEMONENTRY_IN_MEM && pokemonEntryMem[i] != 0; i++)
-							if(pokemonEntryMem[i] == deletePtr)
+							if(pokemonEntryMem[i] == deletePtr) {
+								//DeletePokemonEntry( (PokemonEntry *) deletePtr);
+								pokemonEntryMem[i] = 0;
 								break;
-						DeletePokemonEntry( (PokemonEntry *) deletePtr);
-						pokemonEntryMem[i] = 0;
+							}
+						break;
+
+			case BATTLESIMULATION: 
+						for(i = 0; i < MAX_BATTLESIM_IN_MEM && battleSimMem[i] != 0; i++)
+							if(battleSimMem[i] == deletePtr) {
+								//DeleteBattleSim( (BattleSim *) deletePtr);	
+								battleSimMem[i] = 0;
+								break;
+							}
+						break;
+
 
 		} 
 		
@@ -112,16 +128,17 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 						pokemonEntryMem[pokemonEntryCounter] = (PokemonEntry *)deletePtr;
 					   	pokemonEntryCounter += 1;
 					  	break;
-/**
+
 			case BATTLESIMULATION:	if ( battleSimCounter == MAX_BATTLESIM_IN_MEM) {
-							DeleteBattleS
+							DeleteBattleSim( (BattleSim *)deletePtr);
+							GlobalDestroyer(1,0,0);
 										}
-						battleSimMem[battleSimCounter] = (BattleSimMem *)deletePtr;
+						battleSimMem[battleSimCounter] = (BattleSim *)deletePtr;
 						battleSimCounter += 1;
 						break;
-**/
+
 		}
 
 	}
-	
+	//need returns to prevent going back to this in case MAX_IN_MEM
 }

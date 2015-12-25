@@ -100,8 +100,8 @@ unsigned int (*GetDefense)();
 unsigned int (*GetSpecialAttack)();
 unsigned int (*GetSpecialDefense)();
 unsigned int (*GetSpeed)();
-unsigned int (*GetPrimaryType)();
-unsigned int (*GetSecondaryType)();
+Type (*GetPrimaryType)();
+Type (*GetSecondaryType)();
 void (*GetFirstMoveName)();
 void (*GetSecondMoveName)();
 void (*GetThirdMoveName)();
@@ -121,6 +121,7 @@ MoveCategory (*GetFirstMoveCategory)();
 MoveCategory (*GetSecondMoveCategory)();
 MoveCategory (*GetThirdMoveCategory)();
 MoveCategory (*GetFourthMoveCategory)();
+
 
 //enum for pokemon Nature
 

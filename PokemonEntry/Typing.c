@@ -202,7 +202,7 @@ Type TokenToType(char *token) {
 				case 'i': 
 				switch(token[2]) {
 					case 'g': return FIGHTING;	
-					case 'i': return FIRE; }
+					case 'r': return FIRE; }
 				case 'l': return FLYING;
 				}
 		case 'G':
@@ -228,6 +228,10 @@ Type TokenToType(char *token) {
 /*
 To make more efficient later, and to keep from re creating a huge array every tiem we call upon DamageModFromTypes, we should
 keep a global data struct for this. Or perhaps to just have 1 and pass it into the parameters of this.
+0 = no effect
+1 = normal
+2 = super effective
+3 = not very effective
 */
 unsigned int DamageModCodeFromTypes(Type attack, Type defend) {
 	static unsigned int mod[NUM_OF_TYPES][NUM_OF_TYPES];
@@ -239,25 +243,25 @@ unsigned int DamageModCodeFromTypes(Type attack, Type defend) {
 	int i,j;
 	for(i = 0; i < NUM_OF_TYPES; i++)
 		for(j = 0; j < NUM_OF_TYPES; j++)
-			mod[i][j] = 0;
+			mod[i][j] = 1;
 
 	mod[NORMAL][ROCK] = mod[NORMAL][STEEL] = 3;
-	mod[NORMAL][GHOST] = 1;
+	mod[NORMAL][GHOST] = 0;
 
 	mod[FIGHTING][NORMAL] = mod[FIGHTING][ROCK] = mod[FIGHTING][STEEL] = mod[FIGHTING][DARK] = mod[FIGHTING][ICE] = 2;
 	mod[FIGHTING][FLYING] = mod[FIGHTING][POISON] = mod[FIGHTING][BUG] = mod[FIGHTING][PSYCHIC] = 3;
-	mod[FIGHTING][GHOST] = 1;
+	mod[FIGHTING][GHOST] = 0;
 	
 	mod[FLYING][FIGHTING] = mod[FLYING][BUG] = mod[FLYING][GRASS] = 2;
 	mod[FLYING][ROCK] = mod[FLYING][STEEL] = mod[FLYING][ELECTRIC] = 3;
 	
 	mod[POISON][GRASS] = 2;
 	mod[POISON][POISON] = mod[POISON][GROUND] = mod[POISON][ROCK] = mod[POISON][GHOST] = 3;
-	mod[POISON][STEEL] = 1;
+	mod[POISON][STEEL] = 0;
 
 	mod[GROUND][POISON] = mod[GROUND][ROCK] = mod[GROUND][STEEL] = mod[GROUND][FIRE] = mod[GROUND][ELECTRIC] = 2;
 	mod[GROUND][BUG] = mod[GROUND][GRASS] = 3;
-	mod[GROUND][FLYING] = 1;
+	mod[GROUND][FLYING] = 0;
 
 	mod[ROCK][FLYING] = mod[ROCK][BUG] = mod[ROCK][FIRE] = mod[ROCK][ICE] = 2;
 	mod[ROCK][FIGHTING] = mod[ROCK][GROUND] = mod[ROCK][STEEL] = 3;
@@ -268,7 +272,7 @@ unsigned int DamageModCodeFromTypes(Type attack, Type defend) {
 
 	mod[GHOST][GHOST] = mod[GHOST][PSYCHIC] = 2;
 	mod[GHOST][DARK] = mod[GHOST][STEEL] = 3;
-	mod[GHOST][NORMAL] = 1;
+	mod[GHOST][NORMAL] = 0;
 	
 	mod[STEEL][ROCK] = mod[STEEL][ICE] = 2;
 	mod[STEEL][FIRE] = mod[STEEL][WATER] = mod[STEEL][STEEL] = mod[STEEL][ELECTRIC] = 3;
@@ -289,7 +293,7 @@ unsigned int DamageModCodeFromTypes(Type attack, Type defend) {
 	
 	mod[PSYCHIC][FIGHTING] = mod[PSYCHIC][POISON] = 2;
 	mod[PSYCHIC][STEEL] = mod[PSYCHIC][PSYCHIC] = 3;
-	mod[PSYCHIC][DARK] = 1;
+	mod[PSYCHIC][DARK] = 0;
 
 	mod[ICE][FLYING] = mod[ICE][GROUND] = mod[ICE][GRASS] = mod[ICE][DRAGON] = 2;
 	mod[ICE][STEEL] = mod[ICE][FIRE] = mod[ICE][WATER] = mod[ICE][ICE] = 3;
@@ -299,13 +303,32 @@ unsigned int DamageModCodeFromTypes(Type attack, Type defend) {
 
 	mod[DARK][PSYCHIC] = mod[DARK][GHOST] = 2;
 	mod[DARK][FIGHTING] = mod[DARK][STEEL] = mod[DARK][DARK] = 3; 
-	flag = 1;
+	flag = 0;
 			}
 	
 	return mod[attack][defend];
 
 }
 
+
+double ModDamageTypeResistance(double initial,Type attack, Type defend) {
+	double mod = initial;
+	unsigned int code = DamageModCodeFromTypes(attack,defend);
+
+	switch(code) {
+		case 0:
+		case 1:
+		case 2:
+			mod *= code;
+			break;
+		case 3:
+			mod /= 2;
+			break;
+
+	}
+
+	return mod;
+}
 
 
 

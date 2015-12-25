@@ -112,7 +112,7 @@ void SafeReadLine(char *line, unsigned int limit, FILE *fin,unsigned int safeDes
 
 }
 
-//RNL stands for remove new line
+//RNL stands for remove everything after new line
 void SafeReadLineRNL(char *line, unsigned int limit, FILE *fin,unsigned int safeDestruct) {
 	if(safeDestruct) {
 		if( fgets(line, limit, fin) == 0) {

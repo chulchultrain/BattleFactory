@@ -52,7 +52,9 @@ void ResetTypeContainerAll(TypeContainer* recall);
 Type TokenToType(char *token);
 
 //0 stands for no modification. 1 stands for multiply by 0. 2 stands for multiply by 2. 3 stands for divide by 2.
-unsigned int DamageModCodeFromTypes(Type t1, Type t2);
+unsigned int DamageModCodeFromTypes(Type attack, Type defend);
+
+double ModDamageTypeResistance(double initial,Type attack, Type defend);
 
 #endif
 

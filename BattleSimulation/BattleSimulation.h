@@ -1,3 +1,6 @@
+#ifndef __BATTLESIMULATION_H_INCLUDED__
+#define __BATTLESIMULATION_H_INCLUDED__
+
 #include <PokemonEntry/PokemonEntry.h>
 
 
@@ -7,11 +10,15 @@ typedef struct BattleSim{
 
 BattleSimPrivate *mem;
 
-void SetEntry1(BattleSim *original, PokemonEntry *obj);
-void SetEntry2(BattleSim *original, PokemonEntry *obj);
 
-void CalcMoveDamages(BattleSim *original);
-void ConsolePrint(BattleSim *obj);
+void (*Initialize)();
+void (*Simulate)();
+void (*ConsolePrint)();
 } BattleSim;
 
+BattleSim *NewBattleSim();
 
+void DeleteBattleSim(BattleSim *obj);
+
+
+#endif
