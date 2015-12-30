@@ -3,6 +3,13 @@
 
 #include <PokemonEntry/PokemonEntry.h>
 
+/*
+void Initialize(BattleSim *obj, PokemonEntry *e1, PokemonEntry *e2);
+void Simulate(BattleSim *obj);
+void ConsolePrint(BattleSim *obj);
+
+*/
+
 
 typedef struct BattleSimPrivate BattleSimPrivate;
 

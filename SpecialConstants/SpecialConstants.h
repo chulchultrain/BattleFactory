@@ -6,6 +6,14 @@
 File to store Special constants and include here so that do not have to #define in all the files used.
 */
 
+#ifndef MAX_POKEMON_NUMBER
+#define MAX_POKEMON_NUMBER 721
+#endif
+
+#ifndef MAX_MOVE_NUMBER
+#define MAX_MOVE_NUMBER 621
+#endif
+
 #ifndef MAX_NAME
 #define MAX_NAME 21
 #endif

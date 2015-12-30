@@ -33,18 +33,25 @@ unsigned int UnsignedIntToString(unsigned int num, char *line, unsigned int limi
 	char temp[MAX_LINE_LENGTH] = {0};
 	for(len = 0; len < limit && tempNum > 0;len++) {
 		temp[len] = tempNum % 10;
+//		printf("%u \n\n",temp[len]);
 		tempNum /= 10;
 
 	}
-
+//	printf("%u\n\n",len);
 	if(tempNum > 0) {
 		return 1;
 	}
 
-	while( len >= 0) {
-		line[len] = (temp[len] + 48);
-		len--;
+	len--;
+	//not working reverses digits
+	unsigned int i;
+	for(i = 0; i <= len; i++) {
+		//printf("%c %u \n\n",line[len],len);
+		line[i] = (temp[len - i] + 48);
 	}
+
+//	line[len] = (temp[len] + 48);
+	printf("%s\n\n",line);
 
 	return 0;
 	

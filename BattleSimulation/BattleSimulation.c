@@ -28,8 +28,9 @@ struct BattleSimPrivate{
 void SetBattleSimFunctionPointers(BattleSim *obj);
 void SetBattleSimMemory(BattleSimPrivate *memPtr);
 
-//initialize
-void BattleSimInitialization(BattleSim *obj);
+//initialize choices. be sure to change in header file the comments.
+void BattleSimInitializationConsoleInput(BattleSim *obj);
+void BattleSimInitializationEntries(BattleSim *obj, PokemonEntry *e1, PokemonEntry *e2);
 
 //simulate
 unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsigned int moveChoice);
@@ -54,7 +55,7 @@ void SetBattleSimMemory(BattleSimPrivate *memPtr) {
 }
 
 void SetBattleSimFunctionPointers(BattleSim *obj) {
-	obj->Initialize = BattleSimInitialization;
+	obj->Initialize = BattleSimInitializationEntries;
 	obj->Simulate = BattleSimSimulate;
 	obj->ConsolePrint = BattleSimConsolePrint;
 	
@@ -92,9 +93,15 @@ void DeleteBattleSim(BattleSim *obj) {
 	}
 }
 
+//initialization with entries already made
+void BattleSimInitializationEntries(BattleSim *obj, PokemonEntry *e1, PokemonEntry *e2) {
+	obj->mem->entry1 = e1;
+	obj->mem->entry2 = e2;
+}
 
 
-void BattleSimInitialization(BattleSim *obj) {
+//easy way to just from stdin
+void BattleSimInitializationConsoleInput(BattleSim *obj) {
 	char name1[MAX_NAME] = {0};
 	char name2[MAX_NAME] = {0};
 
@@ -143,7 +150,6 @@ unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsi
 	unsigned int dStat = 0;
 	double damage = 0;
 
-	printf("Accessing dType1 and dType2\n\n");
 
 	Type dType1 = defender->GetPrimaryType(defender);
 	Type dType2 = defender->GetSecondaryType(defender);
@@ -174,7 +180,6 @@ unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsi
 			break;
 	}
 
-	printf("right before get oStat and dStat\n\n");
 	
 	switch(cat) {
 		case EMPTY:
@@ -198,18 +203,18 @@ unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsi
 	damage /= 250;
 	damage /= dStat;
 	damage += 2;
-	printf("damage is %f\n",damage);
+//	printf("damage is %f\n",damage);
 
 	damage = ModDamageTypeResistance(damage,t, dType1);
 	damage = ModDamageTypeResistance(damage,t, dType2);
 	printf("damage is %f\n",damage);
 
-	printf("right before stab\n\n");
+	//stab calculation
 	if(t == attacker->GetPrimaryType(attacker) || t == attacker->GetSecondaryType(attacker) ) {
 		damage +=  (damage / 2);
 	}
 
-	printf("damage is %f\n",damage);
+//	printf("damage is %f\n",damage);
 	
 	return damage;
 
@@ -237,10 +242,9 @@ void BattleSimSimulate(BattleSim *original) {
 	entry2->GetThirdMoveName(entry2,damages[6].name, MAX_NAME);
 	entry2->GetFourthMoveName(entry2,damages[7].name, MAX_NAME);
 
-	entry1->ConsolePrint(entry1);
-	entry2->ConsolePrint(entry2);
+	//entry1->ConsolePrint(entry1);
+	//entry2->ConsolePrint(entry2);
 
-	printf("About to calculate move damage\n\n");
 	damages[0].damage = calcMoveDamage(entry1,entry2,0);
 	damages[1].damage = calcMoveDamage(entry1,entry2,1);	
 	damages[2].damage = calcMoveDamage(entry1,entry2,2);	
@@ -251,11 +255,13 @@ void BattleSimSimulate(BattleSim *original) {
 	damages[6].damage = calcMoveDamage(entry2,entry1,2);
 	damages[7].damage = calcMoveDamage(entry2,entry1,3);
 
-	printf("Reach end of simulate\n\n");
+
 }
 
 void ConsolePrintMoveDamage(MoveDamage md) {
-	printf("%s does %u\n", md.name, md.damage);
+	unsigned int upperBound = md.damage;
+	unsigned int lowerBound = md.damage - (md.damage * 1.0 * 15 / 100); 
+	printf("%s does between %u and %u\n", md.name, lowerBound,upperBound);
 }
 
 void BattleSimConsolePrint(BattleSim *obj) {

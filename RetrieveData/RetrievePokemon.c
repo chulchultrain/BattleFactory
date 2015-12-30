@@ -247,7 +247,7 @@ void NatureLineToEntry(char *natureLine, unsigned int line_limit, PokemonEntry *
 			//timid
 	}
 
-	printf("Nature is %u\n",entryNat);
+//	printf("Nature is %u\n",entryNat);
 	
 	unsigned int augStats[NUM_OF_STATS] = {0};
 	augStats[HP] = pEntry->GetHitPoints(pEntry);
@@ -285,7 +285,7 @@ void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable)
 	while( EVLine[i] < 'A' || EVLine[i] > 'Z')
 		i++;
 
-	printf("%s\n", num);
+//	printf("%s\n", num);
 
 	switch(EVLine[i]) {
 		case 'A': 	StringToUnsignedInt(num, MAX_NAME, (EVTable + 1) ); 
@@ -308,8 +308,8 @@ void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable)
 
 	}
 
-	for(i = 0; i < 6; i++)
-		printf("EVS are %u\n",EVTable[i]);
+//	for(i = 0; i < 6; i++)
+//		printf("EVS are %u\n",EVTable[i]);
 
 
 }
@@ -319,7 +319,7 @@ unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, 
 	val *= level;
 	val /= 100; 
 	val += 5;
-	printf("print stat %u\n",val);
+//	printf("print stat %u\n",val);
 	return val;
 }
 
@@ -328,7 +328,7 @@ unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, uns
 	val *= level;
 	val /= 100; 
 	val += (level + 10);
-	printf("print hp %u\n",val);
+//	printf("print hp %u\n",val);
 	return val;
 }
 
@@ -356,7 +356,7 @@ void RefinedStatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int le
 void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsigned int level) {
 
 
-	printf("Start of DataToEntry\n");
+//	printf("Start of DataToEntry\n");
 	pEntry->SetLevel(pEntry,level);
 	char entryFileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
 	char name[MAX_NAME] = {0};
@@ -371,7 +371,7 @@ void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsig
 	else 
 		printf("Successful open\n");
 
-	printf("After data entry file open section\n");
+//	printf("After data entry file open section\n");
 	//move file pointer to correct position in file, then parse data
 	GoToEntryChoice(fin,choice);
 	char typeLine[MAX_LINE_LENGTH] = {0};
@@ -405,7 +405,7 @@ void DataToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsig
 	RefinedStatsToEntry(EVTable, IV, level, natureLine,MAX_LINE_LENGTH, pEntry);
 	fclose(fin);
 
-	printf("After close data entry file section\n");
+//	printf("After close data entry file section\n");
 }
 
 
@@ -431,7 +431,7 @@ void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statAr
 	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
 	AppendArrayToArray(name, name_limit, fileName, MAX_FILE_NAME);
 	
-	printf("base stat file name is %s\n", fileName);
+	//printf("base stat file name is %s\n", fileName);
 
 	FILE *fin = fopen(fileName, "r");
 	if(fin == 0) {
@@ -441,7 +441,7 @@ void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statAr
 	BaseStatsFileToArray(fin, statArray, statArrayLimit);
 	fclose(fin);
 
-	printf("Close base stat file %s\n",fileName);
+	//printf("Close base stat file %s\n",fileName);
 }
 
 
