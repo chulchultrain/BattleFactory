@@ -461,6 +461,22 @@ void BaseStatsToEntry(PokemonEntry *pEntry) {
 		
 }
 
+
+/*	1/4/15 Currently, setup so that prints the pokemon entries created from each of the four entries,
+	using the entry data + zero IV's and level 100. due to being easy to use high level functions.
+	WARNING: not known actually how many entries are in the file, so IT WILL FAIL for entry files with < 4.
+	TODO: Change it to something better, like literally printing out the entry file with actual move names
+	instead of just the numbers.
+**/
+void ConsolePrintEntireEntryFile(char *name) {
+	PokemonEntry *pEntry = NewEntryFromNameChoice(name,0);
+	pEntry->ConsolePrint(pEntry);
+	unsigned int i = 1;
+	for(i = 1; i <= 3; i++) {
+	SetEntryFromNameChoice(pEntry,name,1);
+	pEntry->ConsolePrint(pEntry); }
+}
+
 PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice) {
 	PokemonEntry *pEntry = NewPokemonEntry();
 	pEntry->SetName(pEntry, name);
@@ -497,4 +513,7 @@ void SetEntryFromData(PokemonEntry *pEntry, char *name,unsigned int choice, unsi
 	BaseStatsToEntry(pEntry);
 	DataToEntry(pEntry,choice,IV,level);
 }
+
+
+
 

@@ -25,8 +25,8 @@ MTTester: $(MT_DIR)/MoveTable.o $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_O
 BSTester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o $(RD_DIR)/RetrievePokemon.o $(BS_DIR)/BattleSimulation.o $(BS_DIR)/BattleSimTester.o
 	gcc -o BSTester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o $(RD_DIR)/RetrievePokemon.o $(BS_DIR)/BattleSimulation.o $(BS_DIR)/BattleSimTester.o
 
-RDTester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o $(RD_DIR)/RetrieveTester.o $(RD_DIR)/RetrievePokemon.o
-	gcc -o RDTester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(RD_DIR)/RetrieveTester.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o $(RD_DIR)/RetrievePokemon.o
+RDTester: $(GLOBAL_DESTROYER_OBJS) $(RD_DIR)/RetrieveTester.o 
+	gcc -o RDTester $(GLOBAL_DESTROYER_OBJS) $(RD_DIR)/RetrieveTester.o 
 
 PETester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
 	gcc -o PETester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
