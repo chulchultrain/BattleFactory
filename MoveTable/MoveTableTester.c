@@ -8,10 +8,11 @@
 
 int main() {
 
-	unsigned int i = 2;
+	unsigned int i = 1;
 	char name[MAX_NAME] = {0};
+	for(i = 1; i < MAX_MOVE_NUMBER; i++) {
 	GetMoveNameFromID(i,name,MAX_NAME);
-	printf("name of move %d is %s\n",i,name);
+	printf("name of move %d is %s\n",i,name); }
 
 
 	GlobalDestroyer(1,0,0);

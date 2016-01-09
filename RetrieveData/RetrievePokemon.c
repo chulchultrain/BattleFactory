@@ -2,10 +2,11 @@
 #include <BF_Special_Util/Special_Util.h>
 #include <SpecialConstants/SpecialConstants.h>
 #include <GlobalDestroyer/GlobalDestroyer.h>
+#include <MoveTable/MoveTable.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-
+void ConsolePrintEntireEntryFile(char *fileName);
 //pokemon data into entry
 void BaseStatsToEntry(PokemonEntry *pEntry);
 void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
@@ -30,13 +31,43 @@ PokemonEntry *NewEntryFromData(char *name,unsigned int choice, unsigned int IV, 
 void SetEntryFromNameChoice(PokemonEntry *entry, char *name, unsigned int choice);
 void SetEntryFromData(PokemonEntry *entry, char *name,unsigned int choice, unsigned int IV, unsigned int level);
 
+void ConsolePrintForPokemon(char *name) {
+	char fileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;	
+	CorrectRegionPrompt(fileName, MAX_FILE_NAME);
+	printf("FILE NAME IS %s\n",fileName);
+	AppendArrayToArray(name,MAX_NAME,fileName,MAX_FILE_NAME);
+	printf("FILE NAME IS %s\n",fileName);
+	ConsolePrintEntireEntryFile(fileName);
+	
+
+}
+
+void ConsolePrintEntireEntryFile(char *fileName) {
+	FILE *fin = fopen(fileName,"r");
+	if(fin == 0) {
+		printf("FILE OPEN of %s failed\n", fileName);
+		GlobalDestroyer(1,0,0);
+	}
+	unsigned int flag = 0;
+	unsigned int moveNum[1] = {0};
+	char line[MAX_LINE_LENGTH] = {0};
+	while( fgets(line,MAX_LINE_LENGTH - 5,fin) != 0) {
+		
+		flag = StringToUnsignedInt(line,MAX_LINE_LENGTH,moveNum);
+		if(flag == 0 && moveNum[0] != 0) 
+			GetMoveNameFromID(moveNum[0], line, MAX_LINE_LENGTH);
+		printf("%s",line);
+	}
+
+}
+
 
 void GoToEntryChoice(FILE *fin, unsigned int choice) {
 	unsigned int i = 0;
-	char line[MAX_POKEDEX_LINE] = {0};
+	char line[MAX_LINE_LENGTH] = {0};
 	for(i = 0; i < choice; i++) {
 		while( line[0] != '\n')
-			if(fgets(line,MAX_POKEDEX_LINE - 5, fin) == 0)
+			if(fgets(line,MAX_LINE_LENGTH - 5, fin) == 0)
 				GlobalDestroyer(1,0,0);
 	}
 }
@@ -468,6 +499,7 @@ void BaseStatsToEntry(PokemonEntry *pEntry) {
 	TODO: Change it to something better, like literally printing out the entry file with actual move names
 	instead of just the numbers.
 **/
+/*
 void ConsolePrintEntireEntryFile(char *name) {
 	PokemonEntry *pEntry = NewEntryFromNameChoice(name,0);
 	pEntry->ConsolePrint(pEntry);
@@ -475,7 +507,7 @@ void ConsolePrintEntireEntryFile(char *name) {
 	for(i = 1; i <= 3; i++) {
 	SetEntryFromNameChoice(pEntry,name,1);
 	pEntry->ConsolePrint(pEntry); }
-}
+}'*/
 
 PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice) {
 	PokemonEntry *pEntry = NewPokemonEntry();

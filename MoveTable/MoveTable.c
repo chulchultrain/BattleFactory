@@ -1,5 +1,6 @@
 #include <SpecialConstants/SpecialConstants.h>
 #include <BF_Special_Util/Special_Util.h>
+#include <MoveTable/MoveTable.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -41,7 +42,7 @@ void GetMoveNameFromID(unsigned int ID, char *dest, unsigned int dest_limit) {
 	static unsigned int flag = 0;
 
 	if(flag == 0) {
-		unsigned int i,j;
+		unsigned int i;
 		for(i = 0; i < MAX_MOVE_NUMBER; i++) {
 			char id[MAX_NAME] = {0};
 			char idFileName[MAX_FILE_NAME] = MOVES_DIRECTORY;
@@ -56,8 +57,12 @@ void GetMoveNameFromID(unsigned int ID, char *dest, unsigned int dest_limit) {
 	flag = 1;
 	}
 	unsigned int k = 0;
-	for(k = 0; k < dest_limit && k < MAX_NAME && moveNames[ID][k] != 0; k++) {
+	for(k = 0; k < dest_limit && k < MAX_NAME && moveNames[ID - 1][k] != 0; k++) {
 		dest[k] = moveNames[ID-1][k];
 		}
+	if( k < dest_limit - 1) 
+		dest[k] = 0;
+	else
+		dest[dest_limit - 1] = 0;
 
 }

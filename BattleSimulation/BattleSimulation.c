@@ -55,7 +55,7 @@ void SetBattleSimMemory(BattleSimPrivate *memPtr) {
 }
 
 void SetBattleSimFunctionPointers(BattleSim *obj) {
-	obj->Initialize = BattleSimInitializationEntries;
+	obj->Initialize = BattleSimInitializationConsoleInput;
 	obj->Simulate = BattleSimSimulate;
 	obj->ConsolePrint = BattleSimConsolePrint;
 	
@@ -113,14 +113,17 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 
 	printf("Entry name of first pokemon of entry: ");
 	SafeReadLineRNL(name1, MAX_NAME,stdin,1); 
+	ConsolePrintForPokemon(name1);
 
 	printf("Entry choice of first pokemon: ");
 	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,stdin,1);
+
 
 	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,choice1);
 
 	printf("Entry name of second pokemon of entry: ");
 	SafeReadLineRNL(name2, MAX_NAME,stdin,1); 
+	ConsolePrintForPokemon(name2);
 
 	printf("Entry choice of second pokemon: ");
 	fgets(buffer,MAX_LINE_LENGTH,stdin);	

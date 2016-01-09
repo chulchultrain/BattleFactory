@@ -17,13 +17,13 @@ INC_DIR = $(shell pwd)
 
 FLAGS = -I$(INC_DIR) -c -Wall
 
-GLOBAL_DESTROYER_OBJS = $(BS_DIR)/BattleSimulation.o $(PE_DIR)/PokemonEntry.o $(PD_DIR)/Pokedex.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(RD_DIR)/RetrievePokemon.o $(SU_DIR)/Special_Util.o
+GLOBAL_DESTROYER_OBJS = $(BS_DIR)/BattleSimulation.o $(PE_DIR)/PokemonEntry.o $(PD_DIR)/Pokedex.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(RD_DIR)/RetrievePokemon.o $(SU_DIR)/Special_Util.o $(MT_DIR)/MoveTable.o
 
-MTTester: $(MT_DIR)/MoveTable.o $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_OBJS)
-	gcc -o MTTester $(MT_DIR)/MoveTable.o $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_OBJS) 
+MTTester: $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_OBJS)
+	gcc -o MTTester $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_OBJS) 
 
-BSTester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o $(RD_DIR)/RetrievePokemon.o $(BS_DIR)/BattleSimulation.o $(BS_DIR)/BattleSimTester.o
-	gcc -o BSTester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o $(RD_DIR)/RetrievePokemon.o $(BS_DIR)/BattleSimulation.o $(BS_DIR)/BattleSimTester.o
+BSTester: $(GLOBAL_DESTROYER_OBJS) $(BS_DIR)/BattleSimTester.o
+	gcc -o BSTester $(GLOBAL_DESTROYER_OBJS) $(BS_DIR)/BattleSimTester.o
 
 RDTester: $(GLOBAL_DESTROYER_OBJS) $(RD_DIR)/RetrieveTester.o 
 	gcc -o RDTester $(GLOBAL_DESTROYER_OBJS) $(RD_DIR)/RetrieveTester.o 
@@ -88,7 +88,7 @@ $(BS_DIR)/BattleSimulation.o: $(BS_DIR)/BattleSimulation.c $(BS_DIR)/BattleSimul
 $(BS_DIR)/BattleSimTester.o: $(BS_DIR)/BattleSimTester.c $(BS_DIR)/BattleSimulation.h $(GD_DIR)/GlobalDestroyer.h 
 	gcc $(FLAGS) $(BS_DIR)/BattleSimTester.c -o $(BS_DIR)/BattleSimTester.o
 
-$(MT_DIR)/MoveTable.o: $(MT_DIR)/MoveTable.c $(SC_DIR)/SpecialConstants.h $(SU_DIR)/Special_Util.h
+$(MT_DIR)/MoveTable.o: $(MT_DIR)/MoveTable.c $(SC_DIR)/SpecialConstants.h $(SU_DIR)/Special_Util.h $(MT_DIR)/MoveTable.h
 	gcc $(FLAGS) $(MT_DIR)/MoveTable.c -o $(MT_DIR)/MoveTable.o
 
 $(MT_DIR)/MoveTableTester.o: $(MT_DIR)/MoveTableTester.c $(MT_DIR)/MoveTable.h $(SC_DIR)/SpecialConstants.h 

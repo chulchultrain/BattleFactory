@@ -7,7 +7,7 @@
 
 
 //assumes IV = 0 and level = 100
-void ConsolePrintEntireEntryFile(char *name);
+void ConsolePrintForPokemon(char *name);
 
 PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice);
 

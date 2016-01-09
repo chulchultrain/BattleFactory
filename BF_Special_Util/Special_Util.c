@@ -49,9 +49,12 @@ unsigned int UnsignedIntToString(unsigned int num, char *line, unsigned int limi
 		//printf("%c %u \n\n",line[len],len);
 		line[i] = (temp[len - i] + 48);
 	}
-
+	if( i < limit - 1) 
+		line[i] = 0;
+	else
+		line[limit - 1] = 0;
 //	line[len] = (temp[len] + 48);
-	printf("%s\n\n",line);
+//	printf("%s\n\n",line);
 
 	return 0;
 	
@@ -68,19 +71,23 @@ void MakeDir(char *dirName, struct stat *st) {
 	}
 }
 
-
+//TODO:FIX up errorcode
 unsigned int InsertArrayInArray(char *src, unsigned int srcLimit, char *dest, unsigned int start, unsigned int destLimit) {
 	unsigned int i = 0;
 	
 
 	for(i = 0; (i + start) < destLimit && i < srcLimit && src[i] != 0; i++)
 		dest[i + start] = src[i];
-
+	if( (i + start) < (destLimit - 1) )
+		dest[i + start] = 0;
+	else
+		dest[destLimit - 1] = 0;
 
 	return i + start;
 
 }
 
+//TODO: FIX up errorcode
 unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, unsigned int destLimit) {
 	unsigned int i = 0; //destArray iterator
 	unsigned int j = 0; //srcArray iterator
@@ -99,6 +106,10 @@ unsigned int AppendArrayToArray(char *src, unsigned int srcLimit, char *dest, un
 		dest[i] = src[j];
 		i++;
 		j++; }
+	if( i < destLimit - 1) 
+		dest[i] = 0;
+	else
+		dest[destLimit - 1] = 0;
 
 	return i;
 
