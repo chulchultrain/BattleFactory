@@ -106,14 +106,18 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 	char name2[MAX_NAME] = {0};
 
 	char buffer[MAX_LINE_LENGTH] = {0};
+	unsigned int region[1] = {0};
 	unsigned int choice1[1] = {0};
 	unsigned int choice2[1] = {0};
 	unsigned int IV[1] = {0};
 	unsigned int level = 100;
 
+	RegionFromConsoleInput(region);
+
 	printf("Entry name of first pokemon of entry: ");
 	SafeReadLineRNL(name1, MAX_NAME,stdin,1); 
-	ConsolePrintForPokemon(name1);
+
+	ConsolePrintEntryList(name1,region[0]);
 
 	printf("Entry choice of first pokemon: ");
 	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,stdin,1);
@@ -123,7 +127,7 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 
 	printf("Entry name of second pokemon of entry: ");
 	SafeReadLineRNL(name2, MAX_NAME,stdin,1); 
-	ConsolePrintForPokemon(name2);
+	ConsolePrintEntryList(name2,region[0]);
 
 	printf("Entry choice of second pokemon: ");
 	fgets(buffer,MAX_LINE_LENGTH,stdin);	
@@ -135,8 +139,8 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 
 	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,IV);
 
-	PokemonEntry *entry1 = NewEntryFromData(name1,choice1[0],IV[0],level);
-	PokemonEntry *entry2 = NewEntryFromData(name2,choice2[0],IV[0],level);
+	PokemonEntry *entry1 = NewEntryFromData(name1,region[0],choice1[0],IV[0],level);
+	PokemonEntry *entry2 = NewEntryFromData(name2,region[0],choice2[0],IV[0],level);
 
 	obj->mem->entry1 = entry1;
 	obj->mem->entry2 = entry2;

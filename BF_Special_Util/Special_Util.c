@@ -189,6 +189,49 @@ unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit) 
 
 }
 
+//TODO:ADD the regions + their index chocie to a documentto a document
+unsigned int AppendRegionToString(unsigned int regionChoice, char *str, unsigned int strLimit) {
 
+	static char EMERALD_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_EMERALD;
+	static char DPP_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_DPP;
+	static char HGSS_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_HGSS;
+	static char BW_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_BW;
+	static char BW2_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_BW2;
+	static char XY_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_XY;
+	static char ORAS_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_ORAS;
+	static char *regionPointer[MAX_REGIONS] = {EMERALD_R, DPP_R, HGSS_R, BW_R, BW2_R, XY_R, ORAS_R};
 
+	
+
+	if( regionChoice < MAX_REGIONS && regionPointer[regionChoice] != 0)
+		return AppendArrayToArray( *(regionPointer + regionChoice), MAX_REGION_SUBDIR_LENGTH, str, strLimit);
+	else
+		return 1;
+
+}
+
+unsigned int RegionFromConsoleInput(unsigned int *choice) {
+
+	static char EMERALD_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_EMERALD;
+	static char DPP_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_DPP;
+	static char HGSS_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_HGSS;
+	static char BW_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_BW;
+	static char BW2_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_BW2;
+	static char XY_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_XY;
+	static char ORAS_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_ORAS;
+	static char *regionPointer[MAX_REGIONS] = {EMERALD_R, DPP_R, HGSS_R, BW_R, BW2_R, XY_R, ORAS_R};
+
+	printf("Choose which game by typing an integer\n");
+	unsigned int i;
+
+	for(i = 0; i < MAX_REGIONS && regionPointer[i] != 0; i++)
+		printf("%s - %u\n", regionPointer[i], i);			
+
+	char buffer[MAX_LINE_LENGTH];
+
+	fgets(buffer,MAX_LINE_LENGTH,stdin);
+	return StringToUnsignedInt(buffer, MAX_LINE_LENGTH, choice);
+	
+
+}
 

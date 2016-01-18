@@ -44,4 +44,8 @@ TODO:change it to accept stdin or something else
 */
 unsigned int CorrectRegionPrompt(char *baseFileDir, unsigned int fileDirLimit);
 
+unsigned int AppendRegionToString(unsigned int region, char *str, unsigned int strLimit);
+
+unsigned int RegionFromConsoleInput(unsigned int *choice);
+
 #endif

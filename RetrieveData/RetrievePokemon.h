@@ -9,13 +9,15 @@
 //assumes IV = 0 and level = 100
 void ConsolePrintForPokemon(char *name);
 
+void ConsolePrintEntryList(char *name,unsigned int region);
+
 PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice);
 
-PokemonEntry *NewEntryFromData(char *name,unsigned int choice, unsigned int IV, unsigned int level);
+PokemonEntry *NewEntryFromData(char *name, unsigned int region, unsigned int choice, unsigned int IV, unsigned int level);
 
 void SetEntryFromNameChoice(PokemonEntry *entry, char *name, unsigned int choice);
 
-void SetEntryWithData(PokemonEntry *entry, char *name,unsigned int choice, unsigned int IV, unsigned int level);
+void SetEntryWithData(PokemonEntry *entry, char *name, unsigned int region, unsigned int choice, unsigned int IV, unsigned int level);
 
 
 #endif
