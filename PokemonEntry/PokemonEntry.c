@@ -206,8 +206,7 @@ void DeletePokemonEntry(PokemonEntry* recall){
 			ResetPokemonEntryData(recall);
 			if(recall->mem->pokeStats != 0) {
 				DeletePokemonStats(recall->mem->pokeStats);
-				recall->mem->pokeStats = 0;
-				printf("pokemonStats address is %p\n", recall->mem->pokeStats); }
+				recall->mem->pokeStats = 0; }
 			if(recall->mem->typeData != 0) {
 				DeleteTypeContainer(recall->mem->typeData);
 				recall->mem->typeData = 0;

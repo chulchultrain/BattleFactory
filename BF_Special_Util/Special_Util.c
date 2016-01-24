@@ -235,3 +235,23 @@ unsigned int RegionFromConsoleInput(unsigned int *choice) {
 
 }
 
+unsigned int RegionFromFileInput(unsigned int *choice, FILE *fin) {
+/**
+	static char EMERALD_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_EMERALD;
+	static char DPP_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_DPP;
+	static char HGSS_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_HGSS;
+	static char BW_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_BW;
+	static char BW2_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_BW2;
+	static char XY_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_XY;
+	static char ORAS_R[MAX_REGION_SUBDIR_LENGTH] = SUB_DIR_ORAS;
+	static char *regionPointer[MAX_REGIONS] = {EMERALD_R, DPP_R, HGSS_R, BW_R, BW2_R, XY_R, ORAS_R};
+**/
+
+	char buffer[MAX_LINE_LENGTH];
+
+	fgets(buffer,MAX_LINE_LENGTH,fin);
+	return StringToUnsignedInt(buffer, MAX_LINE_LENGTH, choice);
+	
+
+}
+

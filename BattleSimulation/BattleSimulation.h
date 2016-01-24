@@ -21,6 +21,8 @@ BattleSimPrivate *mem;
 void (*Initialize)();
 void (*Simulate)();
 void (*ConsolePrint)();
+void (*FilePrint)();
+//void (*Configure)();
 } BattleSim;
 
 BattleSim *NewBattleSim();

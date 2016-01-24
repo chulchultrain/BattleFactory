@@ -42,9 +42,7 @@ void ConsolePrintEntryList(char *name,unsigned int region) {
 void ConsolePrintForPokemon(char *name) {
 	char fileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;	
 	CorrectRegionPrompt(fileName, MAX_FILE_NAME);
-	printf("FILE NAME IS %s\n",fileName);
 	AppendArrayToArray(name,MAX_NAME,fileName,MAX_FILE_NAME);
-	printf("FILE NAME IS %s\n",fileName);
 	ConsolePrintEntireEntryFile(fileName);
 	
 }
@@ -406,8 +404,6 @@ void DataWithoutRegionToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned 
 	if(fin == 0) {
 		GlobalDestroyer(1,0,0);
 	}
-	else 
-		printf("Successful open\n");
 
 //	printf("After data entry file open section\n");
 	//move file pointer to correct position in file, then parse data
@@ -462,8 +458,6 @@ void DataToEntry(PokemonEntry *pEntry, unsigned int region, unsigned int choice,
 	if(fin == 0) {
 		GlobalDestroyer(1,0,0);
 	}
-	else 
-		printf("Successful open\n");
 
 //	printf("After data entry file open section\n");
 	//move file pointer to correct position in file, then parse data

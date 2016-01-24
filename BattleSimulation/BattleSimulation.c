@@ -30,6 +30,7 @@ void SetBattleSimMemory(BattleSimPrivate *memPtr);
 
 //initialize choices. be sure to change in header file the comments.
 void BattleSimInitializationConsoleInput(BattleSim *obj);
+void BattleSimInitializationFileInput(BattleSim *obj, char *fileName);
 void BattleSimInitializationEntries(BattleSim *obj, PokemonEntry *e1, PokemonEntry *e2);
 
 //simulate
@@ -38,7 +39,9 @@ void BattleSimSimulate(BattleSim *original);
 
 //print
 void ConsolePrintMoveDamage(MoveDamage md);
+void FilePrintMoveDamage(MoveDamage md, FILE *fout);
 void BattleSimConsolePrint(BattleSim *obj);
+void BattleSimFilePrint(BattleSim *obj, char *fileName);
 
 
 
@@ -55,9 +58,10 @@ void SetBattleSimMemory(BattleSimPrivate *memPtr) {
 }
 
 void SetBattleSimFunctionPointers(BattleSim *obj) {
-	obj->Initialize = BattleSimInitializationConsoleInput;
+	obj->Initialize = BattleSimInitializationFileInput;
 	obj->Simulate = BattleSimSimulate;
 	obj->ConsolePrint = BattleSimConsolePrint;
+	obj->FilePrint = BattleSimFilePrint;
 	
 }
 
@@ -99,6 +103,41 @@ void BattleSimInitializationEntries(BattleSim *obj, PokemonEntry *e1, PokemonEnt
 	obj->mem->entry2 = e2;
 }
 
+void BattleSimInitializationFileInput(BattleSim *obj, char *fileName) {
+	FILE *fin = fopen(fileName, "r");
+	if(fin == 0) 
+		GlobalDestroyer(1,0,0);
+
+
+	char name1[MAX_NAME] = {0};
+	char name2[MAX_NAME] = {0};
+	char buffer[MAX_LINE_LENGTH] = {0};
+	unsigned int region[1] = {0};
+	unsigned int choice1[1] = {0};
+	unsigned int choice2[1] = {0};
+	unsigned int IV[1] = {0};
+	unsigned int level = 100;
+
+	//region
+	RegionFromFileInput(region, fin);
+	//entry1	
+	SafeReadLineRNL(name1,MAX_LINE_LENGTH,fin,1);	
+	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,fin,1);
+	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,choice1);	
+	//entry2
+	SafeReadLineRNL(name2, MAX_NAME,fin,1); 
+	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,fin,1);
+	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,choice2);
+	//IVs
+	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,fin,1);	
+	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,IV);
+	PokemonEntry *entry1 = NewEntryFromData(name1,region[0],choice1[0],IV[0],level);
+	PokemonEntry *entry2 = NewEntryFromData(name2,region[0],choice2[0],IV[0],level);
+	obj->mem->entry1 = entry1;
+	obj->mem->entry2 = entry2;
+	fclose(fin);
+}
+
 
 //easy way to just from stdin
 void BattleSimInitializationConsoleInput(BattleSim *obj) {
@@ -130,7 +169,7 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 	ConsolePrintEntryList(name2,region[0]);
 
 	printf("Entry choice of second pokemon: ");
-	fgets(buffer,MAX_LINE_LENGTH,stdin);	
+	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,stdin,1);	
 
 	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,choice2);
 
@@ -214,7 +253,7 @@ unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsi
 
 	damage = ModDamageTypeResistance(damage,t, dType1);
 	damage = ModDamageTypeResistance(damage,t, dType2);
-	printf("damage is %f\n",damage);
+//	printf("damage is %f\n",damage);
 
 	//stab calculation
 	if(t == attacker->GetPrimaryType(attacker) || t == attacker->GetSecondaryType(attacker) ) {
@@ -229,7 +268,7 @@ unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsi
 
 void BattleSimSimulate(BattleSim *original) {
 
-	printf("Reach start of simulate\n\n");
+	//printf("Reach start of simulate\n\n");
 
 	PokemonEntry *entry1 = original->mem->entry1;
 	PokemonEntry *entry2 = original->mem->entry2;
@@ -265,18 +304,48 @@ void BattleSimSimulate(BattleSim *original) {
 
 }
 
+void FilePrintMoveDamage(MoveDamage md, FILE *fout) {
+	unsigned int upperBound = md.damage;
+	unsigned int lowerBound = md.damage - (md.damage * 1.0 * 15 / 100); 
+	fprintf(fout,"%s does between %u and %u\n", md.name, lowerBound,upperBound);
+}
+
 void ConsolePrintMoveDamage(MoveDamage md) {
 	unsigned int upperBound = md.damage;
 	unsigned int lowerBound = md.damage - (md.damage * 1.0 * 15 / 100); 
 	printf("%s does between %u and %u\n", md.name, lowerBound,upperBound);
 }
 
+void BattleSimFilePrint(BattleSim *obj, char *fileName) {
+	FILE *fout = fopen(fileName,"w");
+	if( fout == 0) 
+		GlobalDestroyer(1,0,0);
+
+	char *entry1Name, *entry2Name;
+	entry1Name = obj->mem->entry1Name;
+	entry2Name = obj->mem->entry2Name;
+
+	fprintf(fout,"%s moves to %s:\n",entry1Name, entry2Name);
+	unsigned int i = 0;
+	for(i = 0; i < MAX_NUM_MOVES; i++)
+		FilePrintMoveDamage((obj->mem->damages)[i], fout);
+	fprintf(fout,"\n");
+	fprintf(fout,"%s moves to %s:\n",entry2Name, entry1Name);
+	for(i = MAX_NUM_MOVES; i < 2 * MAX_NUM_MOVES;i++)
+		FilePrintMoveDamage((obj->mem->damages)[i], fout);
+}
+
 void BattleSimConsolePrint(BattleSim *obj) {
-	printf("%s moves:\n",obj->mem->entry1Name);
+	char *entry1Name, *entry2Name;
+	entry1Name = obj->mem->entry1Name;
+	entry2Name = obj->mem->entry2Name;
+
+	printf("%s moves to %s:\n",entry1Name, entry2Name);
 	unsigned int i = 0;
 	for(i = 0; i < MAX_NUM_MOVES; i++)
 		ConsolePrintMoveDamage((obj->mem->damages)[i]);
-	printf("%s moves:\n",obj->mem->entry2Name);
+	printf("\n");
+	printf("%s moves to %s:\n",entry2Name, entry1Name);
 	for(i = MAX_NUM_MOVES; i < 2 * MAX_NUM_MOVES;i++)
 		ConsolePrintMoveDamage((obj->mem->damages)[i]);
 }

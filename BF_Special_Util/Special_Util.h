@@ -48,4 +48,6 @@ unsigned int AppendRegionToString(unsigned int region, char *str, unsigned int s
 
 unsigned int RegionFromConsoleInput(unsigned int *choice);
 
+unsigned int RegionFromFileInput(unsigned int *choice, FILE *fin);
+
 #endif
