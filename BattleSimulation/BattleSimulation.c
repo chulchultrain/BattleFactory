@@ -43,7 +43,8 @@ void FilePrintMoveDamage(MoveDamage md, FILE *fout);
 void BattleSimConsolePrint(BattleSim *obj);
 void BattleSimFilePrint(BattleSim *obj, char *fileName);
 
-
+//clean data
+void WipeBattleSimData(BattleSim *obj);
 
 
 
@@ -58,10 +59,12 @@ void SetBattleSimMemory(BattleSimPrivate *memPtr) {
 }
 
 void SetBattleSimFunctionPointers(BattleSim *obj) {
-	obj->Initialize = BattleSimInitializationFileInput;
+	obj->ConsoleInput = BattleSimInitializationConsoleInput;
+	obj->FileInput = BattleSimInitializationFileInput;
 	obj->Simulate = BattleSimSimulate;
 	obj->ConsolePrint = BattleSimConsolePrint;
 	obj->FilePrint = BattleSimFilePrint;
+	obj->Purge = WipeBattleSimData;
 	
 }
 
@@ -86,6 +89,19 @@ BattleSim *NewBattleSim() {
 	return result;
 }
 
+void WipeBattleSimData(BattleSim *obj) {
+	if(obj != 0) {
+		if(obj->mem->entry1 != 0) {
+			DeletePokemonEntry(obj->mem->entry1);
+			obj->mem->entry1 = 0; }
+		
+		if(obj->mem->entry2 != 0) {
+			DeletePokemonEntry(obj->mem->entry2);
+			obj->mem->entry2 = 0; }
+		
+	}
+}
+
 void DeleteBattleSim(BattleSim *obj) {
 	if(obj != 0) {
 		GlobalDestroyer(2,obj,BATTLESIMULATION);
@@ -107,7 +123,6 @@ void BattleSimInitializationFileInput(BattleSim *obj, char *fileName) {
 	FILE *fin = fopen(fileName, "r");
 	if(fin == 0) 
 		GlobalDestroyer(1,0,0);
-
 
 	char name1[MAX_NAME] = {0};
 	char name2[MAX_NAME] = {0};
@@ -133,6 +148,8 @@ void BattleSimInitializationFileInput(BattleSim *obj, char *fileName) {
 	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,IV);
 	PokemonEntry *entry1 = NewEntryFromData(name1,region[0],choice1[0],IV[0],level);
 	PokemonEntry *entry2 = NewEntryFromData(name2,region[0],choice2[0],IV[0],level);
+
+	obj->Purge(obj);
 	obj->mem->entry1 = entry1;
 	obj->mem->entry2 = entry2;
 	fclose(fin);
@@ -141,6 +158,7 @@ void BattleSimInitializationFileInput(BattleSim *obj, char *fileName) {
 
 //easy way to just from stdin
 void BattleSimInitializationConsoleInput(BattleSim *obj) {
+
 	char name1[MAX_NAME] = {0};
 	char name2[MAX_NAME] = {0};
 
@@ -181,6 +199,7 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 	PokemonEntry *entry1 = NewEntryFromData(name1,region[0],choice1[0],IV[0],level);
 	PokemonEntry *entry2 = NewEntryFromData(name2,region[0],choice2[0],IV[0],level);
 
+	obj->Purge(obj);
 	obj->mem->entry1 = entry1;
 	obj->mem->entry2 = entry2;
 	

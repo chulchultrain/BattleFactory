@@ -134,7 +134,6 @@ void MoveConsolePrint(PokemonMove *obj) {
 }
 
 void SetMoveName(PokemonMove *original, char *moveName) {
-
 	copyMoveName(moveName, original->mem->name);
 }
 

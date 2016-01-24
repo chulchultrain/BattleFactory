@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 void ConsolePrintEntireEntryFile(char *fileName);
+//void FilePrintEntireEntryFile(char *fileName, char *outputFileName); //TODO:define
 //pokemon data into entry
 void BaseStatsToEntry(PokemonEntry *pEntry);
 void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
@@ -88,7 +89,6 @@ void TypeLineToEntry(char *typeLine,PokemonEntry *pEntry) {
 			i += 1;
 			break; }
 		
-	//TODO:CHANGE POKEMONENTRY TO accept values not pointers and then change these accordingly.
 	Type t1 = TokenToType(typeLine);
 	Type t2 = NONE;
 	if( hasTwoTypes == 1) {

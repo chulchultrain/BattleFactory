@@ -220,6 +220,7 @@ void DeletePokemonEntry(PokemonEntry* recall){
 			recall->mem = 0; }
 		free(recall);
 		 }
+	//printf("Successful delete entry\n");
 	
 }
 

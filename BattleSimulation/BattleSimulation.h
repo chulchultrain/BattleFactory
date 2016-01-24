@@ -18,10 +18,12 @@ typedef struct BattleSim{
 BattleSimPrivate *mem;
 
 
-void (*Initialize)();
+void (*ConsoleInput)();
+void (*FileInput)();
 void (*Simulate)();
 void (*ConsolePrint)();
 void (*FilePrint)();
+void (*Purge)();
 //void (*Configure)();
 } BattleSim;
 

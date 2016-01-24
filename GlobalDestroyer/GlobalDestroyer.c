@@ -56,7 +56,7 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 	if(mallocFailFlag == 1) {
 		unsigned int i;
 		for(i = 0; i < pokemonEntryCounter; i++)
-			if( pokemonEntryMem[i] != 0)
+			if( pokemonEntryMem[i] != 0) 
 				DeletePokemonEntry(pokemonEntryMem[i]);
 		for(i = 0; i < pokedexCounter; i++)
 			if( pokedexMem[i] != 0)
@@ -68,6 +68,8 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 
 	exit(1);
 	}
+
+	//NOTE: CANNOT add a zero poitner check to test for end of array due to zeroing out array when calling deletes
 	else if(mallocFailFlag == 2) { //only kill off one item. used for clever multilayer delete and if delete used outside of global destroy
 		unsigned int i;
 		switch(type) {
@@ -77,7 +79,7 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 						break;
 			case POKEDEX:
 						
-						for(i = 0; i < MAX_POKEDEX_IN_MEM && pokedexMem[i] != 0; i++)
+						for(i = 0; i < MAX_POKEDEX_IN_MEM; i++)
 							if(pokedexMem[i] == deletePtr) {
 								//DeletePokedex( (Pokedex *) deletePtr);
 								pokedexMem[i] = 0;
@@ -87,7 +89,7 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 
 						//TODO:add so that move array entries to fill the empty slot, then decrement counter
 			case POKEMONENTRY:
-						for(i = 0; i < MAX_POKEMONENTRY_IN_MEM && pokemonEntryMem[i] != 0; i++)
+						for(i = 0; i < MAX_POKEMONENTRY_IN_MEM; i++)
 							if(pokemonEntryMem[i] == deletePtr) {
 								//DeletePokemonEntry( (PokemonEntry *) deletePtr);
 								pokemonEntryMem[i] = 0;
@@ -96,7 +98,7 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 						break;
 
 			case BATTLESIMULATION: 
-						for(i = 0; i < MAX_BATTLESIM_IN_MEM && battleSimMem[i] != 0; i++)
+						for(i = 0; i < MAX_BATTLESIM_IN_MEM; i++)
 							if(battleSimMem[i] == deletePtr) {
 								//DeleteBattleSim( (BattleSim *) deletePtr);	
 								battleSimMem[i] = 0;

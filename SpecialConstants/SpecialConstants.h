@@ -18,6 +18,22 @@ File to store Special constants and include here so that do not have to #define 
 #define MAX_NAME 21
 #endif
 
+#ifndef POKEMON_MAX_LEVEL
+#define POKEMON_MAX_LEVEL 100
+#endif
+
+#ifndef POKEMON_MIN_LEVEL
+#define POKEMON_MIN_LEVEL 1
+#endif
+
+#ifndef POKEMON_MOVE_MAX_BASE_DAMAGE
+#define POKEMON_MOVE_MAX_BASE_DAMAGE 999
+#endif
+
+#ifndef POKEMON_MOVE_MIN_BASE_DAMAGE
+#define POKEMON_MOVE_MIN_BASE_DAMAGE 1
+#endif
+
 #ifndef MAX_POKEDEX_LINE
 #define MAX_POKEDEX_LINE 80
 #endif
@@ -50,8 +66,8 @@ File to store Special constants and include here so that do not have to #define 
 #define MAX_MOVE_NAME 21
 #endif
 
-#ifndef FULL_FILTER_ENTRIES
-#define FULL_FILTER_ENTRIES "BASE/UNREFINED/FULL_FILTER_ENTRIES/"
+#ifndef FULL_FILTER_ENTRIES_DIR
+#define FULL_FILTER_ENTRIES_DIR "BASE/UNREFINED/FULL_FILTER_ENTRIES/"
 #endif
 
 #ifndef BASE_STATS_DIR
