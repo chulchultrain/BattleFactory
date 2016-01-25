@@ -10,22 +10,32 @@ void ConsolePrintEntireEntryFile(char *fileName);
 //void FilePrintEntireEntryFile(char *fileName, char *outputFileName); //TODO:define
 //pokemon data into entry
 void BaseStatsToEntry(PokemonEntry *pEntry);
+void BaseStatsArrayFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
+
+
 void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
-void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit);
+void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
+
 
 //entry specific data into entry
 void DataWithoutRegionToEntry(PokemonEntry *pEntry,unsigned int choice,unsigned int IV, unsigned int level);
 void DataToEntry(PokemonEntry *pEntry,unsigned int region, unsigned int choice,unsigned int IV, unsigned int level);
-unsigned int CorrectRegionPrompt(char *entryFileDir, unsigned int fileDirLimit);
+
+//fast-forward fin Pointer to point to the correct entry choice in the file.
 void GoToEntryChoice(FILE *fin, unsigned int choice);
+
+//converting line to data to put into entry. Then put into entry.
 void TypeLineToEntry(char *typeLine,PokemonEntry *pEntry);
 void MoveLineToEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice);
 void NatureLineToEntry(char *natureLine, unsigned int line_limit,PokemonEntry *pEntry);
-//refined stats to entry
+
+//calculates real entry stat based off of information.
 unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
 unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
-void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
+
+
 void RefinedStatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry);
+
 
 //Public calls. Either making a new entry, or modifying an already existing entry structure to contain different data
 PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice);
@@ -515,7 +525,7 @@ void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int stat
 
 
 
-void BaseStatsFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
+void BaseStatsArrayFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
 	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
 	AppendArrayToArray(name, name_limit, fileName, MAX_FILE_NAME);
 	
@@ -538,7 +548,7 @@ void BaseStatsToEntry(PokemonEntry *pEntry) {
 	char name[MAX_NAME] = {0};
 	pEntry->GetName(pEntry,name,MAX_NAME);
 	unsigned int statTable[NUM_OF_STATS];
-	BaseStatsFromName(name, MAX_NAME, statTable, NUM_OF_STATS);
+	BaseStatsArrayFromName(name, MAX_NAME, statTable, NUM_OF_STATS);
 
 	pEntry->SetHitPoints(pEntry, statTable[0]);
 	pEntry->SetAttack(pEntry, statTable[1]);
@@ -593,7 +603,6 @@ void SetEntryFromNameChoice(PokemonEntry *pEntry, char *name, unsigned int choic
 	BaseStatsToEntry(pEntry);
 	DataWithoutRegionToEntry(pEntry,choice,0,100);
 }
-
 
 
 void SetEntryFromData(PokemonEntry *pEntry, char *name,  unsigned int region, unsigned int choice, unsigned int IV, unsigned int level) {
