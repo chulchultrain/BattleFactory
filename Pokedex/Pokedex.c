@@ -111,6 +111,7 @@ Pokedex *NewPokedex() {
 	if(result == 0) {
 		GlobalDestroyer(1,0,0);
 			}
+	result->mem = 0;
 	printf("Pokedex address is %p\n", result);
 	GlobalDestroyer(0,result,POKEDEX);	 //SET POKEDEX IN GLOBAL DESTROYER
 	result->mem = malloc(sizeof(PokedexPrivate));

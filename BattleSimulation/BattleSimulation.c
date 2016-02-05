@@ -75,6 +75,7 @@ BattleSim *NewBattleSim() {
 	if(result == 0) {
 		GlobalDestroyer(1,0,0);
 	}
+	result->mem = 0;
 
 	GlobalDestroyer(0,result,BATTLESIMULATION);
 

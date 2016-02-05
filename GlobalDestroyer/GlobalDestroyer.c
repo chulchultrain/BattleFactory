@@ -64,10 +64,7 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 		for(i = 0; i < battleSimCounter; i++)
 			if( battleSimMem[i] != 0)
 				DeleteBattleSim(battleSimMem[i]);
-
-
-	exit(1);
-	}
+		exit(1); }
 
 	//NOTE: CANNOT add a zero poitner check to test for end of array due to zeroing out array when calling deletes
 	else if(mallocFailFlag == 2) { //only kill off one item. used for clever multilayer delete and if delete used outside of global destroy
@@ -133,8 +130,7 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 
 			case BATTLESIMULATION:	if ( battleSimCounter == MAX_BATTLESIM_IN_MEM) {
 							DeleteBattleSim( (BattleSim *)deletePtr);
-							GlobalDestroyer(1,0,0);
-										}
+							GlobalDestroyer(1,0,0); }
 						battleSimMem[battleSimCounter] = (BattleSim *)deletePtr;
 						battleSimCounter += 1;
 						break;

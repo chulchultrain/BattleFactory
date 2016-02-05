@@ -19,6 +19,8 @@ FLAGS = -I$(INC_DIR) -c -Wall
 
 GLOBAL_DESTROYER_OBJS = $(BS_DIR)/BattleSimulation.o $(PE_DIR)/PokemonEntry.o $(PD_DIR)/Pokedex.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(RD_DIR)/RetrievePokemon.o $(SU_DIR)/Special_Util.o $(MT_DIR)/MoveTable.o
 
+
+
 MTTester: $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_OBJS)
 	gcc -o MTTester $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_OBJS) 
 

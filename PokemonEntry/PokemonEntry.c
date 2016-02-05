@@ -116,6 +116,7 @@ PokemonEntry *NewPokemonEntry() {
 	if( result == 0)
 		GlobalDestroyer(1,0,0);
 
+	result->mem = 0;
 	GlobalDestroyer(0,result,POKEMONENTRY);	
 
 	result->mem = malloc(sizeof(PokemonEntryPrivate));
@@ -215,7 +216,6 @@ void DeletePokemonEntry(PokemonEntry* recall){
 				DeletePokemonMoveSet(recall->mem->moveSet);
 				recall->mem->moveSet = 0;
 							}
-
 			free(recall->mem);
 			recall->mem = 0; }
 		free(recall);

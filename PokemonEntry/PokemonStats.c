@@ -42,6 +42,7 @@ PokemonStats* NewPokemonStats() {
 	PokemonStats *pokeStats = malloc(sizeof(PokemonStats));
 	if (pokeStats == 0)
 		GlobalDestroyer(1,0,0);
+	pokeStats->mem = 0;
 	pokeStats->mem = malloc(sizeof(PokemonStatsPrivate));
 	if (pokeStats->mem == 0) {
 		GlobalDestroyer(1,0,0);
