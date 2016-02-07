@@ -10,7 +10,6 @@
 //Making the Directory. Just Make a struct stat *st pointer and malloc and then use it in the function. That's all.
 void MakeDir(char *dirName, struct stat *st);
 
-
 /**
 Attempts to translate a string(char array) to an unsigned int.
 @param line - string(char array) to be translated
@@ -49,5 +48,10 @@ unsigned int AppendRegionToString(unsigned int region, char *str, unsigned int s
 unsigned int RegionFromConsoleInput(unsigned int *choice);
 
 unsigned int RegionFromFileInput(unsigned int *choice, FILE *fin);
+
+//calculates real entry stat based off of information.
+unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
+
+unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
 
 #endif

@@ -255,3 +255,21 @@ unsigned int RegionFromFileInput(unsigned int *choice, FILE *fin) {
 
 }
 
+unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level) {
+	unsigned int val = 2 * base + IV + (EV / 4);
+	val *= level;
+	val /= 100; 
+	val += 5;
+//	printf("print stat %u\n",val);
+	return val;
+}
+
+unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level) {
+	unsigned int val = 2 * base + IV + (EV / 4);
+	val *= level;
+	val /= 100; 
+	val += (level + 10);
+//	printf("print hp %u\n",val);
+	return val;
+}
+

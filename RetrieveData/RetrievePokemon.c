@@ -29,9 +29,7 @@ void TypeLineToEntry(char *typeLine,PokemonEntry *pEntry);
 void MoveLineToEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice);
 void NatureLineToEntry(char *natureLine, unsigned int line_limit,PokemonEntry *pEntry);
 
-//calculates real entry stat based off of information.
-unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
-unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
+
 
 
 void RefinedStatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry);
@@ -358,24 +356,6 @@ void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable)
 //		printf("EVS are %u\n",EVTable[i]);
 
 
-}
-
-unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level) {
-	unsigned int val = 2 * base + IV + (EV / 4);
-	val *= level;
-	val /= 100; 
-	val += 5;
-//	printf("print stat %u\n",val);
-	return val;
-}
-
-unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level) {
-	unsigned int val = 2 * base + IV + (EV / 4);
-	val *= level;
-	val /= 100; 
-	val += (level + 10);
-//	printf("print hp %u\n",val);
-	return val;
 }
 
 void RefinedStatsToEntry(unsigned int *EVTable, unsigned int IV, unsigned int level, char *natureLine, unsigned int line_limit, PokemonEntry *pEntry) {
