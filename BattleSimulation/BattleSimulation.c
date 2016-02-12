@@ -134,6 +134,9 @@ void BattleSimInitializationFileInput(BattleSim *obj, char *fileName) {
 	unsigned int IV[1] = {0};
 	unsigned int level = 100;
 
+
+	
+
 	//region
 	RegionFromFileInput(region, fin);
 	//entry1	
@@ -147,8 +150,23 @@ void BattleSimInitializationFileInput(BattleSim *obj, char *fileName) {
 	//IVs
 	SafeReadLineRNL(buffer,MAX_LINE_LENGTH,fin,1);	
 	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,IV);
-	PokemonEntry *entry1 = NewEntryFromData(name1,region[0],choice1[0],IV[0],level);
-	PokemonEntry *entry2 = NewEntryFromData(name2,region[0],choice2[0],IV[0],level);
+
+
+	EntryOptions options1,options2;
+	copyName(name1,options1.name);	
+	copyName(name2,options2.name);
+
+	options1.region = options2.region = region[0];
+	options1.choice = choice1[0];
+	options2.choice = choice2[0];
+
+	options1.IV = options2.IV = IV[0];
+	options1.level = options2.level = level;
+	
+	
+	
+	PokemonEntry *entry1 = NewEntryFromData(options1);
+	PokemonEntry *entry2 = NewEntryFromData(options2);
 
 	obj->Purge(obj);
 	obj->mem->entry1 = entry1;
@@ -197,8 +215,20 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 
 	StringToUnsignedInt(buffer,MAX_LINE_LENGTH,IV);
 
-	PokemonEntry *entry1 = NewEntryFromData(name1,region[0],choice1[0],IV[0],level);
-	PokemonEntry *entry2 = NewEntryFromData(name2,region[0],choice2[0],IV[0],level);
+	EntryOptions options1,options2;
+	copyName(name1,options1.name);	
+	copyName(name2,options2.name);
+
+	options1.region = options2.region = region[0];
+	options1.choice = choice1[0];
+	options2.choice = choice2[0];
+
+	options1.IV = options2.IV = IV[0];
+	options1.level = options2.level = level;
+	
+	PokemonEntry *entry1 = NewEntryFromData(options1);
+	PokemonEntry *entry2 = NewEntryFromData(options2);
+
 
 	obj->Purge(obj);
 	obj->mem->entry1 = entry1;

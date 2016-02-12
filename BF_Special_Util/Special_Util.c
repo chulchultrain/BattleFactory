@@ -3,6 +3,30 @@
 #include <stdlib.h>
 
 
+unsigned int StringEquality(char *str1, char *str2) {
+	unsigned int i = 0;
+	while( str1[i] == str2[i] && str1[i] != 0)
+		i++;
+
+	if( str1[i] != str2[i]) 
+		return 0;
+	else 
+		return 1; 
+
+}
+
+void copyName(const char* source, char* dest) {
+	int i = 0;
+	while(i < MAX_NAME && source[i] != 0) {
+		dest[i] = source[i];
+		i++;
+	}
+	if(i == MAX_NAME) //took up all the space so must truncate for'\0'
+		dest[MAX_NAME - 1] = 0;
+	else
+		dest[i] = 0; //append '\0'
+}
+
 
 unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *product) {
 	unsigned int temp = 0;

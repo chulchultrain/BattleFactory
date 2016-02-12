@@ -6,8 +6,13 @@
 #include <stdio.h>
 
 
-//deprecated
-void ConsolePrintForPokemon(char *name);
+typedef struct EntryOptions {
+	char name[21];
+	unsigned int region;
+	unsigned int choice;
+	unsigned int IV;
+	unsigned int level;
+} EntryOptions;
 
 /*
 Given a pokemon name and the region that the pokemon comes from, 
@@ -44,7 +49,7 @@ unsigned int choice: choice of entry in the entry file.
 unsigned int IV: number of IVs the pokemon has
 unsigned int level: level of pokemon
 */
-PokemonEntry *NewEntryFromData(char *name, unsigned int region, unsigned int choice, unsigned int IV, unsigned int level);
+PokemonEntry *NewEntryFromData(EntryOptions options);
 
 /*
 DEPRECATED: not modular enough.
@@ -68,7 +73,7 @@ unsigned int choice: choice of entry in the entry file.
 unsigned int IV: number of IVs the pokemon has
 unsigned int level: level of pokemon
 */
-void SetEntryWithData(PokemonEntry *entry, char *name, unsigned int region, unsigned int choice, unsigned int IV, unsigned int level);
+void SetEntryWithData(PokemonEntry *entry, EntryOptions options);
 
 
 #endif

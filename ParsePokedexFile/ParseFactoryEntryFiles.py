@@ -24,6 +24,12 @@ fullNameInputFileList = {}
 
 entryOutputDir = "../BASE/UNREFINED/FULL_FILTER_ENTRIES/"
 
+TypeLineStart = "Types:\n"
+MoveLineStart = "Moves:\n"
+ItemLineStart = "Item:\n"
+NatureLineStart = "Nature:\n"
+EVLineStart = "EVs:\n"
+
 for entry in inputFileNameList:
 	fullNameInputFileList[entryInputDir + regionSubDir + entry] = entryOutputDir + regionSubDir + DPPInputFileNameList[entry]
 	
@@ -257,14 +263,23 @@ def FilterEVFromEntry(line):
 		return line,''
 
 def ParsePokemon(line):
+
+	global TypeLineStart
+	global MoveLineStart
+	global ItemLineStart
+	global NatureLineStart
+	global EVLineStart
+
 	result = ''
 	name, line = FilterNameFromEntry(line) #get name
 	line = DiscardTagTokenFromEntry(line)
 	typeData,line = FilterTypeFromEntry(line) #get type
 
 	result = name + '\n'
+	result += TypeLineStart
 	result += (typeData + '\n')
 
+	result += MoveLineStart
 	while ExistsMoveTagInLine(line): 
 		move,line = FilterMoveFromEntry(line)
 		#line = DiscardTagTokenFromEntry(line)
@@ -275,10 +290,12 @@ def ParsePokemon(line):
 	nature, line = FilterNatureFromEntry(line)
 
 	#print nature
+	result += ItemLineStart
 	result += (item + '\n')
+	result += NatureLineStart
 	result += (nature + '\n')
 
-
+	result += EVLineStart
 	while ExistsEVInLine(line):
 		EV, line = FilterEVFromEntry(line)
 		result += (EV + '\n')

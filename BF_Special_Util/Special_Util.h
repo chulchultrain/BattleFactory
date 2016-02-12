@@ -10,6 +10,8 @@
 //Making the Directory. Just Make a struct stat *st pointer and malloc and then use it in the function. That's all.
 void MakeDir(char *dirName, struct stat *st);
 
+
+void copyName(const char* source, char* dest); 
 /**
 Attempts to translate a string(char array) to an unsigned int.
 @param line - string(char array) to be translated
@@ -54,4 +56,5 @@ unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, uns
 
 unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
 
+unsigned int StringEquality(char *str1, char *str2);
 #endif

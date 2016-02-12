@@ -7,6 +7,7 @@
 #include <PokemonEntry/PokemonStats.h>
 #include <PokemonEntry/PokemonMoveSet.h>
 #include <SpecialConstants/SpecialConstants.h>
+#include <BF_Special_Util/Special_Util.h>
 
 struct PokemonEntryPrivate {
 TypeContainer *typeData;
@@ -82,17 +83,7 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original);
 //TODO:NO MAGIC NUMBERS PLZ
 //provide protection if longer than MAXNAME characters is entered.
 //checked before this function If longer then end will be truncated.
-void copyName(const char* source, char* dest) {
-	int i = 0;
-	while(i < MAX_NAME && source[i] != 0) {
-		dest[i] = source[i];
-		i++;
-	}
-	if(i == MAX_NAME) //took up all the space so must truncate for'\0'
-		dest[MAX_NAME - 1] = 0;
-	else
-		dest[i] = 0; //append '\0'
-}
+
 /**
 void SetPokemonEntryMemPointer(PokemonEntry *entryPtr) {
 	if(entryPtr != 0)
