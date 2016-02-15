@@ -29,30 +29,14 @@ void SetSpeed(PokemonEntry* original, unsigned int S);
 void SetPrimaryType(PokemonEntry* original, Type primary);
 void SetSecondaryType(PokemonEntry* original, Type secondary);
 
-void SetFirstMove(PokemonEntry *original, char *move, unsigned int d, Type t, MoveCategory m);
-void SetSecondMove(PokemonEntry *original, char *move, unsigned int d, Type t, MoveCategory m);
-void SetThirdMove(PokemonEntry *original, char *move, unsigned int d, Type t, MoveCategory m);
-void SetFourthMove(PokemonEntry *original, char *move, unsigned int d, Type t, MoveCategory m);
+void SetMove(PokemonEntry *original,unsigned int choice, char *move, unsigned int d, Type t, MoveCategory m);
 
-void GetFirstMoveName(PokemonEntry *original, char *dest, unsigned int limit);
-void GetSecondMoveName(PokemonEntry *original, char *dest, unsigned int limit);
-void GetThirdMoveName(PokemonEntry *original, char *dest, unsigned int limit);
-void GetFourthMoveName(PokemonEntry *original, char *dest, unsigned int limit);
+void GetMoveName(PokemonEntry *original, unsigned int choice, char *dest, unsigned int limit);
+unsigned int GetMoveDamage(PokemonEntry *obj, unsigned int choice);
 
-unsigned int GetFirstMoveDamage(PokemonEntry *obj);
-unsigned int GetSecondMoveDamage(PokemonEntry *obj);
-unsigned int GetThirdMoveDamage(PokemonEntry *obj);
-unsigned int GetFourthMoveDamage(PokemonEntry *obj);
+Type GetMoveType(PokemonEntry *obj, unsigned int choice);
 
-Type GetFirstMoveType(PokemonEntry *obj);
-Type GetSecondMoveType(PokemonEntry *obj);
-Type GetThirdMoveType(PokemonEntry *obj);
-Type GetFourthMoveType(PokemonEntry *obj);
-
-MoveCategory GetFirstMoveCategory(PokemonEntry *obj);
-MoveCategory GetSecondMoveCategory(PokemonEntry *obj);
-MoveCategory GetThirdMoveCategory(PokemonEntry *obj);
-MoveCategory GetFourthMoveCategory(PokemonEntry *obj);
+MoveCategory GetMoveCategory(PokemonEntry *obj, unsigned int choice);
 
 void GetName(PokemonEntry *obj, char* dest, unsigned int limit);
 
@@ -85,10 +69,7 @@ void (*SetSpecialDefense)();
 void (*SetSpeed)();
 void (*SetPrimaryType)();
 void (*SetSecondaryType)();
-void (*SetFirstMove)();
-void (*SetSecondMove)();
-void (*SetThirdMove)();
-void (*SetFourthMove)();
+void (*SetMove)();
 
 void (*ConsolePrint)();
 
@@ -102,25 +83,13 @@ unsigned int (*GetSpecialDefense)();
 unsigned int (*GetSpeed)();
 Type (*GetPrimaryType)();
 Type (*GetSecondaryType)();
-void (*GetFirstMoveName)();
-void (*GetSecondMoveName)();
-void (*GetThirdMoveName)();
-void (*GetFourthMoveName)();
+void (*GetMoveName)();;
 
-unsigned int (*GetFirstMoveDamage)();
-unsigned int (*GetSecondMoveDamage)();
-unsigned int (*GetThirdMoveDamage)();
-unsigned int (*GetFourthMoveDamage)();
+unsigned int (*GetMoveDamage)();
 
-Type (*GetFirstMoveType)();
-Type (*GetSecondMoveType)();
-Type (*GetThirdMoveType)();
-Type (*GetFourthMoveType)();
+Type (*GetMoveType)();
 
-MoveCategory (*GetFirstMoveCategory)();
-MoveCategory (*GetSecondMoveCategory)();
-MoveCategory (*GetThirdMoveCategory)();
-MoveCategory (*GetFourthMoveCategory)();
+MoveCategory (*GetMoveCategory)();
 
 
 //enum for pokemon Nature

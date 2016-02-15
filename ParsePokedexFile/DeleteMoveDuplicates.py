@@ -25,7 +25,7 @@
 entryInputDir = "../BASE/UNREFINED/PARTIAL_FILTER_ENTRIES/"
 DPPRegionSubDir = "DPP/"
 regionSubDir = DPPRegionSubDir
-DPPInputFileNameList = {"R1.txt":"Filter_R1.txt","R2.txt":"Filter_R2.txt","R3.txt":"Filter_R3.txt","R4.txt":"Filter_R4.txt"}
+DPPInputFileNameList = {"Filter_R1.txt":"Filter_R1.txt","Filter_R2.txt":"Filter_R2.txt","Filter_R3.txt":"Filter_R3.txt","Filter_R4.txt":"Filter_R4.txt"}
 
 inputFileNameList = DPPInputFileNameList
 
@@ -58,11 +58,12 @@ processFinished = False
 
 def ParsePokemonEntry(fin,fout):
 	global processFinished
-	fout.write(fin.readline())
-	fout.write(fin.readline())
+	line = fin.readline()
+	while line != "Moves:\n" and line != '':
+		fout.write(line)
+		line = fin.readline()
 
 	i = 0
-	line = fin.readline()
 	moveList =[]
 	while line != '' and line != '\n' and line[0] >= '0' and line[0] <= '9':
 		if not line in moveList:

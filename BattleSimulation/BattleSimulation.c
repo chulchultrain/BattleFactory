@@ -238,7 +238,7 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 
 
 //TODO: Change to doubles
-unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsigned int moveChoice) {
+unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsigned int choice) {
 	unsigned int base = 0;
 	MoveCategory cat = EMPTY;
 	Type t = NONE;
@@ -251,31 +251,10 @@ unsigned int calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsi
 	Type dType2 = defender->GetSecondaryType(defender);
 
 	unsigned int level = attacker->GetLevel(attacker);
-	
-	switch(moveChoice) {
 
-		case 0:
-			base = attacker->GetFirstMoveDamage(attacker);
-			cat = attacker->GetFirstMoveCategory(attacker);	
-			t = attacker->GetFirstMoveType(attacker);
-			break;
-		case 1:
-			base = attacker->GetSecondMoveDamage(attacker);
-			cat = attacker->GetSecondMoveCategory(attacker);	
-			t = attacker->GetSecondMoveType(attacker);
-			break;
-		case 2:
-			base = attacker->GetThirdMoveDamage(attacker);
-			cat = attacker->GetThirdMoveCategory(attacker);	
-			t = attacker->GetThirdMoveType(attacker);
-			break;		
-		case 3:
-			base = attacker->GetFourthMoveDamage(attacker);
-			cat = attacker->GetFourthMoveCategory(attacker);	
-			t = attacker->GetFourthMoveType(attacker);
-			break;
-	}
-
+	base = attacker->GetMoveDamage(attacker,choice);
+	cat = attacker->GetMoveCategory(attacker, choice);	
+	t = attacker->GetMoveType(attacker, choice);
 	
 	switch(cat) {
 		case EMPTY:
@@ -328,15 +307,12 @@ void BattleSimSimulate(BattleSim *original) {
 	entry1->GetName(entry1,original->mem->entry1Name,MAX_NAME);
 	entry2->GetName(entry2,original->mem->entry2Name,MAX_NAME);
 
-	entry1->GetFirstMoveName(entry1,damages[0].name, MAX_NAME);
-	entry1->GetSecondMoveName(entry1,damages[1].name, MAX_NAME);
-	entry1->GetThirdMoveName(entry1,damages[2].name, MAX_NAME);
-	entry1->GetFourthMoveName(entry1,damages[3].name, MAX_NAME);
+	unsigned int i = 0;
+	for(i = 0; i < MAX_NUM_MOVES;i++)
+		entry1->GetMoveName(entry1,i,damages[i].name, MAX_NAME);
 
-	entry2->GetFirstMoveName(entry2,damages[4].name, MAX_NAME);
-	entry2->GetSecondMoveName(entry2,damages[5].name, MAX_NAME);
-	entry2->GetThirdMoveName(entry2,damages[6].name, MAX_NAME);
-	entry2->GetFourthMoveName(entry2,damages[7].name, MAX_NAME);
+	for(i = 0; i < MAX_NUM_MOVES; i++)
+		entry2->GetMoveName(entry2,0,damages[MAX_NUM_MOVES + i].name, MAX_NAME);
 
 	//entry1->ConsolePrint(entry1);
 	//entry2->ConsolePrint(entry2);

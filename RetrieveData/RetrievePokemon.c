@@ -63,19 +63,40 @@ void FastForwardEntryFilePtr(FILE *fin, char *compareStr) {
 
 	char buffer[MAX_LINE_LENGTH] = {0};
 	do {
-		SafeReadLine(buffer,MAX_LINE_LENGTH,fin,0);
+		SafeReadLineRNL(buffer,MAX_LINE_LENGTH,fin,0);
 	} while(  !StringEquality(buffer,compareStr) );  
 }
 
 
 void TypeDataToEntry(PokemonEntry *pEntry, EntryOptions options) {
 	FILE *fin = EntryFilePtr(options);
-	FastForwardEntryFilePtr(fin,"Types:\n");
+	FastForwardEntryFilePtr(fin,"Types:");
 	char typeLine[MAX_LINE_LENGTH] = {0};
 	SafeReadLine(typeLine,80,fin,0);
 	TypeLineToEntry(typeLine,pEntry);
 
 	fclose(fin);
+}
+
+void MoveDataToEntry(PokemonEntry *pEntry, EntryOptions options) {
+	FILE *fin = EntryFilePtr(options);
+	FastForwardEntryFilePtr(fin,"Moves:");
+	char moveLine[MAX_LINE_LENGTH] = {0};
+	
+	unsigned int i;
+	for(i = 0; i < MAX_NUM_MOVES; i++) {
+		SafeReadLine(moveLine,80,fin,0);
+		MoveLineToEntry(moveLine,pEntry,i); }
+
+	fclose(fin);
+}
+
+void StatsDataToEntry(PokemonEntry *pEntry, EntryOptions options) {
+	FILE *fin = EntryFilePtr(options);
+	FastForwardEntryFilePtr(fin,"Nature:");
+	char line[MAX_LINE_LENGTH] = {0};
+	SafeReadLine(line,80,fin,0);
+	
 }
 
 
@@ -177,22 +198,8 @@ void MoveLineToEntry(char *moveLine, PokemonEntry *pEntry, unsigned int choice) 
 	Type moveType = TokenToType(typeString);
 	MoveCategory moveCategory = TokenToCategory(categoryString);
 
-	switch(choice) {
+	pEntry->SetMove(pEntry,choice,moveName,moveDamage[0],moveType,moveCategory);
 
-	case 0:
-		pEntry->SetFirstMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
-		break;
-	case 1:
-		pEntry->SetSecondMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
-		break;
-	case 2:
-		pEntry->SetThirdMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
-		break;
-	case 3:
-		pEntry->SetFourthMove(pEntry, moveName, moveDamage[0], moveType, moveCategory);
-		break;
-	}	
-	
 }
 
 
@@ -612,7 +619,7 @@ PokemonEntry *NewEntryFromData(EntryOptions options) {
 	pEntry->SetName(pEntry, options.name);
 
 	TypeDataToEntry(pEntry,options); //TODO
-//	BaseStatsToEntry(pEntry);
+	MoveDataToEntry(pEntry,options);
 //	DataToEntry(pEntry,options);
 
 	return pEntry;
@@ -630,7 +637,7 @@ void SetEntryFromData(PokemonEntry *pEntry, EntryOptions options) {
 	pEntry->SetName(pEntry, options.name);
 
 	TypeDataToEntry(pEntry,options); //TODO
-//	MoveDataToEntry(pEntry,options); //TODO
+	MoveDataToEntry(pEntry,options); //TODO
 //	StatDataToEntry(pEntry,options); //TODO
 	
 	//type

@@ -2,58 +2,32 @@
 #include <PokemonEntry/PokemonMoveSet.h>
 #include <PokemonEntry/PokemonMove.h>
 #include <GlobalDestroyer/GlobalDestroyer.h>
+#include <SpecialConstants/SpecialConstants.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 
 struct PokemonMoveSetPrivate {
 
-PokemonMove *first;
-PokemonMove *second;
-PokemonMove *third;
-PokemonMove *fourth;
+PokemonMove *moves[MAX_NUM_MOVES];
 
 };
 
-void SetPokemonMoveSetFirstMoveName(PokemonMoveSet *original, char *move);
-void SetPokemonMoveSetSecondMoveName(PokemonMoveSet *original, char *move);
-void SetPokemonMoveSetThirdMoveName(PokemonMoveSet *original, char *move);
-void SetPokemonMoveSetFourthMoveName(PokemonMoveSet *original, char *move);
+void SetPokemonMoveSetMoveName(PokemonMoveSet *original, unsigned int choice, char *move);
 
-void GetPokemonMoveSetFirstMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit);
-void GetPokemonMoveSetSecondMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit);
-void GetPokemonMoveSetThirdMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit);
-void GetPokemonMoveSetFourthMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit);
+void GetPokemonMoveSetMoveName(PokemonMoveSet *obj, unsigned int choice, char *dest, unsigned int limit);
 
-void SetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *original, unsigned int damage);
-void SetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *original, unsigned int damage);
-void SetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *original, unsigned int damage);
-void SetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *original, unsigned int damage);
+void SetPokemonMoveSetMoveDamage(PokemonMoveSet *original, unsigned int choice,unsigned int damage);
 
-unsigned int GetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *obj);
-unsigned int GetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *obj);
-unsigned int GetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *obj);
-unsigned int GetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *obj);
+unsigned int GetPokemonMoveSetMoveDamage(PokemonMoveSet *obj, unsigned int choice);
 
-void SetPokemonMoveSetFirstMoveType(PokemonMoveSet *original, Type t);
-void SetPokemonMoveSetSecondMoveType(PokemonMoveSet *original, Type t);
-void SetPokemonMoveSetThirdMoveType(PokemonMoveSet *original, Type t);
-void SetPokemonMoveSetFourthMoveType(PokemonMoveSet *original, Type t);
+void SetPokemonMoveSetMoveType(PokemonMoveSet *original, unsigned int choice,Type t);
 
-Type GetPokemonMoveSetFirstMoveType(PokemonMoveSet *obj);
-Type GetPokemonMoveSetSecondMoveType(PokemonMoveSet *obj);
-Type GetPokemonMoveSetThirdMoveType(PokemonMoveSet *obj);
-Type GetPokemonMoveSetFourthMoveType(PokemonMoveSet *obj);
+Type GetPokemonMoveSetMoveType(PokemonMoveSet *obj, unsigned int choice);
 
-void SetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *original, MoveCategory m);
-void SetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *original, MoveCategory m);
-void SetPokemonMoveSetThirdMoveCategory(PokemonMoveSet *original, MoveCategory m);
-void SetPokemonMoveSetFourthMoveCategory(PokemonMoveSet *original, MoveCategory m);
+void SetPokemonMoveSetMoveCategory(PokemonMoveSet *original, unsigned int choice, MoveCategory m);
 
-MoveCategory GetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *obj);
-MoveCategory GetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *obj);
-MoveCategory GetPokemonMoveSetThirdMoveCategory(PokemonMoveSet *obj);
-MoveCategory GetPokemonMoveSetFourthMoveCategory(PokemonMoveSet *obj);
+MoveCategory GetPokemonMoveSetMoveCategory(PokemonMoveSet *obj, unsigned int choice);
 
 
 void PokemonMoveSetConsolePrint(PokemonMoveSet *obj);
@@ -61,61 +35,29 @@ void PokemonMoveSetConsolePrint(PokemonMoveSet *obj);
 
 void SetPokemonMoveSetMemory(PokemonMoveSetPrivate *memPtr) {
 	if(memPtr != 0) {
-		memPtr->first = 0;
-		memPtr->second = 0;
-		memPtr->third = 0;
-		memPtr->fourth = 0;
-		memPtr->first = NewPokemonMove();
-		memPtr->second = NewPokemonMove();
-		memPtr->third = NewPokemonMove();
-		memPtr->fourth = NewPokemonMove();
+		unsigned int i = 0;
+		for(i = 0; i < MAX_NUM_MOVES; i++)
+			memPtr->moves[i] = 0;
+
+		for(i = 0; i < MAX_NUM_MOVES; i++)
+			memPtr->moves[i] = NewPokemonMove();
 	}
 
 }
 
 void SetPokemonMoveSetFunctionPointers(PokemonMoveSet *original) {
 	if(original != 0) {
-		original->SetFirstMoveName = SetPokemonMoveSetFirstMoveName;
-		original->SetSecondMoveName = SetPokemonMoveSetSecondMoveName;
-		original->SetThirdMoveName = SetPokemonMoveSetThirdMoveName;
-		original->SetFourthMoveName = SetPokemonMoveSetFourthMoveName;
-		original->GetFirstMoveName = GetPokemonMoveSetFirstMoveName;
-		original->GetSecondMoveName = GetPokemonMoveSetSecondMoveName;
-		original->GetThirdMoveName = GetPokemonMoveSetThirdMoveName;
-		original->GetFourthMoveName = GetPokemonMoveSetFourthMoveName;
+		original->SetMoveName = SetPokemonMoveSetMoveName;
+		original->GetMoveName = GetPokemonMoveSetMoveName;
 	
 		original->ConsolePrint = PokemonMoveSetConsolePrint;
+		original->SetMoveDamage = SetPokemonMoveSetMoveDamage;
+		original->SetMoveType = SetPokemonMoveSetMoveType;
+		original->GetMoveDamage = GetPokemonMoveSetMoveDamage;
+		original->GetMoveType = GetPokemonMoveSetMoveType;
 
-		original->SetFirstMoveDamage = SetPokemonMoveSetFirstMoveDamage;
-		original->SetSecondMoveDamage = SetPokemonMoveSetSecondMoveDamage;
-		original->SetThirdMoveDamage = SetPokemonMoveSetThirdMoveDamage;
-		original->SetFourthMoveDamage = SetPokemonMoveSetFourthMoveDamage;
-
-		original->SetFirstMoveType = SetPokemonMoveSetFirstMoveType;
-		original->SetSecondMoveType = SetPokemonMoveSetSecondMoveType;
-		original->SetThirdMoveType = SetPokemonMoveSetThirdMoveType;
-		original->SetFourthMoveType = SetPokemonMoveSetFourthMoveType;
-
-		original->GetFirstMoveDamage = GetPokemonMoveSetFirstMoveDamage;
-		original->GetSecondMoveDamage = GetPokemonMoveSetSecondMoveDamage;
-		original->GetThirdMoveDamage = GetPokemonMoveSetThirdMoveDamage;
-		original->GetFourthMoveDamage = GetPokemonMoveSetFourthMoveDamage;
-
-		original->GetFirstMoveType = GetPokemonMoveSetFirstMoveType;
-		original->GetSecondMoveType = GetPokemonMoveSetSecondMoveType;
-		original->GetThirdMoveType = GetPokemonMoveSetThirdMoveType;
-		original->GetFourthMoveType = GetPokemonMoveSetFourthMoveType;
-
-
-		original->SetFirstMoveCategory = SetPokemonMoveSetFirstMoveCategory;
-		original->SetSecondMoveCategory = SetPokemonMoveSetSecondMoveCategory;
-		original->SetThirdMoveCategory = SetPokemonMoveSetThirdMoveCategory;
-		original->SetFourthMoveCategory = SetPokemonMoveSetFourthMoveCategory;
-
-		original->GetFirstMoveCategory = GetPokemonMoveSetFirstMoveCategory;
-		original->GetSecondMoveCategory = GetPokemonMoveSetSecondMoveCategory;
-		original->GetThirdMoveCategory = GetPokemonMoveSetThirdMoveCategory;
-		original->GetFourthMoveCategory = GetPokemonMoveSetFourthMoveCategory;
+		original->SetMoveCategory = SetPokemonMoveSetMoveCategory;
+		original->GetMoveCategory = GetPokemonMoveSetMoveCategory;
 
 
 	}
@@ -139,162 +81,70 @@ PokemonMoveSet *NewPokemonMoveSet() {
 void DeletePokemonMoveSet(PokemonMoveSet *recall) {
 	if(recall != 0) {
 		if(recall->mem != 0) {
-			if(recall->mem->first != 0) {
-				DeletePokemonMove(recall->mem->first);
-				recall->mem->first = 0; }
-			if(recall->mem->second != 0) {
-				DeletePokemonMove(recall->mem->second);
-				recall->mem->second = 0; }
-			if(recall->mem->third != 0) {
-				DeletePokemonMove(recall->mem->third);
-				recall->mem->third = 0; }
-			if(recall->mem->fourth != 0) {
-				DeletePokemonMove(recall->mem->fourth);
-				recall->mem->fourth = 0; }
+			unsigned int i = 0;
+			for(i = 0; i < MAX_NUM_MOVES; i++)
+				if(recall->mem->moves[i] != 0) {
+					DeletePokemonMove(recall->mem->moves[i]);
+					recall->mem->moves[i] = 0; }
+			
 			free(recall->mem);
 			recall->mem = 0;
 		}
 		free(recall);
 		
 	}
-
 }
 
-void SetPokemonMoveSetFirstMoveName(PokemonMoveSet *original, char *move) {
-	original->mem->first->SetName(original->mem->first,move);	
+void SetPokemonMoveSetMoveName(PokemonMoveSet *original, unsigned int choice,char *move) {
+	PokemonMove *mPtr = original->mem->moves[choice];
+	mPtr->SetName(mPtr,move);	
 }
 
-void SetPokemonMoveSetSecondMoveName(PokemonMoveSet *original, char *move) {
-	original->mem->second->SetName(original->mem->second,move);	
-}
-
-void SetPokemonMoveSetThirdMoveName(PokemonMoveSet *original, char *move) {
-	original->mem->third->SetName(original->mem->third,move);	
+void GetPokemonMoveSetMoveName(PokemonMoveSet *obj, unsigned int choice, char *dest, unsigned int limit) {
+	PokemonMove *mPtr = obj->mem->moves[choice];
+	mPtr->GetName(mPtr, dest, limit);
 }
 
 
-void SetPokemonMoveSetFourthMoveName(PokemonMoveSet *original, char *move) {
-	original->mem->fourth->SetName(original->mem->fourth,move);	
+void SetPokemonMoveSetMoveDamage(PokemonMoveSet *original, unsigned int choice, unsigned int damage) {
+	PokemonMove *mPtr = original->mem->moves[choice];
+	mPtr->SetDamage(mPtr,damage);
 }
 
-void GetPokemonMoveSetFirstMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit) {
-	obj->mem->first->GetName(obj->mem->first, dest, limit);
+unsigned int GetPokemonMoveSetMoveDamage(PokemonMoveSet *obj, unsigned int choice) {
+	PokemonMove *mPtr = obj->mem->moves[choice];
+	return mPtr->GetDamage(mPtr);
 }
 
-void GetPokemonMoveSetSecondMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit) {
-	obj->mem->second->GetName(obj->mem->second, dest, limit);
-}
-
-void GetPokemonMoveSetThirdMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit) {
-	obj->mem->third->GetName(obj->mem->third, dest, limit);
-}
-
-void GetPokemonMoveSetFourthMoveName(PokemonMoveSet *obj, char *dest, unsigned int limit) {
-	obj->mem->fourth->GetName(obj->mem->fourth, dest, limit);
+void SetPokemonMoveSetMoveType(PokemonMoveSet *original, unsigned int choice, Type t) {
+	PokemonMove *mPtr = original->mem->moves[choice];
+	mPtr->SetType(mPtr,t);
 }
 
 
-void SetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *original, unsigned int damage) {
-	original->mem->first->SetDamage(original->mem->first,damage);
-}
-void SetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *original, unsigned int damage) {
-	original->mem->second->SetDamage(original->mem->second,damage);
-}
-void SetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *original, unsigned int damage) {
-	original->mem->third->SetDamage(original->mem->third,damage);
-}
-void SetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *original, unsigned int damage) {
-	original->mem->fourth->SetDamage(original->mem->fourth,damage);
+Type GetPokemonMoveSetMoveType(PokemonMoveSet *obj, unsigned int choice) {
+	PokemonMove *mPtr = obj->mem->moves[choice];
+	return mPtr->GetType(mPtr);
 }
 
-unsigned int GetPokemonMoveSetFirstMoveDamage(PokemonMoveSet *obj) {
-	return obj->mem->first->GetDamage(obj->mem->first);
+void SetPokemonMoveSetMoveCategory(PokemonMoveSet *original, unsigned int choice, MoveCategory m) {
+	PokemonMove *mPtr = original->mem->moves[choice];
+	mPtr->SetCategory(mPtr,m);
 }
 
-unsigned int GetPokemonMoveSetSecondMoveDamage(PokemonMoveSet *obj) {
-	return obj->mem->second->GetDamage(obj->mem->second);
+MoveCategory GetPokemonMoveSetMoveCategory(PokemonMoveSet *obj, unsigned int choice) {
+	PokemonMove *mPtr = obj->mem->moves[choice];
+	return mPtr->GetCategory(mPtr);
 }
 
-
-unsigned int GetPokemonMoveSetThirdMoveDamage(PokemonMoveSet *obj) {
-	return obj->mem->third->GetDamage(obj->mem->third);
-}
-
-unsigned int GetPokemonMoveSetFourthMoveDamage(PokemonMoveSet *obj) {
-	return obj->mem->fourth->GetDamage(obj->mem->fourth);
-}
-
-void SetPokemonMoveSetFirstMoveType(PokemonMoveSet *original, Type t) {
-	original->mem->first->SetType(original->mem->first,t);
-}
-
-
-void SetPokemonMoveSetSecondMoveType(PokemonMoveSet *original, Type t) {
-	original->mem->second->SetType(original->mem->second,t);
-}
-
-void SetPokemonMoveSetThirdMoveType(PokemonMoveSet *original, Type t) {
-	original->mem->third->SetType(original->mem->third,t);
-}
-
-void SetPokemonMoveSetFourthMoveType(PokemonMoveSet *original, Type t) {
-	original->mem->fourth->SetType(original->mem->fourth,t);
-}
-
-Type GetPokemonMoveSetFirstMoveType(PokemonMoveSet *obj) {
-	return obj->mem->first->GetType(obj->mem->first);
-}
-
-Type GetPokemonMoveSetSecondMoveType(PokemonMoveSet *obj) {
-	return obj->mem->second->GetType(obj->mem->second);
-}
-
-Type GetPokemonMoveSetThirdMoveType(PokemonMoveSet *obj) {
-	return obj->mem->third->GetType(obj->mem->third);
-}
-
-Type GetPokemonMoveSetFourthMoveType(PokemonMoveSet *obj) {
-	return obj->mem->fourth->GetType(obj->mem->fourth);
-}
-
-
-void SetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *original, MoveCategory m) {
-	original->mem->first->SetCategory(original->mem->first,m);
-}
-void SetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *original, MoveCategory m) {
-	original->mem->second->SetCategory(original->mem->second,m);
-}
-void SetPokemonMoveSetThirdMoveCategory(PokemonMoveSet *original, MoveCategory m) {
-	original->mem->third->SetCategory(original->mem->third,m);
-}
-void SetPokemonMoveSetFourthMoveCategory(PokemonMoveSet *original, MoveCategory m) {
-	original->mem->fourth->SetCategory(original->mem->fourth,m);
-}
-
-MoveCategory GetPokemonMoveSetFirstMoveCategory(PokemonMoveSet *obj) {
-	return obj->mem->first->GetCategory(obj->mem->first);
-}
-MoveCategory GetPokemonMoveSetSecondMoveCategory(PokemonMoveSet *obj) {
-	return obj->mem->second->GetCategory(obj->mem->second);
-}
-MoveCategory GetPokemonMoveSetThirdMoveCategory(PokemonMoveSet *obj) {
-	return obj->mem->third->GetCategory(obj->mem->third);
-}
-MoveCategory GetPokemonMoveSetFourthMoveCategory(PokemonMoveSet *obj) {
-	return obj->mem->fourth->GetCategory(obj->mem->fourth);
-}
 
 void PokemonMoveSetConsolePrint(PokemonMoveSet *obj) {
 	if(obj != 0) {
 		PokemonMoveSetPrivate *memPtr = obj->mem;
-		printf("First ");
-		memPtr->first->ConsolePrint(memPtr->first);
-		printf("Second ");
-		memPtr->second->ConsolePrint(memPtr->second);
-		printf("Third ");
-		memPtr->third->ConsolePrint(memPtr->third);
-		printf("Fourth ");
-		memPtr->fourth->ConsolePrint(memPtr->fourth);
+		unsigned int i = 0;
+		printf("MoveSet:\n");
+		for(i = 0; i < MAX_NUM_MOVES; i++)
+			memPtr->moves[i]->ConsolePrint(memPtr->moves[i]);
 	}
 	else {
 		printf("NULL MOVESET POINTER\n");

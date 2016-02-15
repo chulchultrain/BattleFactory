@@ -22,7 +22,7 @@ inputFileNameList = DPPInputFileNameList
 
 fullNameInputFileList = {}
 
-entryOutputDir = "../BASE/UNREFINED/FULL_FILTER_ENTRIES/"
+entryOutputDir = "../BASE/UNREFINED/PARTIAL_FILTER_ENTRIES/"
 
 TypeLineStart = "Types:\n"
 MoveLineStart = "Moves:\n"
