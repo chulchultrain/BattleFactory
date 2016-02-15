@@ -32,6 +32,13 @@ MoveCategory GetPokemonMoveSetMoveCategory(PokemonMoveSet *obj, unsigned int cho
 
 void PokemonMoveSetConsolePrint(PokemonMoveSet *obj);
 
+void MoveSetBoundaryAssertion(unsigned int choice);
+
+
+void MoveSetAssertBounds(unsigned int choice) {
+	if(choice >= MAX_NUM_MOVES || choice < 0)
+		GlobalDestroyer(1,0,0);
+}
 
 void SetPokemonMoveSetMemory(PokemonMoveSetPrivate *memPtr) {
 	if(memPtr != 0) {
@@ -96,43 +103,51 @@ void DeletePokemonMoveSet(PokemonMoveSet *recall) {
 }
 
 void SetPokemonMoveSetMoveName(PokemonMoveSet *original, unsigned int choice,char *move) {
+	MoveSetAssertBounds(choice);
 	PokemonMove *mPtr = original->mem->moves[choice];
 	mPtr->SetName(mPtr,move);	
 }
 
 void GetPokemonMoveSetMoveName(PokemonMoveSet *obj, unsigned int choice, char *dest, unsigned int limit) {
+	MoveSetAssertBounds(choice);
 	PokemonMove *mPtr = obj->mem->moves[choice];
 	mPtr->GetName(mPtr, dest, limit);
 }
 
 
 void SetPokemonMoveSetMoveDamage(PokemonMoveSet *original, unsigned int choice, unsigned int damage) {
+	MoveSetAssertBounds(choice);
 	PokemonMove *mPtr = original->mem->moves[choice];
 	mPtr->SetDamage(mPtr,damage);
 }
 
 unsigned int GetPokemonMoveSetMoveDamage(PokemonMoveSet *obj, unsigned int choice) {
+	MoveSetAssertBounds(choice);
 	PokemonMove *mPtr = obj->mem->moves[choice];
 	return mPtr->GetDamage(mPtr);
 }
 
 void SetPokemonMoveSetMoveType(PokemonMoveSet *original, unsigned int choice, Type t) {
+	MoveSetAssertBounds(choice);
 	PokemonMove *mPtr = original->mem->moves[choice];
 	mPtr->SetType(mPtr,t);
 }
 
 
 Type GetPokemonMoveSetMoveType(PokemonMoveSet *obj, unsigned int choice) {
+	MoveSetAssertBounds(choice);
 	PokemonMove *mPtr = obj->mem->moves[choice];
 	return mPtr->GetType(mPtr);
 }
 
 void SetPokemonMoveSetMoveCategory(PokemonMoveSet *original, unsigned int choice, MoveCategory m) {
+	MoveSetAssertBounds(choice);
 	PokemonMove *mPtr = original->mem->moves[choice];
 	mPtr->SetCategory(mPtr,m);
 }
 
 MoveCategory GetPokemonMoveSetMoveCategory(PokemonMoveSet *obj, unsigned int choice) {
+	MoveSetAssertBounds(choice);
 	PokemonMove *mPtr = obj->mem->moves[choice];
 	return mPtr->GetCategory(mPtr);
 }

@@ -36,8 +36,8 @@ PETester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $
 PokedexTester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/PokedexTesterMain.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o 
 	gcc -o PokedexTester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/PokedexTesterMain.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
 
-PokeMoveSetTester: $(GLOBALDESTROYER_OBJS)
-	gcc -o PokeMoveSetTester $(GLOBALDESTROYER_OBJS)
+PokeMoveSetTester: $(GLOBALDESTROYER_OBJS) $(PE_DIR)/PokemonMoveTester.o
+	gcc -o PokeMoveSetTester $(GLOBAL_DESTROYER_OBJS) $(PE_DIR)/PokemonMoveTester.o
 
 TagGenTester: $(TG_DIR)/TagGenTester.o $(TG_DIR)/FillDataFiles.o $(SU_DIR)/Special_Util.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/Pokedex.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o
 	gcc -o TagGenTester $(TG_DIR)/TagGenTester.o $(TG_DIR)/FillDataFiles.o $(SU_DIR)/Special_Util.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/Pokedex.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o
@@ -53,6 +53,9 @@ $(PE_DIR)/Typing.o: $(PE_DIR)/Typing.c $(PE_DIR)/Typing.h $(GD_DIR)/GlobalDestro
 
 $(PE_DIR)/PokemonMoveSet.o: $(PE_DIR)/PokemonMoveSet.c $(PE_DIR)/PokemonMoveSet.h $(PE_DIR)/PokemonMove.h $(GD_DIR)/GlobalDestroyer.h
 	gcc $(FLAGS) $(PE_DIR)/PokemonMoveSet.c -o $(PE_DIR)/PokemonMoveSet.o
+
+$(PE_DIR)/PokemonMoveTester.o: $(PE_DIR)/PokemonMoveSet.h $(PE_DIR)/PokemonMoveTester.c
+	gcc $(FLAGS) $(PE_DIR)/PokemonMoveTester.c -o $(PE_DIR)/PokemonMoveTester.o
 
 $(PE_DIR)/PokemonMove.o: $(PE_DIR)/PokemonMove.c $(PE_DIR)/PokemonMove.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(PE_DIR)/PokemonMove.c -o $(PE_DIR)/PokemonMove.o 
@@ -83,6 +86,7 @@ $(RD_DIR)/RetrievePokemon.o: $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokem
 
 $(RD_DIR)/RetrieveTester.o: $(RD_DIR)/RetrieveTester.c $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h $(SC_DIR)/SpecialConstants.h $(GD_DIR)/GlobalDestroyer.h $(SU_DIR)/Special_Util.h
 	gcc $(FLAGS) $(RD_DIR)/RetrieveTester.c -o $(RD_DIR)/RetrieveTester.o
+
 
 $(BS_DIR)/BattleSimulation.o: $(BS_DIR)/BattleSimulation.c $(BS_DIR)/BattleSimulation.h $(RD_DIR)/RetrievePokemon.h  $(PE_DIR)/PokemonEntry.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h $(SU_DIR)/Special_Util.h
 	gcc $(FLAGS) $(BS_DIR)/BattleSimulation.c -o $(BS_DIR)/BattleSimulation.o
