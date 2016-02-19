@@ -299,7 +299,12 @@ void SetEntrySecondaryType(PokemonEntry* original, Type secondary) {
 }
 
 void SetEntryMove(PokemonEntry *original, unsigned int choice, char *move, unsigned int d, Type t, MoveCategory m) {
-	original->mem->moveSet->SetMoveName(original->mem->moveSet,choice, move);
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	moveSet->SetMoveName(moveSet,choice, move);
+	moveSet->SetMoveDamage(moveSet,choice,d);
+	moveSet->SetMoveType(moveSet,choice,t);
+	moveSet->SetMoveCategory(moveSet,choice,m);
+
 }
 
 void GetEntryMoveName(PokemonEntry *original, unsigned int choice, char *move, unsigned int limit) {
