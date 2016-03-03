@@ -482,7 +482,7 @@ void BaseStatsArrayFromName(char *name, unsigned int name_limit, unsigned int *s
 
 
 
-/*	1/4/15 Currently, setup so that prints the pokemon entries created from each of the four entries,
+/*	1/4/16 Currently, setup so that prints the pokemon entries created from each of the four entries,
 	using the entry data + zero IV's and level 100. due to being easy to use high level functions.
 	WARNING: not known actually how many entries are in the file, so IT WILL FAIL for entry files with < 4.
 	TODO: Change it to something better, like literally printing out the entry file with actual move names

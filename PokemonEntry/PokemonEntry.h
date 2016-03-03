@@ -14,6 +14,7 @@
 //MAKE A NAME STRUCT/FILE NAH not worth for just a name. 
 
 typedef struct PokemonEntryPrivate PokemonEntryPrivate;
+
 /*
 void SetName(PokemonEntry *original, char *name);
 
@@ -57,39 +58,34 @@ typedef struct  PokemonEntry{
 
 PokemonEntryPrivate *mem;
 
-void (*SetName)();
+	void (*SetName)();
+	void (*SetLevel)();
+	void (*SetHitPoints)();
+	void (*SetAttack)();
+	void (*SetDefense)();
+	void (*SetSpecialAttack)();
+	void (*SetSpecialDefense)();	
+	void (*SetSpeed)();
+	void (*SetPrimaryType)();
+	void (*SetSecondaryType)();
+	void (*SetMove)();
+	void (*ConsolePrint)();
+	void (*GetName)();
 
-void (*SetLevel)();
+	unsigned int (*GetLevel)();
+	unsigned int (*GetHitPoints)();
+	unsigned int (*GetAttack)();
+	unsigned int (*GetDefense)();
+	unsigned int (*GetSpecialAttack)();
+	unsigned int (*GetSpecialDefense)();
+	unsigned int (*GetSpeed)();
+	Type (*GetPrimaryType)();
+	Type (*GetSecondaryType)();
+	void (*GetMoveName)();;
 
-void (*SetHitPoints)();
-void (*SetAttack)();
-void (*SetDefense)();
-void (*SetSpecialAttack)();
-void (*SetSpecialDefense)();
-void (*SetSpeed)();
-void (*SetPrimaryType)();
-void (*SetSecondaryType)();
-void (*SetMove)();
-
-void (*ConsolePrint)();
-
-void (*GetName)();
-unsigned int (*GetLevel)();
-unsigned int (*GetHitPoints)();
-unsigned int (*GetAttack)();
-unsigned int (*GetDefense)();
-unsigned int (*GetSpecialAttack)();
-unsigned int (*GetSpecialDefense)();
-unsigned int (*GetSpeed)();
-Type (*GetPrimaryType)();
-Type (*GetSecondaryType)();
-void (*GetMoveName)();;
-
-unsigned int (*GetMoveDamage)();
-
-Type (*GetMoveType)();
-
-MoveCategory (*GetMoveCategory)();
+	unsigned int (*GetMoveDamage)();
+	Type (*GetMoveType)();
+	MoveCategory (*GetMoveCategory)();
 
 
 //enum for pokemon Nature
@@ -98,15 +94,9 @@ MoveCategory (*GetMoveCategory)();
 
 PokemonEntry *NewPokemonEntry();
 
-//TODO:delete PokemonEntry function
 void DeletePokemonEntry(PokemonEntry* recall);
 
-
-
-
 void ResetPokemonEntryData(PokemonEntry* recall);
-
-//void ResetPokemonEntryPointers(PokemonEntry* recall);
 
 void ResetPokemonEntryAll(PokemonEntry* recall);
 

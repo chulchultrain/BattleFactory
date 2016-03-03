@@ -10,22 +10,21 @@
 #include <BF_Special_Util/Special_Util.h>
 
 struct PokemonEntryPrivate {
-TypeContainer *typeData;
+	char name[MAX_NAME];
+	TypeContainer *typeData;
+	PokemonStats *pokeStats;
+	PokemonMoveSet *moveSet;
 
-char name[MAX_NAME];
 //weaknesses/resistances/normal list
-//moveset
-
-PokemonStats *pokeStats;
-PokemonMoveSet *moveSet;
-
 };
+
+
+
 
 void SetPokemonName(PokemonEntry* original, const char* name);
 
 
 void SetEntryL(PokemonEntry *original, unsigned int level);
-
 void SetEntryHP(PokemonEntry* original, unsigned int HP);
 void SetEntryA(PokemonEntry* original, unsigned int A);
 void SetEntryD(PokemonEntry* original, unsigned int D);
@@ -36,16 +35,18 @@ void SetEntryS(PokemonEntry* original, unsigned int S);
 void SetEntryPrimaryType(PokemonEntry* original, Type primary);
 void SetEntrySecondaryType(PokemonEntry* original, Type secondary);
 
+
 void SetEntryMove(PokemonEntry *original, unsigned int choice, char *move, unsigned int d, Type t, MoveCategory m);
+void SetEntryMoveName(PokemonEntry *original, unsigned int choice, char *name);
+void SetEntryMoveDamage(PokemonEntry *original, unsigned int choice, unsigned int damage);
+void SetEntryMoveType(PokemonEntry *original, unsigned int choice, Type t);
+void SetEntryMoveCategory(PokemonEntry *original, unsigned int choice, MoveCategory cat);
+
 
 void GetEntryMoveName(PokemonEntry *original, unsigned int choice, char *dest, unsigned int limit);
-
 unsigned int GetEntryMoveDamage(PokemonEntry *obj, unsigned int choice);
-
 Type GetEntryMoveType(PokemonEntry *obj, unsigned int choice);
-
 MoveCategory GetEntryMoveCategory(PokemonEntry *obj, unsigned int choice);
-
 void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit);
 
 unsigned int GetEntryL(PokemonEntry *obj);
@@ -105,36 +106,6 @@ PokemonEntry *NewPokemonEntry() {
 
 }
 
-//TODO:POKEMONENTRY COPY CONSTRUCTOR
-/** but before I can do this I need getter functions
-PokemonEntry *CopyPokemonEntry(PokemonEntry* obj) {
-	PokemonEntry *result = NewPokemonEntry(obj);
-}
-**/
-/*If we're gonna make a full pokemon stats, might as well make full new pokemon
-  entry. Will include stats, type and name
-*/
-
-/**
-Deprecated:
-PokemonEntry *FullPokemonEntry(char* name, PokemonStats* statsHolder, TypeContainer* typeHolder) {
-	int i;
-	for(i = 0; i < MAX_NAME; i++)
-		if(name[i] == 0)
-			break;
-	if(i == MAX_NAME)
-		return NULL; //TODO:assert. name > 20c should have already checked
-	PokemonEntry *result = malloc(sizeof(PokemonEntry));
-	result->mem = malloc(sizeof(PokemonEntryPrivate));
-	copyName(name, result->mem->name);
-	result->mem->typeData = CopyTypeContainer(typeHolder); //TODO:CopyConstructor
-	result->mem->pokeStats = CopyPokemonStats(statsHolder); //TODO:CopyConstructor
-	SetPokemonEntryFunctionPointers(result);
-	return result;
-
-
-}
-**/
 
 void ResetPokemonEntryData(PokemonEntry* recall) {
 	//TODO:ADD CLEAR NAME
@@ -154,25 +125,8 @@ void ResetPokemonEntryData(PokemonEntry* recall) {
 }
 
 
-/**
-void ResetPokemonEntryPointers(PokemonEntry* recall) {
-	recall->SetName = NULL;
-	recall->SetHitPoints = NULL;
-	recall->SetAttack = NULL;
-	recall->SetDefense = NULL;
-	recall->SetSpecialAttack = NULL;
-	recall->SetSpecialDefense = NULL;
-	recall->SetSpeed = NULL;
-	recall->SetPrimaryType = NULL;
-	recall->SetSecondaryType = NULL;
-	recall->Get
-	ResetPokemonStatsPointers(recall->mem->pokeStats);
-	ResetTypeContainerPointers(recall->mem->typeData);
-}
-**/
 void ResetPokemonEntryAll(PokemonEntry* recall) {
 	ResetPokemonEntryData(recall);
-//	ResetPokemonEntryPointers(recall);
 }
 
 void DeletePokemonEntry(PokemonEntry* recall){
@@ -234,6 +188,11 @@ void SetPokemonEntryFunctionPointers(PokemonEntry* original) {
 	original->GetSecondaryType = GetEntrySecondary;
 
 	original->SetMove = SetEntryMove;
+	original->SetMoveName = SetEntryMoveName;
+	original->SetMoveDamage = SetEntryMoveDamage;
+	original->SetMoveType = SetEntryMoveType;
+	original->SetMoveCategory = SetEntryMoveCategory;
+
 	original->GetMoveName = GetEntryMoveName;
 
 	original->GetMoveDamage = GetEntryMoveDamage;
@@ -298,31 +257,55 @@ void SetEntrySecondaryType(PokemonEntry* original, Type secondary) {
 //	SetSecondaryType(original->typeData, secondary);
 }
 
-void SetEntryMove(PokemonEntry *original, unsigned int choice, char *move, unsigned int d, Type t, MoveCategory m) {
+void SetEntryMove(PokemonEntry *original, unsigned int choice, char *name, unsigned int damage, Type t, MoveCategory cat) {
 	PokemonMoveSet *moveSet = original->mem->moveSet;
-	moveSet->SetMoveName(moveSet,choice, move);
-	moveSet->SetMoveDamage(moveSet,choice,d);
+	moveSet->SetMoveName(moveSet,choice, name);
+	moveSet->SetMoveDamage(moveSet,choice,damage);
 	moveSet->SetMoveType(moveSet,choice,t);
-	moveSet->SetMoveCategory(moveSet,choice,m);
+	moveSet->SetMoveCategory(moveSet,choice,cat);
 
+}
+
+void SetEntryMoveName(PokemonEntry *original, unsigned int choice, char *name) {
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	moveSet->SetMoveName(moveSet, choice, name);
+}
+
+void SetEntryMoveDamage(PokemonEntry *original, unsigned int choice, unsigned int damage) {
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	moveSet->SetMoveDamage(moveSet,choice,damage);
+}
+
+void SetEntryMoveType(PokemonEntry *original, unsigned int choice, Type t) {
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	moveSet->SetMoveType(moveSet,choice,t);	
+}
+
+void SetEntryMoveCategory(PokemonEntry *original, unsigned int choice, MoveCategory cat) {
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	moveSet->SetMoveCategory(moveSet,choice,cat);
 }
 
 void GetEntryMoveName(PokemonEntry *original, unsigned int choice, char *move, unsigned int limit) {
-	original->mem->moveSet->GetMoveName(original->mem->moveSet, choice, move, limit);
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	moveSet->GetMoveName(moveSet, choice, move, limit);
 }
 
 unsigned int GetEntryMoveDamage(PokemonEntry *obj, unsigned int choice) {
-	return obj->mem->moveSet->GetMoveDamage(obj->mem->moveSet, choice);	
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	return moveSet->GetMoveDamage(moveSet, choice);	
 }
 
 
 Type GetEntryMoveType(PokemonEntry *obj, unsigned int choice) {
-	return obj->mem->moveSet->GetMoveType(obj->mem->moveSet, choice);	
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	return moveSet->GetMoveType(moveSet, choice);	
 }
 
 
 MoveCategory GetEntryMoveCategory(PokemonEntry *obj, unsigned int choice) {
-	return obj->mem->moveSet->GetMoveCategory(obj->mem->moveSet, choice);
+	PokemonMoveSet *moveSet = original->mem->moveSet;
+	return moveSet->GetMoveCategory(moveSet, choice);
 }
 
 void GetEntryName(PokemonEntry *obj, char* dest, unsigned int limit) {
@@ -383,10 +366,7 @@ Type GetEntrySecondary(PokemonEntry* obj) {
 }
 
 void PokemonEntryConsolePrint(PokemonEntry* obj) {
-
-	
 	printf("Name is %s\n", obj->mem->name);	
-
 	PokemonStats *statsPtr = obj->mem->pokeStats;
 	TypeContainer *typePtr = obj->mem->typeData;
 	PokemonMoveSet *moveSetPtr = obj->mem->moveSet;	
