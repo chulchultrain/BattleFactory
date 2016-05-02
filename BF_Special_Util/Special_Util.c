@@ -27,6 +27,19 @@ void copyName(const char* source, char* dest) {
 		dest[i] = 0; //append '\0'
 }
 
+unsigned int copyString(const char* src, unsigned int src_limit, char* dest, unsigned int dest_limit) {
+	unsigned int i = 0, maxL = 0;
+	if(dest_limit > src_limit)
+		maxL = dest_limit;
+	else
+		maxL = src_limit;
+	for(i = 0; i < maxL; i++) {
+		dest[i] = src[i];
+		if(dest[i] == 0)
+			break;
+	}
+	return 0;
+}	
 
 unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned int *product) {
 	unsigned int temp = 0;

@@ -17,7 +17,7 @@ typedef struct BattleSim{
 
 BattleSimPrivate *mem;
 
-
+void (*Menu)();
 void (*ConsoleInput)();
 void (*FileInput)();
 void (*Simulate)();

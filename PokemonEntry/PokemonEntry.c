@@ -286,25 +286,25 @@ void SetEntryMoveCategory(PokemonEntry *original, unsigned int choice, MoveCateg
 	moveSet->SetMoveCategory(moveSet,choice,cat);
 }
 
-void GetEntryMoveName(PokemonEntry *original, unsigned int choice, char *move, unsigned int limit) {
-	PokemonMoveSet *moveSet = original->mem->moveSet;
+void GetEntryMoveName(PokemonEntry *obj, unsigned int choice, char *move, unsigned int limit) {
+	PokemonMoveSet *moveSet = obj->mem->moveSet;
 	moveSet->GetMoveName(moveSet, choice, move, limit);
 }
 
 unsigned int GetEntryMoveDamage(PokemonEntry *obj, unsigned int choice) {
-	PokemonMoveSet *moveSet = original->mem->moveSet;
+	PokemonMoveSet *moveSet = obj->mem->moveSet;
 	return moveSet->GetMoveDamage(moveSet, choice);	
 }
 
 
 Type GetEntryMoveType(PokemonEntry *obj, unsigned int choice) {
-	PokemonMoveSet *moveSet = original->mem->moveSet;
+	PokemonMoveSet *moveSet = obj->mem->moveSet;
 	return moveSet->GetMoveType(moveSet, choice);	
 }
 
 
 MoveCategory GetEntryMoveCategory(PokemonEntry *obj, unsigned int choice) {
-	PokemonMoveSet *moveSet = original->mem->moveSet;
+	PokemonMoveSet *moveSet = obj->mem->moveSet;
 	return moveSet->GetMoveCategory(moveSet, choice);
 }
 

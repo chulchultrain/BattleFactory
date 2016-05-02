@@ -4,9 +4,9 @@
 #include <BattleSimulation/BattleSimulation.h>
 #include <BF_Special_Util/Special_Util.h>
 #include <PokemonEntry/PokemonEntry.h>
+#include <EntryOptions/EntryOptions.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 
 
 typedef struct MoveDamage {
@@ -43,6 +43,116 @@ void FilePrintMoveDamage(MoveDamage md, FILE *fout);
 void BattleSimConsolePrint(BattleSim *obj);
 void BattleSimFilePrint(BattleSim *obj, char *fileName);
 
+void BattleSimMenu() {
+	EntryOptions option1 = DefaultOptions(0,0), option2 = DefaultOptions(0,0);
+	char buffer[MAX_LINE_LENGTH] = {0};
+	unsigned int choice = 0, innerChoice = 0,temp = 0, numEntryChoices = 0;
+	printf("To display choices, enter 1\n");
+	EntryOptions *cEntry = 0;
+	do {
+		SafeReadLine(buffer,MAX_LINE_LENGTH,stdin,1);
+		if(!StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&choice) ) {
+			choice = 1;
+			continue;
+		}
+		switch(choice) {
+			case 0: //just exit
+				break;
+			case 1: //display choices
+				printf("0 - exit\n");
+				printf("1 - display choices\n");
+				printf("2 - display both entries\n");
+				printf("3 - set entry 1 name\n");
+				printf("4 - set entry 1 region\n");
+				printf("5 - set entry 1 IV\n");
+				printf("6 - set entry 1 level\n");
+				printf("7 - set entry 2 name\n");
+				printf("8 - set entry 2 region\n");
+				printf("9 - set entry 2 IV\n");
+				printf("10 - set entry 2 level\n");
+			case 2: //display both entries
+				ConsolePrintOptions(option1);
+				printf("\n");
+				ConsolePrintOptions(option2);
+				printf("\n");
+			case 3: //display entryfile for entry 1 
+				ConsolePrintEntryList(option1.name,option1.region);					
+			case 4: //display entryfile for entry 2	
+				ConsolePrintEntryList(option2.name,option2.region);	
+			case 5: //set entry 1 something
+				cEntry = &option1;
+				break;
+			case 6: //set entry 2 something
+				cEntry = &option2;
+				break;
+		}
+		if(choice == 5 || choice == 6) {
+				
+			SafeReadLine(buffer,MAX_LINE_LENGTH,stdin,1);
+			if(!StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&innerChoice) ) {
+				innerChoice = 0;
+			continue;
+			}
+			switch(innerChoice) {
+				case 1: //entry name
+					SafeReadLineRNL(cEntry->name,MAX_NAME,stdin,1);
+					cEntry->choice = 0;
+					break;			
+				case 2: //entry region
+					SafeReadLine(buffer,MAX_LINE_LENGTH,stdin,1);
+					if(StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&temp)) {
+						printf("Invalid region. Should be non-negative int less than %u\n",MAX_REGIONS);
+					}
+					else {
+						if(temp >= 0 && temp < MAX_REGIONS) {
+							cEntry->region = temp;
+						} 
+						else
+							printf("Invalid region. Should be non-negative int less than %u\n",MAX_REGIONS);
+					}
+					break;
+				case 3: //entry choice
+			//		numEntryChoices = SizeEntryList(EntryOptions options); //TODO:IMPLEMENET THIS
+					numEntryChoices = 4;
+					SafeReadLine(buffer,MAX_LINE_LENGTH,stdin,1);
+					if(StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&temp)) {
+						printf("Invalid choice. Should be non-negative int less than %u\n",numEntryChoices);
+					}	
+					else {
+						if(temp >= 0 && temp < numEntryChoices)
+							cEntry->choice = temp;
+						else
+							printf("Invalid choice. Should be non-negative int less than %u\n",numEntryChoices);
+					}
+					break;									
+				case 4: //entry IV
+					SafeReadLine(buffer,MAX_LINE_LENGTH,stdin,1);
+					if(StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&temp)) {
+						printf("Invalid IV\n");
+					}
+					else {
+						cEntry->IV = temp;
+					}
+					break;
+				case 5: //entry level
+					SafeReadLine(buffer,MAX_LINE_LENGTH,stdin,1);
+					if(StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&temp)) {
+						printf("Invalid level\n");
+					}
+					else {
+						cEntry->level = temp;
+					}
+					break;					
+					
+
+				default:
+					printf("Invalid Choice. Option set failed.\n");
+			}				
+			
+		}
+	} while(choice != 0);
+}
+
 //clean data
 void WipeBattleSimData(BattleSim *obj);
 
@@ -65,7 +175,7 @@ void SetBattleSimFunctionPointers(BattleSim *obj) {
 	obj->ConsolePrint = BattleSimConsolePrint;
 	obj->FilePrint = BattleSimFilePrint;
 	obj->Purge = WipeBattleSimData;
-	
+	obj->Menu = BattleSimMenu;
 }
 
 BattleSim *NewBattleSim() {
@@ -134,9 +244,6 @@ void BattleSimInitializationFileInput(BattleSim *obj, char *fileName) {
 	unsigned int IV[1] = {0};
 	unsigned int level = 100;
 
-
-	
-
 	//region
 	RegionFromFileInput(region, fin);
 	//entry1	
@@ -192,6 +299,8 @@ void BattleSimInitializationConsoleInput(BattleSim *obj) {
 
 	printf("Entry name of first pokemon of entry: ");
 	SafeReadLineRNL(name1, MAX_NAME,stdin,1); 
+
+	//ConsolePrintEntryFile(
 
 	ConsolePrintEntryList(name1,region[0]);
 

@@ -26,6 +26,8 @@ unsigned int StringToUnsignedInt(char *line, unsigned int line_length, unsigned 
 
 unsigned int UnsignedIntToString(unsigned int num, char *str, unsigned int limit);
 
+unsigned int copyString(const char* src, unsigned int src_limit, char* dest, unsigned int dest_limit);
+
 //start = start index in the destination array. This function will always try to put the full src array into an index of the dest array.
 unsigned int InsertArrayInArray(char *src, unsigned int srcLimit, char *dest, unsigned int start, unsigned int destLimit);
 

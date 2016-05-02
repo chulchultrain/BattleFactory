@@ -3,16 +3,9 @@
 
 
 #include <PokemonEntry/PokemonEntry.h>
+#include <EntryOptions/EntryOptions.h>
 #include <stdio.h>
 
-
-typedef struct EntryOptions {
-	char name[21];
-	unsigned int region;
-	unsigned int choice;
-	unsigned int IV;
-	unsigned int level;
-} EntryOptions;
 
 /*
 Given a pokemon name and the region that the pokemon comes from, 
@@ -22,6 +15,8 @@ char *name: name of pokemon
 unsigned int region: the region the entry comes from
 */
 void ConsolePrintEntryList(char *name,unsigned int region);
+
+void ConsolePrintPokemonEntryFile(EntryOptions options);
 
 //TODO void FilePrintEntryList(char *name, unsigned int region, FILE *fout);
 

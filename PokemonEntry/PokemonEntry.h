@@ -69,6 +69,12 @@ PokemonEntryPrivate *mem;
 	void (*SetPrimaryType)();
 	void (*SetSecondaryType)();
 	void (*SetMove)();
+
+	void (*SetMoveName)();
+	void (*SetMoveType)();
+	void (*SetMoveDamage)();
+	void (*SetMoveCategory)();
+
 	void (*ConsolePrint)();
 	void (*GetName)();
 

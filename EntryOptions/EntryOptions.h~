@@ -1,7 +1,7 @@
 #ifndef __ENTRYOPTIONS_H_INCLUDED__
 #define __ENTRYOPTIONS_H_INCLUDED__
 
-
+#include <SpecialConstants/SpecialConstants.h>
 
 typedef struct EntryOptions {
 	char name[21];
@@ -11,7 +11,7 @@ typedef struct EntryOptions {
 	unsigned int level;
 } EntryOptions;
 
-EntryOptions DefaultOptions();
+EntryOptions DefaultOptions(unsigned int optionChoice, void *choiceSet);
 
-
+void ConsolePrintOptions(EntryOptions options);
 #endif

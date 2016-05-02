@@ -12,12 +12,13 @@ SC_DIR = $(BF_DIR)/SpecialConstants
 RD_DIR = $(BF_DIR)/RetrieveData
 BS_DIR = $(BF_DIR)/BattleSimulation
 MT_DIR = $(BF_DIR)/MoveTable
+EO_DIR = $(BF_DIR)/EntryOptions
 
 INC_DIR = $(shell pwd)
 
 FLAGS = -I$(INC_DIR) -c -Wall
 
-GLOBAL_DESTROYER_OBJS = $(BS_DIR)/BattleSimulation.o $(PE_DIR)/PokemonEntry.o $(PD_DIR)/Pokedex.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(RD_DIR)/RetrievePokemon.o $(SU_DIR)/Special_Util.o $(MT_DIR)/MoveTable.o
+GLOBAL_DESTROYER_OBJS = $(BS_DIR)/BattleSimulation.o $(PE_DIR)/PokemonEntry.o $(PD_DIR)/Pokedex.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(RD_DIR)/RetrievePokemon.o $(SU_DIR)/Special_Util.o $(MT_DIR)/MoveTable.o $(EO_DIR)/EntryOptions.o
 
 
 
@@ -81,7 +82,7 @@ $(TG_DIR)/FillDataFiles.o: $(TG_DIR)/FillDataFiles.c $(TG_DIR)/FillDataFiles.h $
 $(TG_DIR)/TagGenTester.o: $(TG_DIR)/FillDataFiles.h $(TG_DIR)/TagGenTester.c $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(TG_DIR)/TagGenTester.c -o $(TG_DIR)/TagGenTester.o
 
-$(RD_DIR)/RetrievePokemon.o: $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h $(SU_DIR)/Special_Util.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h
+$(RD_DIR)/RetrievePokemon.o: $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h $(SU_DIR)/Special_Util.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h $(EO_DIR)/EntryOptions.h
 	gcc $(FLAGS) $(RD_DIR)/RetrievePokemon.c -o $(RD_DIR)/RetrievePokemon.o
 
 $(RD_DIR)/RetrieveTester.o: $(RD_DIR)/RetrieveTester.c $(RD_DIR)/RetrievePokemon.c $(RD_DIR)/RetrievePokemon.h $(SC_DIR)/SpecialConstants.h $(GD_DIR)/GlobalDestroyer.h $(SU_DIR)/Special_Util.h
@@ -100,6 +101,8 @@ $(MT_DIR)/MoveTable.o: $(MT_DIR)/MoveTable.c $(SC_DIR)/SpecialConstants.h $(SU_D
 $(MT_DIR)/MoveTableTester.o: $(MT_DIR)/MoveTableTester.c $(MT_DIR)/MoveTable.h $(SC_DIR)/SpecialConstants.h 
 	gcc $(FLAGS) $(MT_DIR)/MoveTableTester.c -o $(MT_DIR)/MoveTableTester.o
 
+$(EO_DIR)/EntryOptions.o: $(EO_DIR)/EntryOptions.c $(EO_DIR)/EntryOptions.h 
+	gcc $(FLAGS) $(EO_DIR)/EntryOptions.c -o $(EO_DIR)/EntryOptions.o
 
 clean: 
 	rm */*.o *.o *~ PETester PokeMoveSetTester

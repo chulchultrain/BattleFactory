@@ -1,16 +1,15 @@
 
 #include <EntryOptions/EntryOptions.h>
-
-#ifndef DEFAULT_LEVEL
-
-
+#include <stdio.h>
 
 EntryOptions DefaultOptions(unsigned int optionChoice, void *choiceSet) {
-	static EntryOptions defaultOptions;
-	
+	static EntryOptions defaultOptions = { "Abra", 1, 0 , 0, 100};
+	unsigned int i = 0;
 	switch(optionChoice) {
 		case 1:  //name
-			CopyName( (char *)choiceSet, defaultOptions.name);
+			for(i = 0; i < MAX_NAME; i++)
+				defaultOptions.name[i] = ((char *)choiceSet)[i];
+			break;
 		case 2: //region
 			defaultOptions.region = *(unsigned int *)choiceSet;
 			break;
@@ -28,5 +27,12 @@ EntryOptions DefaultOptions(unsigned int optionChoice, void *choiceSet) {
 
 
 	return defaultOptions;
+
+}
+
+
+
+void ConsolePrintOptions(EntryOptions options) {
+	printf("%s\n%u\n%u\n%u\n",options.name,options.region,options.IV,options.level);
 
 }

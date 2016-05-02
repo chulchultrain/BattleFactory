@@ -5,8 +5,11 @@
 #include <MoveTable/MoveTable.h>
 #include <stdio.h>
 #include <stdlib.h>
+//#include <string.h>
 
+void ConsolePrintPokemonEntryFile(EntryOptions options);
 void ConsolePrintEntireEntryFile(char *fileName);
+unsigned int EntryFileName(EntryOptions options, char *dest, unsigned int limit);
 //void FilePrintEntireEntryFile(char *fileName, char *outputFileName); //TODO:define
 //pokemon data into entry
 void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
@@ -47,6 +50,17 @@ void GoToEntryChoice(FILE *fin, unsigned int choice) {
 			if(fgets(line,MAX_LINE_LENGTH - 5, fin) == 0)
 				GlobalDestroyer(1,0,0);
 	}
+}
+
+unsigned int EntryFileName(EntryOptions options, char *dest, unsigned int limit) {
+	char fileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
+	AppendRegionToString(options.region, fileName , MAX_FILE_NAME);
+	AppendArrayToArray(options.name, MAX_NAME, fileName, MAX_FILE_NAME);
+	copyString(fileName,MAX_FILE_NAME,dest,limit);
+	if(limit < MAX_FILE_NAME)
+		return 1;
+	else
+		return 0;
 }
 
 FILE *EntryFilePtr(EntryOptions options) {
@@ -181,7 +195,12 @@ void ConsolePrintEntireEntryFile(char *fileName) {
 
 }
 
-
+void ConsolePrintPokemonEntryFile(EntryOptions options) {
+	char fileName[MAX_FILE_NAME];
+	EntryFileName(options, fileName,MAX_FILE_NAME);
+	ConsolePrintEntireEntryFile(fileName);
+	
+}
 
 
 
