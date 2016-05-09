@@ -43,7 +43,7 @@ void FilePrintMoveDamage(MoveDamage md, FILE *fout);
 void BattleSimConsolePrint(BattleSim *obj);
 void BattleSimFilePrint(BattleSim *obj, char *fileName);
 
-void BattleSimMenu() {
+void BattleSimMenu(BattleSim *sim) {
 	EntryOptions option1 = DefaultOptions(0,0), option2 = DefaultOptions(0,0);
 	char buffer[MAX_LINE_LENGTH] = {0};
 	unsigned int choice = 0, innerChoice = 0,temp = 0, numEntryChoices = 0;
@@ -51,7 +51,7 @@ void BattleSimMenu() {
 	EntryOptions *cEntry = 0;
 	do {
 		SafeReadLine(buffer,MAX_LINE_LENGTH,stdin,1);
-		if(!StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&choice) ) {
+		if(StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&choice) ) {
 			choice = 1;
 			continue;
 		}
@@ -61,24 +61,24 @@ void BattleSimMenu() {
 			case 1: //display choices
 				printf("0 - exit\n");
 				printf("1 - display choices\n");
-				printf("2 - display both entries\n");
-				printf("3 - set entry 1 name\n");
-				printf("4 - set entry 1 region\n");
-				printf("5 - set entry 1 IV\n");
-				printf("6 - set entry 1 level\n");
-				printf("7 - set entry 2 name\n");
-				printf("8 - set entry 2 region\n");
-				printf("9 - set entry 2 IV\n");
-				printf("10 - set entry 2 level\n");
+				printf("2 - display both entries options\n");
+				printf("3 - display entryfile for name and region 1\n");
+				printf("4 - display entryfile for name and region 2\n");
+				printf("5 - set entry 1 options\n");
+				printf("6 - set entry 2 options\n");
+				break;
 			case 2: //display both entries
 				ConsolePrintOptions(option1);
 				printf("\n");
 				ConsolePrintOptions(option2);
 				printf("\n");
+				break;
 			case 3: //display entryfile for entry 1 
-				ConsolePrintEntryList(option1.name,option1.region);					
+				ConsolePrintEntryList(option1.name,option1.region);	
+				break;				
 			case 4: //display entryfile for entry 2	
 				ConsolePrintEntryList(option2.name,option2.region);	
+				break;
 			case 5: //set entry 1 something
 				cEntry = &option1;
 				break;
@@ -89,9 +89,9 @@ void BattleSimMenu() {
 		if(choice == 5 || choice == 6) {
 				
 			SafeReadLine(buffer,MAX_LINE_LENGTH,stdin,1);
-			if(!StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&innerChoice) ) {
+			if(StringToUnsignedInt(buffer,MAX_LINE_LENGTH,&innerChoice) ) {
 				innerChoice = 0;
-			continue;
+				continue;
 			}
 			switch(innerChoice) {
 				case 1: //entry name
@@ -151,6 +151,17 @@ void BattleSimMenu() {
 			
 		}
 	} while(choice != 0);
+	PokemonEntry *entry1 = NewEntryFromData(option1);
+	printf("After E1\n\n\n");
+	PokemonEntry *entry2 = NewEntryFromData(option2);
+	printf("After E2\n\n\n");
+	printf("Before purge\n\n\n\n");
+	//sim->Purge(sim);
+	if(!sim->mem || !sim->mem)
+		printf("FAILURE OF SIM MEM\n\n\n");
+	sim->mem->entry1 = entry1;
+	sim->mem->entry2 = entry2;
+	printf("Fin Menu func\n\n");
 }
 
 //clean data
@@ -421,7 +432,7 @@ void BattleSimSimulate(BattleSim *original) {
 		entry1->GetMoveName(entry1,i,damages[i].name, MAX_NAME);
 
 	for(i = 0; i < MAX_NUM_MOVES; i++)
-		entry2->GetMoveName(entry2,0,damages[MAX_NUM_MOVES + i].name, MAX_NAME);
+		entry2->GetMoveName(entry2,i,damages[MAX_NUM_MOVES + i].name, MAX_NAME);
 
 	//entry1->ConsolePrint(entry1);
 	//entry2->ConsolePrint(entry2);

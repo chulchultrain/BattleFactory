@@ -7,7 +7,6 @@ EntryOptions DefaultOptions(unsigned int optionChoice, void *choiceSet) {
 	unsigned int i = 0;
 	switch(optionChoice) {
 		case 1:  //name
-			unsigned int i = 0;
 			for(i = 0; i < MAX_NAME; i++)
 				defaultOptions.name[i] = ((char *)choiceSet)[i];
 			break;
@@ -34,6 +33,6 @@ EntryOptions DefaultOptions(unsigned int optionChoice, void *choiceSet) {
 
 
 void ConsolePrintOptions(EntryOptions options) {
-	printf("%s\n%u\n%u\n%u\n",options.name,options.region,options.IV,options.level);
+	printf("%s\n%u\n%u\n%u\n%u\n",options.name,options.region,options.IV,options.level);
 
 }

@@ -64,6 +64,7 @@ void GlobalDestroyer(int mallocFailFlag, void *deletePtr, ALLTYPES type) {
 		for(i = 0; i < battleSimCounter; i++)
 			if( battleSimMem[i] != 0)
 				DeleteBattleSim(battleSimMem[i]);
+		printf("Malloc Failure\n");
 		exit(1); }
 
 	//NOTE: CANNOT add a zero poitner check to test for end of array due to zeroing out array when calling deletes

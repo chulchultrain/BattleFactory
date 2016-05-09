@@ -33,6 +33,6 @@ EntryOptions DefaultOptions(unsigned int optionChoice, void *choiceSet) {
 
 
 void ConsolePrintOptions(EntryOptions options) {
-	printf("%s\n%u\n%u\n%u\n",options.name,options.region,options.IV,options.level);
+	printf("%s\n%u\n%u\n%u\n%u\n",options.name,options.region,options.choice,options.IV,options.level);
 
 }
