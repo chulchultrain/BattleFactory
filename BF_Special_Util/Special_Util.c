@@ -15,6 +15,8 @@ unsigned int StringEquality(char *str1, char *str2) {
 
 }
 
+
+
 void copyName(const char* source, char* dest) {
 	int i = 0;
 	while(i < MAX_NAME && source[i] != 0) {
@@ -309,4 +311,9 @@ unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, uns
 //	printf("print hp %u\n",val);
 	return val;
 }
+
+
+
+
+
 

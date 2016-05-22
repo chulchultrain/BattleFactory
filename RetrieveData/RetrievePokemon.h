@@ -31,7 +31,6 @@ with the correct information.
 char *name - name of pokemon
 choice - choice of entry in the entry file.
 */
-PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice);
 
 
 /*
@@ -45,18 +44,6 @@ unsigned int IV: number of IVs the pokemon has
 unsigned int level: level of pokemon
 */
 PokemonEntry *NewEntryFromData(EntryOptions options);
-
-/*
-DEPRECATED: not modular enough.
-Given the name of the pokemon, and the choice of the entry in the entry file, 
-user will be prompted in stdout to input the region into stdin. 
-Based on that information and assuming level = 100 and IV = 0, function will set an already existing PokemonEntry structure to reflect the entry information.
-
-PokemonEntry *entry: poitner to already existing PokemonEntry structure
-char *name - name of pokemon
-choice - choice of entry in the entry file.
-*/
-void SetEntryFromNameChoice(PokemonEntry *entry, char *name, unsigned int choice);
 
 /*
 Given information of the entry, function will set an already existing PokemonEntry structure to reflect the entry information.

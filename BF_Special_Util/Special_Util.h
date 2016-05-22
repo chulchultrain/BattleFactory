@@ -7,9 +7,10 @@
 #include <unistd.h>
 #include <GlobalDestroyer/GlobalDestroyer.h>
 
+
+
 //Making the Directory. Just Make a struct stat *st pointer and malloc and then use it in the function. That's all.
 void MakeDir(char *dirName, struct stat *st);
-
 
 void copyName(const char* source, char* dest); 
 /**
@@ -59,4 +60,6 @@ unsigned int CalcHPStat(unsigned int base, unsigned int EV, unsigned int IV, uns
 unsigned int CalcNonHPStat(unsigned int base, unsigned int EV, unsigned int IV, unsigned int level);
 
 unsigned int StringEquality(char *str1, char *str2);
+
+
 #endif

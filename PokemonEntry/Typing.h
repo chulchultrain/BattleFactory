@@ -56,6 +56,7 @@ unsigned int DamageModCodeFromTypes(Type attack, Type defend);
 
 double ModDamageTypeResistance(double initial,Type attack, Type defend);
 
+
 #endif
 
 

@@ -14,7 +14,7 @@ unsigned int EntryFileName(EntryOptions options, char *dest, unsigned int limit)
 //pokemon data into entry
 void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit);
 void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable);
-
+unsigned int BaseStatFileName(EntryOptions options, char *dest, unsigned int limit);
 
 //fast-forward fin Pointer to point to the correct entry choice in the file.
 void GoToEntryChoice(FILE *fin, unsigned int choice);
@@ -28,7 +28,7 @@ void TypeDataToEntry(PokemonEntry *pEntry, EntryOptions options); //TODO
 void MoveDataToEntry(PokemonEntry *pEntry, EntryOptions options); //TODO
 void StatDataToEntry(PokemonEntry *pEntry, EntryOptions options); //TODO
 
-void BaseStatsArrayFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit); //TODO: Change to be like EVStatArray
+void BaseStatsArray(EntryOptions options, unsigned int *statArray, unsigned int statArrayLimit); //TODO: Change to be like EVStatArray
 void EVStatArray(EntryOptions options, unsigned int *EVStats);
 void RefinedStatsEntry( unsigned int *stats, unsigned int *EVTable, EntryOptions options, char *natureLine, PokemonEntry *pEntry);
 
@@ -51,16 +51,26 @@ void GoToEntryChoice(FILE *fin, unsigned int choice) {
 				GlobalDestroyer(1,0,0);
 	}
 }
-
+//TODO: proper error codes. consider limit with respect to how its called
 unsigned int EntryFileName(EntryOptions options, char *dest, unsigned int limit) {
 	char fileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;
 	AppendRegionToString(options.region, fileName , MAX_FILE_NAME);
 	AppendArrayToArray(options.name, MAX_NAME, fileName, MAX_FILE_NAME);
 	copyString(fileName,MAX_FILE_NAME,dest,limit);
 	if(limit < MAX_FILE_NAME)
-		return 1;
-	else
 		return 0;
+	else
+		return 1;
+}
+//TODO: same as above
+unsigned int BaseStatFileName(EntryOptions options, char *dest, unsigned int limit) {
+	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;	
+	AppendArrayToArray(options.name, MAX_NAME, fileName, MAX_FILE_NAME);
+	copyString(fileName,MAX_FILE_NAME,dest,limit);
+	if(limit < MAX_FILE_NAME)
+		return 0;
+	else
+		return 1;
 }
 
 FILE *EntryFilePtr(EntryOptions options) {
@@ -115,13 +125,12 @@ void StatsDataToEntry(PokemonEntry *pEntry, EntryOptions options) {
 	char natureLine[MAX_LINE_LENGTH] = {0};
 	SafeReadLine(natureLine,80,fin,0);
 	fclose(fin);
+	printf("AFTER NATURE\n\n\n");
 	unsigned int stats[NUM_OF_STATS] = {0};
-	BaseStatsArrayFromName(options.name, MAX_NAME, stats, NUM_OF_STATS);
-
+	BaseStatsArray(options, stats, NUM_OF_STATS);
+	printf("AFTER BASE STATS ARRAY\n\n\n");
 	unsigned int EVTable[NUM_OF_STATS] = {0};
 	EVStatArray(options, EVTable);
-	
-
 	RefinedStatsEntry(stats, EVTable, options, natureLine, pEntry);
 
 }
@@ -168,13 +177,6 @@ void ConsolePrintEntryList(char *name,unsigned int region) {
 	ConsolePrintEntireEntryFile(fileName);
 }
 
-void ConsolePrintForPokemon(char *name) {
-	char fileName[MAX_FILE_NAME] = ENTRY_DIRECTORY;	
-	CorrectRegionPrompt(fileName, MAX_FILE_NAME);
-	AppendArrayToArray(name,MAX_NAME,fileName,MAX_FILE_NAME);
-	ConsolePrintEntireEntryFile(fileName);
-	
-}
 
 void ConsolePrintEntireEntryFile(char *fileName) {
 	FILE *fin = fopen(fileName,"r");
@@ -431,9 +433,7 @@ void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable)
 
 	while( EVLine[i] < 'A' || EVLine[i] > 'Z')
 		i++;
-
 //	printf("%s\n", num);
-
 	switch(EVLine[i]) {
 		case 'A': 	StringToUnsignedInt(num, MAX_NAME, (EVTable + 1) ); 
 				break;
@@ -454,23 +454,17 @@ void EVLineToArray(char *EVLine, unsigned int line_limit, unsigned int *EVTable)
 			} 		
 
 	}
-
 //	for(i = 0; i < 6; i++)
 //		printf("EVS are %u\n",EVTable[i]);
-
-
 }
 
 
 
 // the file should have each stat on a different line, statName statAmount 
 void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int statArrayLimit) {
-
 	unsigned int i = 0; //array offset
 	char buffer[MAX_LINE_LENGTH] = {0};
-
 	while(i < statArrayLimit && fgets(buffer, MAX_LINE_LENGTH, fptr) != 0) {
-
 		StringToUnsignedInt(buffer, MAX_LINE_LENGTH, (statArray + i) );
 		//add Logger function to indicate failure. 
 		i++;
@@ -479,14 +473,12 @@ void BaseStatsFileToArray(FILE *fptr, unsigned int *statArray, unsigned int stat
 }
 
 
+ 
 
-
-void BaseStatsArrayFromName(char *name, unsigned int name_limit, unsigned int *statArray, unsigned int statArrayLimit) {
-	char fileName[MAX_FILE_NAME] = BASE_STATS_DIR;
-	AppendArrayToArray(name, name_limit, fileName, MAX_FILE_NAME);
-	
+void BaseStatsArray(EntryOptions options, unsigned int *statArray, unsigned int statArrayLimit) {
+	char fileName[MAX_FILE_NAME] = {0};
+	BaseStatFileName(options,fileName, MAX_FILE_NAME);
 	//printf("base stat file name is %s\n", fileName);
-
 	FILE *fin = fopen(fileName, "r");
 	if(fin == 0) {
 		GlobalDestroyer(1,0,0);
@@ -494,7 +486,6 @@ void BaseStatsArrayFromName(char *name, unsigned int name_limit, unsigned int *s
 	//Extracts base stats out of file and put into array.
 	BaseStatsFileToArray(fin, statArray, statArrayLimit);
 	fclose(fin);
-
 	//printf("Close base stat file %s\n",fileName);
 }
 
@@ -507,22 +498,7 @@ void BaseStatsArrayFromName(char *name, unsigned int name_limit, unsigned int *s
 	TODO: Change it to something better, like literally printing out the entry file with actual move names
 	instead of just the numbers.
 **/
-/*
-void ConsolePrintEntireEntryFile(char *name) {
-	PokemonEntry *pEntry = NewEntryFromNameChoice(name,0);
-	pEntry->ConsolePrint(pEntry);
-	unsigned int i = 1;
-	for(i = 1; i <= 3; i++) {
-	SetEntryFromNameChoice(pEntry,name,1);
-	pEntry->ConsolePrint(pEntry); }
-}'*/
 
-PokemonEntry *NewEntryFromNameChoice(char *name, unsigned int choice) {
-	printf("DONT CALL THIS FUNCTION\n");
-	GlobalDestroyer(1,0,0);
-	PokemonEntry *pEntry = NewPokemonEntry();
-	return pEntry;
-}
 
 PokemonEntry *NewEntryFromData(EntryOptions options) {
 	PokemonEntry *pEntry = NewPokemonEntry();
@@ -533,11 +509,6 @@ PokemonEntry *NewEntryFromData(EntryOptions options) {
 	StatsDataToEntry(pEntry,options);
 
 	return pEntry;
-}
-
-void SetEntryFromNameChoice(PokemonEntry *pEntry, char *name, unsigned int choice) {
-	printf("DONT CALL THIS FUNCTION\n");
-	GlobalDestroyer(1,0,0);
 }
 
 

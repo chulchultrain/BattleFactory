@@ -21,6 +21,8 @@ MoveCategory GetCategory(PokemonMove *this);
 void ConsolePrint(PokemonMove *this);
 */
 
+
+
 typedef struct PokemonMove {
 
 PokemonMovePrivate *mem;
@@ -45,9 +47,7 @@ void ResetPokemonMoveData(PokemonMove *recall);
 
 void DeletePokemonMove(PokemonMove *recall);
 
-
 MoveCategory TokenToCategory(char *token);
-
 
 
 #endif
