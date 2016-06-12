@@ -31,8 +31,8 @@ BSTester: $(GLOBAL_DESTROYER_OBJS) $(BS_DIR)/BattleSimTester.o
 RDTester: $(GLOBAL_DESTROYER_OBJS) $(RD_DIR)/RetrieveTester.o 
 	gcc -o RDTester $(GLOBAL_DESTROYER_OBJS) $(RD_DIR)/RetrieveTester.o 
 
-PETester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
-	gcc -o PETester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PE_DIR)/PokemonEntryTestDriver.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
+PETester: $(GLOBALDESTROYER_OBJS) $(PE_DIR)/PokemonEntryTestDriver.o 
+	gcc -o PETester $(GLOBAL_DESTROYER_OBJS) $(PE_DIR)/PokemonEntryTestDriver.o 
 
 PokedexTester: $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/PokedexTesterMain.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o 
 	gcc -o PokedexTester $(PE_DIR)/PokemonEntry.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(PD_DIR)/PokedexTesterMain.o $(PD_DIR)/Pokedex.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(SU_DIR)/Special_Util.o
@@ -61,7 +61,7 @@ $(PE_DIR)/PokemonMoveTester.o: $(PE_DIR)/PokemonMoveSet.h $(PE_DIR)/PokemonMoveT
 $(PE_DIR)/PokemonMove.o: $(PE_DIR)/PokemonMove.c $(PE_DIR)/PokemonMove.h $(GD_DIR)/GlobalDestroyer.h $(SC_DIR)/SpecialConstants.h
 	gcc $(FLAGS) $(PE_DIR)/PokemonMove.c -o $(PE_DIR)/PokemonMove.o 
 
-$(PE_DIR)/PokemonEntryTestDriver.o: $(PE_DIR)/PokemonEntryTestDriver.c $(PE_DIR)/PokemonEntryTestDriver.h $(PE_DIR)/PokemonEntry.h $(PE_DIR)/Typing.h
+$(PE_DIR)/PokemonEntryTestDriver.o: $(PE_DIR)/PokemonEntryTestDriver.c $(PE_DIR)/PokemonEntryTestDriver.h $(PE_DIR)/PokemonEntry.h $(PE_DIR)/Typing.h $(GD_DIR)/GlobalDestroyer.h
 	gcc $(FLAGS) $(PE_DIR)/PokemonEntryTestDriver.c -o $(PE_DIR)/PokemonEntryTestDriver.o
 
 $(PD_DIR)/PokedexTesterMain.o: $(PD_DIR)/PokedexTesterMain.c $(GD_DIR)/GlobalDestroyer.h $(PD_DIR)/Pokedex.h
