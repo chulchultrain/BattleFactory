@@ -94,6 +94,19 @@ void UnitTestTypeFeature() {
 }
 
 
+/*
+	Make sure each of the stat getters and setters work correctly
+	Partition
+		Stat > 0, = 0,(Not defined for < 0 since it takes an unsigned int. Requires it to be Nonnegative)
+		
+		
+*/
+
+void UnitTestStatFeature() {
+	PokemonEntry *e = NewPokemonEntry();
+}
+
+
 int main() {
 /*
 	char overFlowName[30] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -122,6 +135,7 @@ int main() {
 	PETest(hp,a,d,SpA,SpD,S,t1,t2,oneName,move1,move2,move3,move4, moveCat);
 */
 	UnitTestTypeFeature();
+	printf("Type Feature Unit Test Passed.\n");
 	GlobalDestroyer(1,0,0);
 	return 0;
 }

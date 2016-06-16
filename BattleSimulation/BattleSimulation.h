@@ -41,7 +41,10 @@ BattleSim *NewBattleSim();
 
 void DeleteBattleSim(BattleSim *obj);
 
-
+/*
+	Only Relevant function here as of 06_12_2016
+	Use to calculate the upper and lower bounds of a move from an attacker when it hits a defender.
+*/
 MoveDamage calcMoveDamage(PokemonEntry *attacker, PokemonEntry *defender, unsigned int choice);
 
 #endif

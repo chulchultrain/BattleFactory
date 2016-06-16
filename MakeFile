@@ -13,6 +13,7 @@ RD_DIR = $(BF_DIR)/RetrieveData
 BS_DIR = $(BF_DIR)/BattleSimulation
 MT_DIR = $(BF_DIR)/MoveTable
 EO_DIR = $(BF_DIR)/EntryOptions
+MP_DIR = $(BF_DIR)/MessageParser
 
 INC_DIR = $(shell pwd)
 
@@ -20,7 +21,8 @@ FLAGS = -I$(INC_DIR) -c -Wall
 
 GLOBAL_DESTROYER_OBJS = $(BS_DIR)/BattleSimulation.o $(PE_DIR)/PokemonEntry.o $(PD_DIR)/Pokedex.o $(PE_DIR)/PokemonStats.o $(PE_DIR)/Typing.o $(GD_DIR)/GlobalDestroyer.o $(PE_DIR)/PokemonMove.o $(PE_DIR)/PokemonMoveSet.o $(RD_DIR)/RetrievePokemon.o $(SU_DIR)/Special_Util.o $(MT_DIR)/MoveTable.o $(EO_DIR)/EntryOptions.o
 
-
+MPTester: $(MP_DIR)/MessageParser.o $(MP_DIR)/MessageParserTester.o
+	gcc -o MPTester $(MP_DIR)/MessageParser.o $(MP_DIR)/MessageParserTester.o
 
 MTTester: $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_OBJS)
 	gcc -o MTTester $(MT_DIR)/MoveTableTester.o $(GLOBAL_DESTROYER_OBJS) 
@@ -103,6 +105,12 @@ $(MT_DIR)/MoveTableTester.o: $(MT_DIR)/MoveTableTester.c $(MT_DIR)/MoveTable.h $
 
 $(EO_DIR)/EntryOptions.o: $(EO_DIR)/EntryOptions.c $(EO_DIR)/EntryOptions.h 
 	gcc $(FLAGS) $(EO_DIR)/EntryOptions.c -o $(EO_DIR)/EntryOptions.o
+
+$(MP_DIR)/MessageParser.o: $(MP_DIR)/MessageParser.c $(MP_DIR)/MessageParser.h $(SC_DIR)/SpecialConstants.h
+	gcc $(FLAGS) $(MP_DIR)/MessageParser.c -o $(MP_DIR)/MessageParser.o
+
+$(MP_DIR)/MessageParserTester.o: $(MP_DIR)/MessageParser.h $(MP_DIR)/MessageParserTester.c
+	gcc $(FLAGS) $(MP_DIR)/MessageParserTester.c -o $(MP_DIR)/MessageParserTester.o
 
 clean: 
 	rm */*.o *.o *~ PETester PokeMoveSetTester

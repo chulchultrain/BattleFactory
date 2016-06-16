@@ -54,7 +54,9 @@ Type GetPrimaryType(PokemonEntry* obj);
 Type GetSecondaryType(PokemonEntry* obj);
 */
 
-typedef struct  PokemonEntry{
+typedef struct PokemonEntry PokemonEntry;
+
+struct  PokemonEntry{
 
 PokemonEntryPrivate *mem;
 
@@ -66,8 +68,8 @@ PokemonEntryPrivate *mem;
 	void (*SetSpecialAttack)();
 	void (*SetSpecialDefense)();	
 	void (*SetSpeed)();
-	void (*SetPrimaryType)();
-	void (*SetSecondaryType)();
+	void (*SetPrimaryType)(PokemonEntry* original, Type primary);
+	void (*SetSecondaryType)(PokemonEntry* original, Type secondary);
 	void (*SetMove)();
 
 	void (*SetMoveName)();
@@ -96,7 +98,7 @@ PokemonEntryPrivate *mem;
 
 //enum for pokemon Nature
 
-} PokemonEntry;
+};
 
 PokemonEntry *NewPokemonEntry();
 
